@@ -1,12 +1,145 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ClaudPlay</title>
+
+  <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(180deg, #000000, #0b0b0b);
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    header h1 {
+      font-size: 28px;
+      color: #00ffcc;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 6px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #00ffcc;
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card span {
+      font-size: 13px;
+      display: block;
+    }
+
+    .play-btn {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 8px 14px;
+      background: #00ffcc;
+      color: #000;
+      border-radius: 20px;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 15px;
+      text-align: center;
+      font-size: 10px;
+      color: #666;
+    }
+  </style>
 </head>
-<body style="margin:0; background:#000; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh;">
-  <h1>🎮 ClaudPlay</h1>
+
+<body>
+
+  <header>
+    <h1>🎮 ClaudPlay</h1>
+    <p>Jogos em nuvem direto no seu celular</p>
+  </header>
+
+  <div class="container">
+    <div class="section-title">Jogos em destaque</div>
+
+    <div class="games">
+      <div class="card">
+        <img src="https://via.placeholder.com/300x160/222/00ffcc?text=Jogo+1" alt="Jogo 1">
+        <span>Jogo Exemplo 1</span>
+        <a class="play-btn" href="#">Jogar</a>
+      </div>
+
+      <div class="card">
+        <img src="https://via.placeholder.com/300x160/222/00ffcc?text=Jogo+2" alt="Jogo 2">
+        <span>Jogo Exemplo 2</span>
+        <a class="play-btn" href="#">Jogar</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 ClaudPlay • Versão inicial
+  </footer>
+
+  <!-- Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+
 </body>
 </html>
