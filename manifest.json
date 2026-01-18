@@ -1,20 +1,25 @@
 {
   "name": "ClaudPlay",
   "short_name": "ClaudPlay",
-  "start_url": ".",
-  "scope": ".",
+  "description": "Plataforma de jogos em nuvem",
+  "start_url": "/claudplay/",
+  "scope": "/claudplay/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
-  {
-    "src": "https://drive.google.com/uc?export=view&id=1WpX6gxzq6atgTw4m8Qh_LnbXoE6gdZVE",
-    "sizes": "192x192",
-    "type": "image/png"
-  },
-  {
-    "src": "https://drive.google.com/uc?export=view&id=1sUasEKiYvBpm5qLNJvJQhczKFIQ4xHQP",
-    "sizes": "512x512",
-    "type": "image/png"
-  }
-]
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
