@@ -1,72 +1,45 @@
+;
  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>ClaudPlay</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#000000">
-
-  <link rel="manifest" href="manifest.json">
-
-  <style>
-    body {
-      margin: 0;
-      background: #0b0b0b;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 26px;
-      font-weight: bold;
-      background: #000;
-      border-bottom: 1px solid #222;
-    }
-
-    .games {
-      display: flex;
-      justify-content: center;
-      padding: 30px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border-radius: 16px;
-      padding: 15px;
-      text-align: center;
-      cursor: pointer;
-      width: 220px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0,255,255,0.3);
-    }
-
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .card p {
-      margin: 12px 0 5px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 12px;
-      font-size: 12px;
-      color: #777;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>ClaudPlay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<style>
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+header{
+  text-align:center;
+  padding:20px;
+  font-size:26px;
+  font-weight:bold;
+}
+.games{
+  display:flex;
+  justify-content:center;
+  padding:30px;
+}
+.card{
+  background:#1a1a1a;
+  border-radius:16px;
+  padding:15px;
+  width:220px;
+  text-align:center;
+}
+.card img{
+  width:100%;
+  border-radius:12px;
+}
+.card p{
+  margin-top:10px;
+  font-size:16px;
+}
+</style>
 </head>
 
 <body>
@@ -74,29 +47,11 @@
 <header>🎮 ClaudPlay</header>
 
 <div class="games">
-
-  <!-- FREE FIRE CLOUD -->
-  <div class="card" onclick="openGame('https://now.gg/play/garena-free-fire')">
+  <div class="card" onclick="location.href='https://now.gg/play/garena-free-fire'">
     <img src="https://i.imgur.com/8Qf4FzM.jpg">
     <p>Free Fire (Cloud)</p>
   </div>
-
 </div>
-
-<footer>
-  Jogue Free Fire em nuvem diretamente no ClaudPlay
-</footer>
-
-<script>
-  function openGame(url) {
-    window.location.href = url;
-  }
-
-  // Detecta controle conectado
-  window.addEventListener("gamepadconnected", function(e) {
-    console.log("Controle conectado:", e.gamepad.id);
-  });
-</script>
 
 </body>
 </html>
