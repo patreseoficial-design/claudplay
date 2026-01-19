@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #0b0b0b;
+  border-bottom: 1px solid #222;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.beta {
+  background: #ff3b3b;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.banner {
+  display: flex;
+  gap: 20px;
+  background: #111;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.banner-img img {
+  width: 300px;
+  height: 180px;
+  object-fit: cover;
+}
+
+.banner-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-info h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.banner-info p {
+  margin-bottom: 15px;
+}
+
+.btn {
+  display: inline-block;
+  background: #ff3b3b;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.carrossel {
+  background: #111;
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.carrossel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.carrossel-items {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.item img {
+  width: 250px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid #222;
+}
+
+.rodape {
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+  background: #0b0b0b;
+  border-top: 1px solid #222;
+  font-size: 12px;
+}
