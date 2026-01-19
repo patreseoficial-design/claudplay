@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClaudPlay</title>
 
-  <!-- Ícone do app -->
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="mario-banner.jpeg" />
+  <link rel="icon" href="icon-192.png" />
 
   <style>
     body {
@@ -49,6 +48,22 @@
       margin: 0;
       font-size: 22px;
     }
+
+    .carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 20px;
+    }
+
+    .carousel img {
+      width: 200px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
   </style>
 </head>
 
@@ -59,9 +74,22 @@
   <div class="banner">
     <h2>Super Mario World</h2>
 
-    <!-- Banner grande do Mario -->
     <a href="https://www.minijogos.com.br/jogo/super-mario-world-online/jogar" target="_blank">
       <img src="mario-banner.jpeg" alt="Super Mario World" />
+    </a>
+  </div>
+
+  <div class="carousel">
+    <a href="https://www.minijogos.com.br/jogo/super-mario-world-online/jogar" target="_blank">
+      <img src="mario-banner.jpeg" alt="Super Mario World" />
+    </a>
+
+    <a href="https://www.minijogos.com.br/jogo/resident-evil-4-online/jogar" target="_blank">
+      <img src="resident-evil-4-banner.jpeg" alt="Resident Evil 4" />
+    </a>
+
+    <a href="https://www.minijogos.com.br/jogo/god-of-war-online/jogar" target="_blank">
+      <img src="god-of-war-banner.jpeg" alt="God of War" />
     </a>
   </div>
 
