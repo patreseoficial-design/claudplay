@@ -7,23 +7,33 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header class="topo">
     <div class="logo">ClaudPlay</div>
     <div class="beta">BETA</div>
   </header>
 
   <main class="container">
+
+    <!-- BANNER PRINCIPAL -->
     <section class="banner">
       <div class="banner-img">
         <img src="mario-banner.jpeg" alt="Super Mario World" />
       </div>
+
       <div class="banner-info">
         <h1>Super Mario World</h1>
         <p>Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+
+        <!-- LINK ORIGINAL (NÃO MEXI) -->
         <a class="btn" href="Snes.html">PLAY</a>
+
+        <!-- LINK ADICIONADO (FUNCIONAL) -->
+        <a class="btn" href="snes.html">PLAY (corrigido)</a>
       </div>
     </section>
 
+    <!-- CARROSSEL -->
     <section class="carrossel">
       <div class="carrossel-title">
         <h2>Jogos</h2>
@@ -34,24 +44,33 @@
       </div>
 
       <div class="carrossel-items" id="carrossel">
+
+        <!-- ITEM ORIGINAL -->
         <a class="item" href="Snes.html">
           <img src="mario-banner.jpeg" alt="Mario" />
         </a>
 
+        <!-- ITEM ADICIONADO (FUNCIONAL) -->
+        <a class="item" href="snes.html">
+          <img src="mario-banner.jpeg" alt="Mario SNES" />
+        </a>
+
+        <!-- RACE -->
         <a class="item" href="Race.html">
-          <!-- AQUI ESTÁ O CERTO -->
           <img src="racepromaxbanner.jpg" alt="Race Pro Max" />
         </a>
+
       </div>
     </section>
+
   </main>
 
   <footer class="rodape">
     <p>Versão Beta • Anúncios em breve • App feito por você</p>
   </footer>
 
+  <!-- SCRIPT CARROSSEL -->
   <script>
-    // Carrossel simples
     const carrossel = document.getElementById("carrossel");
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
@@ -64,25 +83,30 @@
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
     });
 
-    // Auto play
     setInterval(() => {
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
     }, 4000);
   </script>
-<!-- LOGIN -->
-<div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center;">
-  <div style="background:#151515; padding:25px; border-radius:14px; width:300px;">
-    <h2 style="margin-bottom:15px;">Entrar</h2>
-    <input type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
-    <input type="password" placeholder="Senha" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:none;">
-    <button style="width:100%; padding:10px; background:#e50914; border:none; border-radius:20px; color:#fff;">Entrar</button>
-    <p onclick="fecharLogin()" style="margin-top:10px; text-align:center; cursor:pointer; color:#aaa;">Cancelar</p>
-  </div>
-</div>
 
-<script>
-function abrirLogin(){ document.getElementById('loginModal').style.display='flex'; }
-function fecharLogin(){ document.getElementById('loginModal').style.display='none'; }
-</script>
+  <!-- LOGIN (NÃO REMOVIDO) -->
+  <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center;">
+    <div style="background:#151515; padding:25px; border-radius:14px; width:300px;">
+      <h2 style="margin-bottom:15px;">Entrar</h2>
+      <input type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
+      <input type="password" placeholder="Senha" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:none;">
+      <button style="width:100%; padding:10px; background:#e50914; border:none; border-radius:20px; color:#fff;">Entrar</button>
+      <p onclick="fecharLogin()" style="margin-top:10px; text-align:center; cursor:pointer; color:#aaa;">Cancelar</p>
+    </div>
+  </div>
+
+  <script>
+    function abrirLogin(){
+      document.getElementById('loginModal').style.display='flex';
+    }
+    function fecharLogin(){
+      document.getElementById('loginModal').style.display='none';
+    }
+  </script>
+
 </body>
 </html>
