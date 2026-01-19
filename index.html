@@ -1,222 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claudplay Beta</title>
-
-<link rel="manifest" href="manifest.json">
-
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #000;
-    color: #fff;
-  }
-
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px;
-    background: #070707;
-    border-bottom: 1px solid #222;
-  }
-
-  .logo {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 1px;
-  }
-
-  .btn {
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: #1DB954;
-    border: none;
-    color: #000;
-    font-weight: 800;
-    cursor: pointer;
-  }
-
-  .hero {
-    padding: 20px;
-    text-align: center;
-  }
-
-  .hero img {
-    width: 100%;
-    max-width: 900px;
-    border-radius: 24px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.7);
-    cursor: pointer;
-  }
-
-  .carousel-wrapper {
-    position: relative;
-    padding: 18px 0;
-  }
-
-  .carousel {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 0 20px;
-  }
-
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-
-  .card {
-    min-width: 260px;
-    border-radius: 24px;
-    overflow: hidden;
-    scroll-snap-align: start;
-    cursor: pointer;
-    border: 1px solid #222;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  }
-
-  .card img {
-    width: 100%;
-    display: block;
-  }
-
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    padding: 10px 14px;
-    cursor: pointer;
-    border-radius: 50%;
-  }
-
-  .arrow.left { left: 10px; }
-  .arrow.right { right: 10px; }
-
-  .ad {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 1000;
-  }
-
-  .ad h2 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 900;
-  }
-
-  .ad p {
-    margin: 10px 0 0 0;
-    font-size: 18px;
-  }
-
-  footer {
-    padding: 14px;
-    text-align: center;
-    border-top: 1px solid #222;
-    background: #070707;
-    font-size: 14px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaudPlay</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="topo">
+    <div class="logo">ClaudPlay</div>
+    <div class="beta">BETA</div>
+  </header>
 
-<div class="topbar">
-  <div class="logo">Claudplay Beta</div>
-  <button class="btn" onclick="openLogin()">Login</button>
-</div>
+  <main class="container">
+    <section class="banner">
+      <div class="banner-img">
+        <img src="mario-banner.jpeg" alt="Super Mario World" />
+      </div>
+      <div class="banner-info">
+        <h1>Super Mario World</h1>
+        <p>Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+        <a class="btn" href="Snes.html">PLAY</a>
+      </div>
+    </section>
 
-<div class="hero">
-  <img src="mario-banner.jpeg" alt="Mario Banner" onclick="openGame('mario')">
-</div>
+    <section class="carrossel">
+      <div class="carrossel-title">
+        <h2>Jogos</h2>
+        <div class="carrossel-arrows">
+          <button id="prev">⟵</button>
+          <button id="next">⟶</button>
+        </div>
+      </div>
 
-<div class="carousel-wrapper">
-  <button class="arrow left" onclick="scrollLeft()">&#8249;</button>
-  <div class="carousel" id="carousel">
-    <div class="card" onclick="openGame('mario')">
-      <img src="mario-banner.jpeg" alt="Mario Banner">
-    </div>
-    <div class="card" onclick="openGame('race')">
-      <img src="Racepromaxbanner.jpeg" alt="Race Banner">
-    </div>
-  </div>
-  <button class="arrow right" onclick="scrollRight()">&#8250;</button>
-</div>
+      <div class="carrossel-items" id="carrossel">
+        <a class="item" href="Snes.html">
+          <img src="mario-banner.jpeg" alt="Mario" />
+        </a>
 
-<!-- Anúncio intersticial -->
-<div class="ad" id="ad">
-  <h2>Anúncio</h2>
-  <p>Seu jogo vai abrir em <span id="timer">5</span> segundos...</p>
-</div>
+        <a class="item" href="Race.html">
+          <img src="racepromaxbanner.jpeg" alt="Race Pro Max" />
+        </a>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  Versão Beta • Claudplay • Feito para testes • <span id="date"></span>
-</footer>
+  <footer class="rodape">
+    <p>Versão Beta • Anúncios em breve • App feito por você</p>
+  </footer>
 
-<script>
-  // Autoplay do carrossel
-  const carousel = document.getElementById("carousel");
-  setInterval(() => {
-    carousel.scrollBy({ left: 280, behavior: "smooth" });
-  }, 3000);
+  <script>
+    // Carrossel simples
+    const carrossel = document.getElementById("carrossel");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
 
-  function scrollLeft() {
-    carousel.scrollBy({ left: -280, behavior: "smooth" });
-  }
+    prev.addEventListener("click", () => {
+      carrossel.scrollBy({ left: -300, behavior: "smooth" });
+    });
 
-  function scrollRight() {
-    carousel.scrollBy({ left: 280, behavior: "smooth" });
-  }
+    next.addEventListener("click", () => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+    });
 
-  // Data no rodapé
-  document.getElementById("date").innerText = new Date().getFullYear();
-
-  function openLogin() {
-    window.location.href = "login.html";
-  }
-
-  function openGame(game) {
-    document.getElementById("ad").style.display = "flex";
-
-    let timer = 5;
-    const timerEl = document.getElementById("timer");
-
-    const interval = setInterval(() => {
-      timer--;
-      timerEl.innerText = timer;
-
-      if (timer <= 0) {
-        clearInterval(interval);
-        document.getElementById("ad").style.display = "none";
-
-        if (game === "mario") {
-          window.location.href = "snes.html";
-        } else if (game === "race") {
-          window.location.href = "race.html";
-        }
-      }
-    }, 1000);
-  }
-</script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-
+    // Auto play
+    setInterval(() => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+    }, 4000);
+  </script>
 </body>
 </html>
