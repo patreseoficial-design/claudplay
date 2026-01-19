@@ -1,3 +1,119 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+/* TOPO */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #020617;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.beta {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #22c55e;
+  color: #022c22;
+  font-weight: bold;
+}
+
+/* CONTAINER */
+.container {
+  padding: 16px;
+}
+
+/* BANNER PRINCIPAL */
+.banner {
+  display: flex;
+  gap: 16px;
+  background: linear-gradient(90deg, #020617, #020617cc);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.banner-img img {
+  width: 260px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.banner-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-info h1 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.banner-info p {
+  font-size: 14px;
+  color: #cbd5f5;
+  margin-bottom: 12px;
+}
+
+/* BOTÃO PLAY */
+.btn {
+  display: inline-block;
+  background: #22c55e;
+  color: #022c22;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  width: fit-content;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* CARROSSEL */
+.carrossel {
+  margin-top: 10px;
+}
+
+.carrossel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.carrossel-title h2 {
+  font-size: 18px;
+}
+
+/* SETAS ESTILO GAME PASS */
+.carrossel-arrows {
+  display: flex;
+  gap: 8px;
+}
+
 .carrossel-arrows button {
   background: rgba(255,255,255,0.15);
   border: none;
@@ -7,9 +123,70 @@
   height: 42px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .carrossel-arrows button:hover {
   background: rgba(255,255,255,0.35);
+  transform: scale(1.1);
+}
+
+/* ITENS */
+.carrossel-items {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 6px;
+}
+
+.carrossel-items::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  min-width: 180px;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* EFEITO HOVER TIPO GAME PASS */
+.item:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* RODAPÉ */
+.rodape {
+  margin-top: 30px;
+  padding: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .banner {
+    flex-direction: column;
+  }
+
+  .banner-img img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .item {
+    min-width: 150px;
+    height: 90px;
+  }
 }
