@@ -69,5 +69,20 @@
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
     }, 4000);
   </script>
+<!-- LOGIN -->
+<div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center;">
+  <div style="background:#151515; padding:25px; border-radius:14px; width:300px;">
+    <h2 style="margin-bottom:15px;">Entrar</h2>
+    <input type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
+    <input type="password" placeholder="Senha" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:none;">
+    <button style="width:100%; padding:10px; background:#e50914; border:none; border-radius:20px; color:#fff;">Entrar</button>
+    <p onclick="fecharLogin()" style="margin-top:10px; text-align:center; cursor:pointer; color:#aaa;">Cancelar</p>
+  </div>
+</div>
+
+<script>
+function abrirLogin(){ document.getElementById('loginModal').style.display='flex'; }
+function fecharLogin(){ document.getElementById('loginModal').style.display='none'; }
+</script>
 </body>
 </html>
