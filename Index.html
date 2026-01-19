@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaudPlay</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="topo">
+    <div class="logo">ClaudPlay</div>
+    <div class="beta">BETA</div>
+  </header>
+
+  <main class="container">
+
+    <!-- BANNER PRINCIPAL (CLICÁVEL) -->
+    <a href="Emuladores/Super Nintendo/snes.html" class="banner">
+      <div class="banner-img">
+        <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
+      </div>
+      <div class="banner-info">
+        <h1>Super Mario World</h1>
+        <p>Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+      </div>
+    </a>
+
+    <!-- CARROSSEL -->
+    <section class="carrossel">
+      <div class="carrossel-title">
+        <h2>Jogos</h2>
+        <div class="carrossel-arrows">
+          <button id="prev">⟵</button>
+          <button id="next">⟶</button>
+        </div>
+      </div>
+
+      <div class="carrossel-items" id="carrossel">
+
+        <!-- MARIO (INTERNO - CORRETO) -->
+        <a class="item" href="Emuladores/Super Nintendo/snes.html">
+          <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
+        </a>
+
+        <!-- RACE (INTERNO) -->
+        <a class="item" href="Emuladores/Race.html">
+          <img src="Banner/racepromaxbanner.jpeg" alt="Race Pro Max" />
+        </a>
+
+        <!-- SONIC (INTERNO) -->
+        <a class="item" href="Emuladores/Mega Drive/megadrive.html">
+          <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Versão Beta • ClaudPlay ©</p>
+  </footer>
+
+  <script>
+    const carrossel = document.getElementById("carrossel");
+    document.getElementById("prev").onclick = () => {
+      carrossel.scrollBy({ left: -300, behavior: "smooth" });
+    };
+    document.getElementById("next").onclick = () => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+    };
+
+    setInterval(() => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+    }, 4000);
+  </script>
+</body>
+</html>
