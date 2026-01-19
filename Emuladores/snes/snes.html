@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emulador SNES</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+    }
+    #game {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
 
+  <div id="game"></div>
+
+  <!-- CONFIGURAÇÃO DO EMULADOR -->
+  <script>
+    window.EJS_player = "#game";
+    window.EJS_core = "snes";
+    window.EJS_gameUrl = "../../roms/super-nintendo/SuperMarioWorld.sfc";
+    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  </script>
+
+  <!-- CARREGAR EMULADOR -->
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
+</body>
+</html>
