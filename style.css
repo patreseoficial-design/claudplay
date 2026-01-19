@@ -14,19 +14,19 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 14px 18px;
   background: #000;
 }
 
 .logo {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .beta {
   background: #ff3b3b;
-  padding: 5px 10px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 14px;
   font-weight: bold;
   font-size: 12px;
 }
@@ -37,71 +37,73 @@ body {
 
 .banner {
   background: #111;
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 16px;
+  padding: 16px;
   display: flex;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .banner-img img {
-  width: 220px;
-  height: 140px;
+  width: 320px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .banner-info h1 {
-  font-size: 22px;
+  font-size: 26px;
   margin-bottom: 8px;
 }
 
 .banner-info p {
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .btn {
   display: inline-block;
   background: #ff3b3b;
   color: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: bold;
 }
 
 .carrossel {
   background: #111;
-  border-radius: 14px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 14px;
 }
 
 .carrossel-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .carrossel-items {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   overflow-x: auto;
   scroll-behavior: smooth;
   padding-bottom: 10px;
 }
 
 .item img {
-  width: 210px;
-  height: 120px;
+  width: 260px;
+  height: 140px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  border: 2px solid #222;
 }
 
 .rodape {
   text-align: center;
   padding: 12px;
-  margin-top: 16px;
+  margin-top: 20px;
   font-size: 12px;
 }
