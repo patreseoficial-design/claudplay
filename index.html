@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Claudplay</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudplay Beta</title>
+
+<link rel="manifest" href="manifest.json">
 
 <style>
   body {
@@ -48,14 +50,20 @@
     max-width: 900px;
     border-radius: 24px;
     box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    cursor: pointer;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    padding: 18px 0;
   }
 
   .carousel {
-    padding: 18px 0;
     display: flex;
     gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    padding: 0 20px;
   }
 
   .carousel::-webkit-scrollbar {
@@ -76,6 +84,22 @@
     width: 100%;
     display: block;
   }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .arrow.left { left: 10px; }
+  .arrow.right { right: 10px; }
 
   .ad {
     position: fixed;
@@ -101,28 +125,38 @@
     margin: 10px 0 0 0;
     font-size: 18px;
   }
+
+  footer {
+    padding: 14px;
+    text-align: center;
+    border-top: 1px solid #222;
+    background: #070707;
+    font-size: 14px;
+  }
 </style>
 </head>
-
 <body>
 
 <div class="topbar">
-  <div class="logo">Claudplay</div>
+  <div class="logo">Claudplay Beta</div>
   <button class="btn" onclick="openLogin()">Login</button>
 </div>
 
 <div class="hero">
-  <img src="mario-banner.jpeg" alt="Mario Banner" onclick="openGame('mario')" />
+  <img src="mario-banner.jpeg" alt="Mario Banner" onclick="openGame('mario')">
 </div>
 
-<div class="carousel">
-  <div class="card" onclick="openGame('mario')">
-    <img src="mario-banner.jpeg" alt="Mario Banner" />
+<div class="carousel-wrapper">
+  <button class="arrow left" onclick="scrollLeft()">&#8249;</button>
+  <div class="carousel" id="carousel">
+    <div class="card" onclick="openGame('mario')">
+      <img src="mario-banner.jpeg" alt="Mario Banner">
+    </div>
+    <div class="card" onclick="openGame('race')">
+      <img src="Racepromaxbanner.jpeg" alt="Race Banner">
+    </div>
   </div>
-
-  <div class="card" onclick="openGame('race')">
-    <img src="Racepromaxbanner.jpeg" alt="Race Banner" />
-  </div>
+  <button class="arrow right" onclick="scrollRight()">&#8250;</button>
 </div>
 
 <!-- Anúncio intersticial -->
@@ -131,7 +165,28 @@
   <p>Seu jogo vai abrir em <span id="timer">5</span> segundos...</p>
 </div>
 
+<footer>
+  Versão Beta • Claudplay • Feito para testes • <span id="date"></span>
+</footer>
+
 <script>
+  // Autoplay do carrossel
+  const carousel = document.getElementById("carousel");
+  setInterval(() => {
+    carousel.scrollBy({ left: 280, behavior: "smooth" });
+  }, 3000);
+
+  function scrollLeft() {
+    carousel.scrollBy({ left: -280, behavior: "smooth" });
+  }
+
+  function scrollRight() {
+    carousel.scrollBy({ left: 280, behavior: "smooth" });
+  }
+
+  // Data no rodapé
+  document.getElementById("date").innerText = new Date().getFullYear();
+
   function openLogin() {
     window.location.href = "login.html";
   }
