@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>ClaudPlay - SNES</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNES - Super Mario World</title>
   <style>
-    html, body {
+    body, html {
       margin: 0;
       padding: 0;
-      width: 100%;
       height: 100%;
       background: #000;
-      overflow: hidden;
     }
-    #game {
+    iframe {
       width: 100%;
       height: 100%;
+      border: none;
     }
   </style>
-
-  <!-- CONFIGURAÇÃO DO EMULATORJS -->
-  <script>
-    EJS_player = "#game";
-    EJS_core = "snes";
-
-    /* ⚠️ NOME EXATO DO ARQUIVO .sfc ⚠️ */
-    EJS_gameUrl = "SuperMarioWorld.sfc";
-
-    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-  </script>
-
-  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </head>
 <body>
-  <div id="game"></div>
+  <iframe src="emulators/snes/index.html?rom=../roms/Super%20Nintendo/SuperMarioWorld.sfc"></iframe>
 </body>
 </html>
