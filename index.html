@@ -13,14 +13,14 @@
   </header>
 
   <main class="container">
-    <section class="banner">
+    <section class="banner" id="banner">
       <div class="banner-img">
         <img src="mario-banner.jpeg" alt="Super Mario World" />
       </div>
       <div class="banner-info">
-        <h1>Super Mario World</h1>
-        <p>Jogue direto no navegador como se fosse um jogo em nuvem.</p>
-        <a class="btn" href="Snes.html">PLAY</a>
+        <h1 id="banner-title">Super Mario World</h1>
+        <p id="banner-desc">Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+        <a class="btn" id="banner-play" href="Snes.html">PLAY</a>
       </div>
     </section>
 
@@ -34,13 +34,13 @@
       </div>
 
       <div class="carrossel-items" id="carrossel">
-        <a class="item" href="Snes.html">
+        <div class="item" data-title="Super Mario World" data-link="Snes.html" data-img="mario-banner.jpeg">
           <img src="mario-banner.jpeg" alt="Mario" />
-        </a>
+        </div>
 
-        <a class="item" href="Race.html">
+        <div class="item" data-title="Race Pro Max" data-link="Race.html" data-img="racepromaxbanner.jpeg">
           <img src="racepromaxbanner.jpeg" alt="Race Pro Max" />
-        </a>
+        </div>
       </div>
     </section>
   </main>
@@ -50,10 +50,26 @@
   </footer>
 
   <script>
-    // Carrossel simples
     const carrossel = document.getElementById("carrossel");
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
+
+    const bannerImg = document.querySelector("#banner .banner-img img");
+    const bannerTitle = document.getElementById("banner-title");
+    const bannerPlay = document.getElementById("banner-play");
+
+    // Quando clicar em um item do carrossel, muda o banner
+    document.querySelectorAll(".item").forEach(item => {
+      item.addEventListener("click", () => {
+        const title = item.getAttribute("data-title");
+        const link = item.getAttribute("data-link");
+        const img = item.getAttribute("data-img");
+
+        bannerTitle.textContent = title;
+        bannerImg.src = img;
+        bannerPlay.href = link;
+      });
+    });
 
     prev.addEventListener("click", () => {
       carrossel.scrollBy({ left: -300, behavior: "smooth" });
