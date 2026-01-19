@@ -13,7 +13,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* HEADER */
     header {
       padding: 20px;
       display: flex;
@@ -45,12 +44,10 @@
       opacity: 1;
     }
 
-    /* MAIN */
     .main {
       padding: 20px;
     }
 
-    /* HERO */
     .hero {
       display: flex;
       gap: 20px;
@@ -115,7 +112,6 @@
       display: block;
     }
 
-    /* CARROSSEL */
     .carousel {
       margin-top: 20px;
       display: flex;
@@ -155,39 +151,6 @@
       font-weight: 700;
     }
 
-    /* CARDS */
-    .cards {
-      margin-top: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
-      background: #111;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.12);
-      cursor: pointer;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 12px;
-    }
-
-    .card h3 {
-      margin: 10px 0 5px 0;
-      font-size: 16px;
-    }
-
-    .card p {
-      margin: 0;
-      opacity: 0.8;
-      font-size: 14px;
-    }
-
-    /* ANÚNCIOS (FAKE) */
     .ads {
       margin-top: 30px;
       padding: 20px;
@@ -214,7 +177,6 @@
       margin: 0;
       font-weight: 700;
     }
-
   </style>
 </head>
 <body>
@@ -224,60 +186,42 @@
   <div class="menu">
     <a href="login.html">Login</a>
     <a href="cadastro.html">Cadastro</a>
+    <a href="games.html">Jogos</a>
   </div>
 </header>
 
 <div class="main">
 
-  <!-- HERO -->
   <div class="hero">
     <div class="info">
       <h2>Jogos em nuvem estilo Game Pass</h2>
-      <p>Escolha um jogo e clique em PLAY. Anúncios e planos pagos serão adicionados em breve.</p>
+      <p>Escolha um jogo e clique em PLAY. Anúncios e planos pagos serão ativados em breve.</p>
       <div class="buttons">
-        <button class="btn btn-play" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">PLAY</button>
-        <button class="btn btn-details" onclick="alert('Em breve: detalhes do jogo')">DETALHES</button>
+        <button class="btn btn-play" onclick="openGame('games.html')">VER JOGOS</button>
       </div>
     </div>
 
-    <div class="banner" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
+    <div class="banner" onclick="openGame('games.html')">
       <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
     </div>
   </div>
 
-  <!-- CARROSSEL -->
   <div class="carousel">
-    <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
+    <div class="carousel-item" onclick="openGame('games.html')">
       <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
       <p>Max Pro Race</p>
     </div>
 
-    <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/super-mario-world-online/jogar')">
+    <div class="carousel-item" onclick="openGame('games.html')">
       <img src="mario-banner.jpeg" alt="Super Mario World" />
       <p>Super Mario World</p>
     </div>
   </div>
 
-  <!-- CARDS -->
-  <div class="cards">
-    <div class="card" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
-      <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
-      <h3>Max Pro Race</h3>
-      <p>Jogo de corrida online.</p>
-    </div>
-
-    <div class="card" onclick="openGame('https://www.minijogos.com.br/jogo/super-mario-world-online/jogar')">
-      <img src="mario-banner.jpeg" alt="Super Mario World" />
-      <h3>Super Mario World</h3>
-      <p>Jogo clássico de plataforma.</p>
-    </div>
-  </div>
-
-  <!-- ANÚNCIOS -->
   <div class="ads">
     <h3>Anúncios</h3>
     <div class="ad-banner">
-      <p>📌 Aqui vai o anúncio do Mario e do Race (simulado)</p>
+      <p>📌 Em breve: anúncios reais do AdMob</p>
     </div>
   </div>
 
