@@ -1,1 +1,104 @@
-ksksksnajambaccacah
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Claudplay</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: #111;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+    }
+
+    h1 {
+      margin: 0 0 20px 0;
+      text-align: center;
+      font-size: 22px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      background: #222;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #1DB954;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .link {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .link a {
+      color: #1DB954;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Login</h1>
+
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Senha" />
+
+  <button onclick="login()">Entrar</button>
+
+  <div class="link">
+    <a href="cadastro.html">Criar conta</a>
+  </div>
+</div>
+
+<script>
+  function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // Busca no localStorage
+    const userData = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = userData.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      localStorage.setItem("loggedUser", JSON.stringify(user));
+      alert("Login feito com sucesso!");
+      window.location.href = "profile.html";
+    } else {
+      alert("Email ou senha inválidos.");
+    }
+  }
+</script>
+
+</body>
+</html>
