@@ -1,235 +1,163 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Claudplay</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claudplay</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #111;
+    border-bottom: 1px solid #222;
+  }
 
-    header {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
+  }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 700;
-    }
+  .btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #1DB954;
+    border: none;
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+  }
 
-    header .menu {
-      display: flex;
-      gap: 15px;
-    }
+  .hero {
+    padding: 20px;
+    text-align: center;
+  }
 
-    header .menu a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      opacity: 0.8;
-    }
+  .hero img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 20px;
+  }
 
-    header .menu a:hover {
-      opacity: 1;
-    }
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 10px;
+    margin-top: 10px;
+  }
 
-    .main {
-      padding: 20px;
-    }
+  .card {
+    min-width: 220px;
+    background: #111;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #222;
+  }
 
-    .hero {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
+  .card img {
+    width: 100%;
+    border-radius: 16px;
+  }
 
-    .hero .info {
-      max-width: 600px;
-    }
+  .card-title {
+    margin: 10px 0 0 0;
+    font-weight: 700;
+    text-align: center;
+  }
 
-    .hero .info h2 {
-      margin: 0;
-      font-size: 34px;
-    }
+  /* Anúncio */
+  .ad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+  }
 
-    .hero .info p {
-      margin: 10px 0;
-      opacity: 0.8;
-      font-size: 16px;
-    }
+  .ad h2 {
+    margin: 0;
+    font-size: 24px;
+  }
 
-    .hero .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-play {
-      background: #1DB954;
-      color: #000;
-    }
-
-    .btn-details {
-      background: #222;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .hero .banner {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(255,255,255,0.15);
-      cursor: pointer;
-    }
-
-    .hero .banner img {
-      width: 100%;
-      display: block;
-    }
-
-    .carousel {
-      margin-top: 20px;
-      display: flex;
-      overflow-x: auto;
-      gap: 15px;
-      padding: 10px;
-      scroll-snap-type: x mandatory;
-    }
-
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
-
-    .carousel-item {
-      min-width: 220px;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      scroll-snap-align: start;
-      background: #111;
-      box-shadow: 0 0 15px rgba(255,255,255,0.12);
-      transition: transform 0.2s;
-    }
-
-    .carousel-item:hover {
-      transform: translateY(-5px);
-    }
-
-    .carousel-item img {
-      width: 100%;
-      display: block;
-    }
-
-    .carousel-item p {
-      margin: 10px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .ads {
-      margin-top: 30px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      background: #111;
-      text-align: center;
-    }
-
-    .ads h3 {
-      margin: 0 0 10px 0;
-      font-size: 18px;
-    }
-
-    .ads .ad-banner {
-      margin-top: 10px;
-      background: #222;
-      border-radius: 12px;
-      padding: 20px;
-      opacity: 0.9;
-    }
-
-    .ads .ad-banner p {
-      margin: 0;
-      font-weight: 700;
-    }
-  </style>
+  .ad p {
+    margin: 10px 0 0 0;
+  }
+</style>
 </head>
+
 <body>
 
-<header>
-  <h1>Claudplay</h1>
-  <div class="menu">
-    <a href="login.html">Login</a>
-    <a href="cadastro.html">Cadastro</a>
-    <a href="games.html">Jogos</a>
-  </div>
-</header>
+<div class="topbar">
+  <div class="logo">Claudplay</div>
+  <button class="btn" onclick="openLogin()">Login</button>
+</div>
 
-<div class="main">
+<div class="hero">
+  <img src="mario-banner.jpeg" alt="Mario Banner" />
+  <h1>Jogos em nuvem</h1>
+  <p>Clique no jogo para jogar</p>
+</div>
 
-  <div class="hero">
-    <div class="info">
-      <h2>Jogos em nuvem estilo Game Pass</h2>
-      <p>Escolha um jogo e clique em PLAY. Anúncios e planos pagos serão ativados em breve.</p>
-      <div class="buttons">
-        <button class="btn btn-play" onclick="openGame('games.html')">VER JOGOS</button>
-      </div>
-    </div>
-
-    <div class="banner" onclick="openGame('games.html')">
-      <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
-    </div>
+<div class="carousel">
+  <div class="card" onclick="openGame('mario')">
+    <img src="mario-banner.jpeg" alt="Mario" />
+    <div class="card-title">Super Mario World</div>
   </div>
 
-  <div class="carousel">
-    <div class="carousel-item" onclick="openGame('games.html')">
-      <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
-      <p>Max Pro Race</p>
-    </div>
-
-    <div class="carousel-item" onclick="openGame('games.html')">
-      <img src="mario-banner.jpeg" alt="Super Mario World" />
-      <p>Super Mario World</p>
-    </div>
+  <div class="card" onclick="openGame('race')">
+    <img src="Racepromaxbanner.jpeg" alt="Race" />
+    <div class="card-title">Race Max</div>
   </div>
+</div>
 
-  <div class="ads">
-    <h3>Anúncios</h3>
-    <div class="ad-banner">
-      <p>📌 Em breve: anúncios reais do AdMob</p>
-    </div>
-  </div>
-
+<!-- Anúncio intersticial -->
+<div class="ad" id="ad">
+  <h2>Anúncio</h2>
+  <p>Seu jogo vai abrir em <span id="timer">5</span> segundos...</p>
 </div>
 
 <script>
-  function openGame(url) {
-    window.location.href = url;
+  function openLogin() {
+    window.location.href = "login.html";
+  }
+
+  function openGame(game) {
+    document.getElementById("ad").style.display = "flex";
+
+    let timer = 5;
+    const timerEl = document.getElementById("timer");
+
+    const interval = setInterval(() => {
+      timer--;
+      timerEl.innerText = timer;
+
+      if (timer <= 0) {
+        clearInterval(interval);
+        document.getElementById("ad").style.display = "none";
+
+        if (game === "mario") {
+          window.location.href = "snes.html";
+        } else if (game === "race") {
+          window.location.href = "race.html";
+        }
+      }
+    }, 1000);
   }
 </script>
 
