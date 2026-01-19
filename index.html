@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudPlay</title>
+  <title>ClaudPlay</title>
   <style>
     body {
       margin: 0;
@@ -11,45 +11,58 @@
       background: #0b0b0b;
       color: #fff;
     }
+
     .topo {
       padding: 20px;
       text-align: center;
-      background: #141414;
-      border-bottom: 1px solid #222;
+      background: #111;
     }
+
     .topo h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 26px;
     }
-    .grid {
+
+    .topo p {
+      margin: 5px 0 0;
+      color: #ccc;
+    }
+
+    .jogos {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      padding: 20px;
     }
+
     .jogo {
-      background: #1a1a1a;
-      border-radius: 14px;
-      overflow: hidden;
+      background: #222;
+      border-radius: 12px;
       cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s;
       box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      transition: transform .2s;
     }
+
     .jogo:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
+
     .jogo img {
       width: 100%;
       height: 140px;
       object-fit: cover;
     }
+
     .jogo-info {
       padding: 10px;
     }
+
     .jogo-info h3 {
       margin: 0;
       font-size: 18px;
     }
+
     .jogo-info p {
       margin: 5px 0 0;
       font-size: 12px;
@@ -57,19 +70,25 @@
     }
   </style>
 </head>
+
 <body>
+
   <div class="topo">
-    <h1>CloudPlay</h1>
+    <h1>ClaudPlay</h1>
+    <p>Escolha um jogo para jogar</p>
   </div>
 
-  <div class="grid">
-    <div class="jogo" onclick="window.location.href='snes.html'">
-      <img src="https://upload.wikimedia.org/wikipedia/en/a/a8/Super_Mario_World.png" alt="Super Mario World">
+  <div class="jogos">
+
+    <div class="jogo" onclick="window.location.href='mario.html'">
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a8/Super_Mario_World.png" alt="Super Mario World Online">
       <div class="jogo-info">
-        <h3>Super Mario World</h3>
-        <p>SNES (Emulador Online)</p>
+        <h3>Super Mario World Online</h3>
+        <p>HTML5 via Minijogos</p>
       </div>
     </div>
+
   </div>
+
 </body>
 </html>
