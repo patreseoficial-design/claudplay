@@ -1,105 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClaudPlay</title>
-
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon-192.png" />
-
+  <title>Claudplay</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
+      text-align: center;
     }
-
-    .top {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 0;
-      font-size: 30px;
+    header {
+      padding: 20px;
+      font-size: 24px;
       font-weight: bold;
-      letter-spacing: 2px;
     }
-
     .banner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px;
-    }
-
-    .banner img {
+      margin: 20px auto;
       width: 90%;
-      max-width: 600px;
-      border-radius: 15px;
-      border: 3px solid #fff;
-      cursor: pointer;
-    }
-
-    .banner h2 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .carousel {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      padding: 20px;
-    }
-
-    .carousel img {
-      width: 200px;
-      height: 110px;
-      object-fit: cover;
+      max-width: 900px;
       border-radius: 10px;
+      overflow: hidden;
       cursor: pointer;
-      border: 2px solid #fff;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+    .banner img {
+      width: 100%;
+      display: block;
+    }
+    .carousel {
+      margin-top: 40px;
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px;
+    }
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .carousel-item {
+      min-width: 250px;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+    .carousel-item img {
+      width: 100%;
+      display: block;
+    }
+    .carousel-item p {
+      margin: 8px 0;
+      font-size: 14px;
+      font-weight: bold;
     }
   </style>
 </head>
-
 <body>
 
-  <div class="top">ClaudPlay</div>
+  <header>Claudplay</header>
 
-  <div class="banner">
-    <h2>Super Mario World</h2>
-
-    <a href="https://www.minijogos.com.br/jogo/super-mario-world-online/jogar" target="_blank">
-      <img src="mario-banner.jpeg" alt="Super Mario World" />
-    </a>
-  </div>
-
-  <div class="carousel">
-    <a href="https://www.minijogos.com.br/jogo/super-mario-world-online/jogar" target="_blank">
-      <img src="mario-banner.jpeg" alt="Super Mario World" />
-    </a>
-
-    <a href="https://www.minijogos.com.br/jogo/resident-evil-4-online/jogar" target="_blank">
-      <img src="resident-evil-4-banner.jpeg" alt="Resident Evil 4" />
-    </a>
-
-    <a href="https://www.minijogos.com.br/jogo/god-of-war-online/jogar" target="_blank">
-      <img src="god-of-war-banner.jpeg" alt="God of War" />
-    </a>
-  </div>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then(() => console.log("Service Worker registrado"))
-        .catch((err) => console.log("SW falhou: ", err));
-    }
-  </script>
-</body>
-</html>
+  <!-- BANNER PRINCIPAL -->
+  <div class="banner" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
+    <img src="Racepromaxbanner.jpeg" alt="Max
