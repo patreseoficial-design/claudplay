@@ -12,11 +12,13 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
+
     header {
       padding: 20px;
       font-size: 24px;
       font-weight: bold;
     }
+
     .banner {
       margin: 20px auto;
       width: 90%;
@@ -26,10 +28,12 @@
       cursor: pointer;
       box-shadow: 0 0 15px rgba(255,255,255,0.2);
     }
+
     .banner img {
       width: 100%;
       display: block;
     }
+
     .carousel {
       margin-top: 40px;
       display: flex;
@@ -37,9 +41,11 @@
       gap: 15px;
       padding: 10px;
     }
+
     .carousel::-webkit-scrollbar {
       display: none;
     }
+
     .carousel-item {
       min-width: 250px;
       border-radius: 10px;
@@ -47,10 +53,12 @@
       cursor: pointer;
       box-shadow: 0 0 15px rgba(255,255,255,0.2);
     }
+
     .carousel-item img {
       width: 100%;
       display: block;
     }
+
     .carousel-item p {
       margin: 8px 0;
       font-size: 14px;
@@ -62,20 +70,20 @@
 
   <header>Claudplay</header>
 
-  <!-- BANNER PRINCIPAL -->
+  <!-- BANNER PRINCIPAL (Race) -->
   <div class="banner" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
     <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
   </div>
 
   <!-- CARROSSEL -->
   <div class="carousel">
-    <!-- ITEM 1 -->
+    <!-- ITEM 1 - Race -->
     <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
       <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
       <p>Max Pro Race</p>
     </div>
 
-    <!-- ITEM 2 -->
+    <!-- ITEM 2 - Mario -->
     <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/super-mario-world-online/jogar')">
       <img src="mario-banner.jpeg" alt="Super Mario World" />
       <p>Super Mario World</p>
