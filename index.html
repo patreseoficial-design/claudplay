@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claudplay</title>
+
 <style>
   body {
     margin: 0;
@@ -16,23 +17,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: #111;
+    padding: 12px 20px;
+    background: #070707;
     border-bottom: 1px solid #222;
   }
 
   .logo {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
   }
 
   .btn {
     padding: 10px 14px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #1DB954;
     border: none;
     color: #000;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
   }
 
@@ -43,46 +45,45 @@
 
   .hero img {
     width: 100%;
-    max-width: 700px;
-    border-radius: 20px;
+    max-width: 900px;
+    border-radius: 24px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.7);
   }
 
   .carousel {
+    padding: 18px 0;
     display: flex;
-    overflow-x: auto;
     gap: 12px;
-    padding: 10px;
-    margin-top: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none;
   }
 
   .card {
-    min-width: 220px;
-    background: #111;
-    border-radius: 20px;
-    padding: 10px;
+    min-width: 260px;
+    border-radius: 24px;
+    overflow: hidden;
+    scroll-snap-align: start;
     cursor: pointer;
     border: 1px solid #222;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
   }
 
   .card img {
     width: 100%;
-    border-radius: 16px;
+    display: block;
   }
 
-  .card-title {
-    margin: 10px 0 0 0;
-    font-weight: 700;
-    text-align: center;
-  }
-
-  /* Anúncio */
   .ad {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     display: none;
     justify-content: center;
     align-items: center;
@@ -92,11 +93,13 @@
 
   .ad h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
+    font-weight: 900;
   }
 
   .ad p {
     margin: 10px 0 0 0;
+    font-size: 18px;
   }
 </style>
 </head>
@@ -109,20 +112,16 @@
 </div>
 
 <div class="hero">
-  <img src="mario-banner.jpeg" alt="Mario Banner" />
-  <h1>Jogos em nuvem</h1>
-  <p>Clique no jogo para jogar</p>
+  <img src="mario-banner.jpeg" alt="Mario Banner" onclick="openGame('mario')" />
 </div>
 
 <div class="carousel">
   <div class="card" onclick="openGame('mario')">
-    <img src="mario-banner.jpeg" alt="Mario" />
-    <div class="card-title">Super Mario World</div>
+    <img src="mario-banner.jpeg" alt="Mario Banner" />
   </div>
 
   <div class="card" onclick="openGame('race')">
-    <img src="Racepromaxbanner.jpeg" alt="Race" />
-    <div class="card-title">Race Max</div>
+    <img src="Racepromaxbanner.jpeg" alt="Race Banner" />
   </div>
 </div>
 
