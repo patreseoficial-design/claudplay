@@ -30,38 +30,21 @@
       width: 100%;
       display: block;
     }
-    .carousel {
-      margin-top: 40px;
-      display: flex;
-      overflow-x: auto;
-      gap: 15px;
-      padding: 10px;
-    }
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
-    .carousel-item {
-      min-width: 250px;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-    .carousel-item img {
-      width: 100%;
-      display: block;
-    }
-    .carousel-item p {
-      margin: 8px 0;
-      font-size: 14px;
-      font-weight: bold;
-    }
   </style>
 </head>
 <body>
 
   <header>Claudplay</header>
 
-  <!-- BANNER PRINCIPAL -->
   <div class="banner" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
-    <img src="Racepromaxbanner.jpeg" alt="Max
+    <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
+  </div>
+
+  <script>
+    function openGame(url) {
+      window.location.href = url;
+    }
+  </script>
+
+</body>
+</html>
