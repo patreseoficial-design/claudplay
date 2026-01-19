@@ -1,9 +1,14 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClaudPlay</title>
+
+  <!-- Ícone do app -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="mario-banner.jpeg" />
+
   <style>
     body {
       margin: 0;
@@ -44,28 +49,6 @@
       margin: 0;
       font-size: 22px;
     }
-
-    .carousel {
-      padding: 20px;
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-    }
-
-    .carousel img {
-      width: 220px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      scroll-snap-align: start;
-      border: 2px solid #fff;
-    }
-
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
   </style>
 </head>
 
@@ -82,24 +65,13 @@
     </a>
   </div>
 
-  <div class="carousel">
-    <!-- Carrossel com outros jogos -->
-    <a href="https://www.minijogos.com.br/jogo/resident-evil-4/jogar" target="_blank">
-      <img src="images/resident-evil.jpg" alt="Resident Evil 4" />
-    </a>
-
-    <a href="https://www.minijogos.com.br/jogo/god-of-war/jogar" target="_blank">
-      <img src="images/god-of-war.jpg" alt="God of War" />
-    </a>
-
-    <a href="https://www.minijogos.com.br/jogo/fortnite/jogar" target="_blank">
-      <img src="images/fortnite.jpg" alt="Fortnite" />
-    </a>
-
-    <a href="https://www.minijogos.com.br/jogo/free-fire/jogar" target="_blank">
-      <img src="images/freefire.jpg" alt="Free Fire" />
-    </a>
-  </div>
-
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch((err) => console.log("SW falhou: ", err));
+    }
+  </script>
 </body>
 </html>
