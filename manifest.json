@@ -1,25 +1,20 @@
 {
   "name": "ClaudPlay",
   "short_name": "ClaudPlay",
-  "description": "Plataforma de jogos em nuvem",
-  "start_url": "/claudplay/",
-  "scope": "/claudplay/",
+  "start_url": ".",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "mario-banner.jpeg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/jpeg"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "mario-banner.jpeg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/jpeg"
     }
   ]
 }
