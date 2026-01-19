@@ -10,36 +10,115 @@
       background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
-      text-align: center;
     }
 
     header {
       padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    header h1 {
+      margin: 0;
       font-size: 24px;
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    .banner {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 900px;
+    header .menu {
+      display: flex;
+      gap: 15px;
+    }
+
+    header .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    header .menu a:hover {
+      opacity: 1;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .hero {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .hero .info {
+      max-width: 600px;
+    }
+
+    .hero .info h2 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    .hero .info p {
+      margin: 10px 0;
+      opacity: 0.8;
+      font-size: 16px;
+    }
+
+    .hero .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
       border-radius: 10px;
-      overflow: hidden;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
     }
 
-    .banner img {
+    .btn-play {
+      background: #1DB954;
+      color: #000;
+    }
+
+    .btn-details {
+      background: #222;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .hero .banner {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+      cursor: pointer;
+    }
+
+    .hero .banner img {
       width: 100%;
       display: block;
     }
 
+    /* Carrossel */
     .carousel {
-      margin-top: 40px;
+      margin-top: 20px;
       display: flex;
       overflow-x: auto;
       gap: 15px;
       padding: 10px;
+      scroll-snap-type: x mandatory;
     }
 
     .carousel::-webkit-scrollbar {
@@ -47,54 +126,9 @@
     }
 
     .carousel-item {
-      min-width: 250px;
-      border-radius: 10px;
+      min-width: 220px;
+      border-radius: 12px;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-
-    .carousel-item img {
-      width: 100%;
-      display: block;
-    }
-
-    .carousel-item p {
-      margin: 8px 0;
-      font-size: 14px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-  <header>Claudplay</header>
-
-  <!-- BANNER PRINCIPAL (Race) -->
-  <div class="banner" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
-    <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
-  </div>
-
-  <!-- CARROSSEL -->
-  <div class="carousel">
-    <!-- ITEM 1 - Race -->
-    <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/race-max/jogar')">
-      <img src="Racepromaxbanner.jpeg" alt="Max Pro Race" />
-      <p>Max Pro Race</p>
-    </div>
-
-    <!-- ITEM 2 - Mario -->
-    <div class="carousel-item" onclick="openGame('https://www.minijogos.com.br/jogo/super-mario-world-online/jogar')">
-      <img src="mario-banner.jpeg" alt="Super Mario World" />
-      <p>Super Mario World</p>
-    </div>
-  </div>
-
-  <script>
-    function openGame(url) {
-      window.location.href = url;
-    }
-  </script>
-
-</body>
-</html>
+      scroll-snap-align: start;
+      background:
