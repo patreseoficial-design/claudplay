@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mega Drive - ClaudPlay</title>
+</head>
+<body>
+  <div id="game"></div>
+
+  <script>
+    // Caminho da ROM
+    const url = "./roms/Sonic.md";
+
+    window.EJS_player = "#game";
+    window.EJS_gameName = "Sonic";
+    window.EJS_gameUrl = url;
+    window.EJS_core = "genesis_plus_gx";
+    window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
+    window.EJS_startOnLoaded = true;
+
+    const script = document.createElement("script");
+    script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
+    document.body.appendChild(script);
+  </script
