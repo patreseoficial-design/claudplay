@@ -1,90 +1,143 @@
-body, html {
+/* ====== RESET ====== */
+* {
   margin: 0;
   padding: 0;
-  background: #000;
+  box-sizing: border-box;
+}
+
+body {
+  background: #050505;
   color: #fff;
   font-family: Arial, sans-serif;
 }
 
+/* ====== TOPO ====== */
 .topo {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  background: #111;
   align-items: center;
+  padding: 18px 22px;
+  background: #0b0b0b;
+  border-bottom: 1px solid #1a1a1a;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .beta {
+  font-size: 12px;
+  padding: 6px 10px;
   background: #e50914;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-weight: bold;
+  border-radius: 999px;
 }
 
+/* ====== CONTAINER ====== */
 .container {
   padding: 20px;
 }
 
+/* ====== BANNER ====== */
 .banner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
   gap: 20px;
+  background: #111;
+  border-radius: 14px;
+  overflow: hidden;
   text-decoration: none;
-  color: #fff;
-  background: #222;
-  padding: 15px;
-  border-radius: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .banner-img img {
-  width: 220px;
-  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-info {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .banner-info h1 {
-  margin: 0;
-  font-size: 28px;
+  font-size: 32px;
+  margin-bottom: 10px;
 }
 
 .banner-info p {
-  margin: 10px 0 0 0;
-  opacity: 0.8;
+  color: #b0b0b0;
+  font-size: 16px;
+}
+
+/* ====== CARROSSEL ====== */
+.carrossel {
+  margin-top: 10px;
 }
 
 .carrossel-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 14px;
+}
+
+.carrossel-title h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.carrossel-arrows button {
+  background: #111;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 8px;
 }
 
 .carrossel-items {
   display: flex;
   overflow-x: auto;
-  gap: 20px;
-  padding: 20px 0;
+  gap: 14px;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+}
+
+.carrossel-items::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  min-width: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  text-decoration: none;
 }
 
 .item img {
-  width: 180px;
-  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.carrossel-arrows button {
-  background: #222;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
+/* ====== RODAPE ====== */
 .rodape {
+  padding: 16px;
   text-align: center;
-  padding: 20px;
-  background: #111;
+  color: #7a7a7a;
+  font-size: 13px;
+}
+
+/* ====== MOBILE ====== */
+@media (max-width: 768px) {
+  .banner {
+    grid-template-columns: 1fr;
+  }
 }
