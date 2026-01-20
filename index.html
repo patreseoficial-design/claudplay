@@ -15,7 +15,7 @@
 
   <main class="container">
 
-    <!-- BANNER PRINCIPAL (CLICÁVEL) -->
+    <!-- BANNER PRINCIPAL -->
     <a href="Emuladores/SuperNintendo/snes.html" class="banner" id="bannerPrincipal">
       <div class="banner-img">
         <img src="Banner/mario_banner.jpeg" alt="Super Mario World" id="bannerImg" />
@@ -38,18 +38,27 @@
 
       <div class="carrossel-items" id="carrossel">
 
-        <!-- MARIO (SNES) -->
-        <a class="item" href="Emuladores/SuperNintendo/snes.html" data-title="Super Mario World" data-desc="Jogue direto no navegador como se fosse um jogo em nuvem." data-img="Banner/mario_banner.jpeg" data-link="Emuladores/SuperNintendo/snes.html">
+        <a class="item" href="Emuladores/SuperNintendo/snes.html"
+           data-title="Super Mario World"
+           data-desc="Jogue direto no navegador como se fosse um jogo em nuvem."
+           data-img="Banner/mario_banner.jpeg"
+           data-link="Emuladores/SuperNintendo/snes.html">
           <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
         </a>
 
-        <!-- SONIC (MEGA DRIVE) -->
-        <a class="item" href="Emuladores/MegaDrive/megadrive.html" data-title="Sonic" data-desc="Jogue Sonic direto no navegador." data-img="Banner/sonic_banner.jpeg" data-link="Emuladores/MegaDrive/megadrive.html">
+        <a class="item" href="Emuladores/MegaDrive/megadrive.html"
+           data-title="Sonic"
+           data-desc="Jogue Sonic direto no navegador."
+           data-img="Banner/sonic_banner.jpeg"
+           data-link="Emuladores/MegaDrive/megadrive.html">
           <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
         </a>
 
-        <!-- MARIO BROS (NES) -->
-        <a class="item" href="Emuladores/Nes/nes.html" data-title="Super Mario Bros" data-desc="Clássico do NES jogável online." data-img="Banner/bannersupermariobros.png" data-link="Emuladores/Nes/nes.html">
+        <a class="item" href="Emuladores/NES/nes.html"
+           data-title="Super Mario Bros"
+           data-desc="Clássico do NES jogável online."
+           data-img="Banner/bannersupermariobros.png"
+           data-link="Emuladores/NES/nes.html">
           <img src="Banner/bannersupermariobros.png" alt="Super Mario Bros" />
         </a>
 
@@ -71,7 +80,6 @@
     const itens = document.querySelectorAll(".item");
     let indexAtual = 0;
 
-    // FUNÇÃO PARA MUDAR O BANNER
     function mudarBanner(i) {
       const item = itens[i];
       bannerImg.src = item.dataset.img;
@@ -80,7 +88,6 @@
       bannerPrincipal.href = item.dataset.link;
     }
 
-    // CLICK NO ITEM DO CARROSSEL (muda o banner)
     itens.forEach((item, index) => {
       item.addEventListener("click", () => {
         indexAtual = index;
@@ -88,7 +95,6 @@
       });
     });
 
-    // SETAS DO CARROSSEL
     document.getElementById("prev").onclick = () => {
       carrossel.scrollBy({ left: -300, behavior: "smooth" });
       indexAtual = (indexAtual - 1 + itens.length) % itens.length;
@@ -100,7 +106,6 @@
       mudarBanner(indexAtual);
     };
 
-    // AUTOPLAY (4s)
     setInterval(() => {
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
       indexAtual = (indexAtual + 1) % itens.length;
