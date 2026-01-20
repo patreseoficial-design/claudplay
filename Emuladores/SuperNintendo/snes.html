@@ -9,17 +9,18 @@
   <div id="game"></div>
 
   <script>
-    const url = "../Emuladores/SuperNintendo/Roms/SuperMarioWorld.sfc";
+    // CAMINHO CORRETO DA ROM
+    const url = "../roms/SuperMarioWorld.sfc";
 
     window.EJS_player = "#game";
     window.EJS_gameName = "Super Mario World";
     window.EJS_gameUrl = url;
     window.EJS_core = "snes9x";
-    window.EJS_pathtodata = "../emulatorjs/EmulatorJS/data/";
+    window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
     window.EJS_startOnLoaded = true;
 
     const script = document.createElement("script");
-    script.src = "../emulatorjs/EmulatorJS/data/loader.js";
+    script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
     document.body.appendChild(script);
   </script>
 </body>
