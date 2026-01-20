@@ -128,11 +128,12 @@
       mudarBanner(indexAtual);
     };
 
+    // AQUI É O TEMPO DE MUDAR AUTOMATICAMENTE (10 SEGUNDOS)
     setInterval(() => {
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
       indexAtual = (indexAtual + 1) % itens.length;
       mudarBanner(indexAtual);
-    }, 4000);
+    }, 10000);
 
     // FUNÇÃO PARA ABRIR O JOGO
     function abrirJogo(url, comAnuncio){
