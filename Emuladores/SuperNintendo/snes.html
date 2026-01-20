@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNES - ClaudPlay</title>
+  <style>
+    body { margin:0; font-family: Arial; background:#000; color:#fff; }
+    #game { width: 100vw; height: 70vh; background:#000; }
+    #controls { display:flex; justify-content:center; gap:10px; padding:10px; }
+    button { padding:10px 20px; font-size:16px; }
+  </style>
 </head>
 <body>
-  <h1>Super Nintendo - ClaudPlay</h1>
-  <p>Clique no botão para carregar o jogo:</p>
-
-  <button onclick="startGame()">Jogar Super Mario World</button>
-
+  <h1 style="text-align:center;">Super Nintendo - ClaudPlay</h1>
   <div id="game"></div>
+
+  <div id="controls">
+    <button onclick="startGame()">Jogar</button>
+    <button onclick="pressKey('ArrowUp')">↑</button>
+    <button onclick="pressKey('ArrowDown')">↓</button>
+    <button onclick="pressKey('ArrowLeft')">←</button>
+    <button onclick="pressKey('ArrowRight')">→</button>
+    <button onclick="pressKey('KeyZ')">B</button>
+    <button onclick="pressKey('KeyX')">A</button>
+    <button onclick="pressKey('Enter')">Start</button>
+    <button onclick="pressKey('ShiftLeft')">Select</button>
+  </div>
 
   <script>
     function startGame(){
-      const url = "./Roms/SuperMarioWorld.sfc";  // <-- CAMINHO CORRETO
+      const url = "./Roms/SuperMarioWorld.sfc";
 
       window.EJS_player = "#game";
       window.EJS_gameName = "Super Mario World";
@@ -27,6 +41,11 @@
       const script = document.createElement("script");
       script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
       document.body.appendChild(script);
+    }
+
+    function pressKey(code){
+      const event = new KeyboardEvent('keydown', { code });
+      document.dispatchEvent(event);
     }
   </script>
 </body>
