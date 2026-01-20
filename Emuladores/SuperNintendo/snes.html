@@ -7,14 +7,57 @@
   <title>Super Nintendo - ClaudPlay</title>
 </head>
 <body>
-  <h1>Carregando SNES...</h1>
+  <div id="top">
+    <h1>Super Nintendo</h1>
+    <p>Se a ROM estiver aqui, o jogo vai rodar.</p>
+  </div>
+
+  <div id="box" style="width: 100%; height: 80vh; display: flex; justify-content:center; align-items:center;">
+    <div style="text-align:center;">
+      <p>Carregando emulador...</p>
+    </div>
+  </div>
 
   <script>
-    // Caminho da ROM
-    const romPath = "Roms/SuperMarioWorld.sfc";
+    const box = document.getElementById("box");
 
-    // Redireciona para o EmulatorJS
-    window.location.href = "emulatorjs/?rom=" + encodeURIComponent(romPath);
+    // Caminho da ROM
+    const url = "Roms/SuperMarioWorld.sfc";
+
+    // Core do SNES no EmulatorJS
+    const core = "snes";
+
+    const enableDebug = false;
+    const enableThreads = false;
+
+    // ---- MESMA LÓGICA DO EMULATORJS ----
+    const div = document.createElement("div");
+    const sub = document.createElement("div");
+    const script = document.createElement("script");
+
+    sub.id = "game";
+    div.id = "display";
+
+    const top = document.getElementById("top");
+    top.remove();
+    box.remove();
+
+    div.appendChild(sub);
+    document.body.appendChild(div);
+
+    window.EJS_player = "#game";
+    window.EJS_gameName = "Super Mario World";
+    window.EJS_biosUrl = "";
+    window.EJS_gameUrl = url;
+    window.EJS_core = core;
+    window.EJS_pathtodata = "emulatorjs/data/";
+    window.EJS_startOnLoaded = true;
+    window.EJS_DEBUG_XX = enableDebug;
+    window.EJS_disableDatabases = true;
+    window.EJS_threads = enableThreads;
+
+    script.src = "emulatorjs/data/loader.js";
+    document.body.appendChild(script);
   </script>
 </body>
 </html>
