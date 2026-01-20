@@ -1,143 +1,164 @@
-/* ====== RESET ====== */
-* {
+/* ===== Estilo base ===== */
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: #050505;
-  color: #fff;
   font-family: Arial, sans-serif;
+  background: #0b0b0b;
+  color: #fff;
 }
 
-/* ====== TOPO ====== */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===== Cabeçalho ===== */
 .topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 22px;
-  background: #0b0b0b;
-  border-bottom: 1px solid #1a1a1a;
+  padding: 20px 40px;
+  background: #101010;
+  border-bottom: 1px solid #222;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .beta {
+  background: #6b00ff;
+  padding: 5px 10px;
+  border-radius: 10px;
   font-size: 12px;
-  padding: 6px 10px;
-  background: #e50914;
-  border-radius: 999px;
+  font-weight: bold;
 }
 
-/* ====== CONTAINER ====== */
+/* ===== Container ===== */
 .container {
-  padding: 20px;
+  padding: 20px 40px;
 }
 
-/* ====== BANNER ====== */
+/* ===== Banner ===== */
 .banner {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 20px;
-  background: #111;
-  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  background: #1a1a1a;
+  border-radius: 20px;
   overflow: hidden;
-  text-decoration: none;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.banner:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 .banner-img img {
-  width: 100%;
-  height: 100%;
+  width: 260px;
+  height: 160px;
   object-fit: cover;
 }
 
 .banner-info {
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 20px;
 }
 
 .banner-info h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
+  margin: 0;
+  font-size: 28px;
 }
 
 .banner-info p {
-  color: #b0b0b0;
-  font-size: 16px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #cfcfcf;
 }
 
-/* ====== CARROSSEL ====== */
+/* ===== Carrossel ===== */
 .carrossel {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .carrossel-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
 }
 
 .carrossel-title h2 {
-  font-size: 18px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 20px;
 }
 
 .carrossel-arrows button {
-  background: #111;
+  background: #2b2b2b;
   border: 1px solid #333;
   color: #fff;
   padding: 8px 12px;
+  font-size: 18px;
   border-radius: 10px;
   cursor: pointer;
-  margin-left: 8px;
+}
+
+.carrossel-arrows button:hover {
+  background: #3a3a3a;
 }
 
 .carrossel-items {
   display: flex;
+  gap: 15px;
   overflow-x: auto;
-  gap: 14px;
   padding-bottom: 10px;
-  scroll-behavior: smooth;
 }
 
 .carrossel-items::-webkit-scrollbar {
-  display: none;
+  height: 8px;
 }
 
-.item {
-  min-width: 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #111;
-  text-decoration: none;
+.carrossel-items::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
 }
 
 .item img {
+  width: 220px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.item:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== Rodapé ===== */
+.rodape {
+  padding: 20px 40px;
+  text-align: center;
+  border-top: 1px solid #222;
+  background: #0a0a0a;
+}
+
+/* ===== Overlay de carregando ===== */
+#loadingOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-/* ====== RODAPE ====== */
-.rodape {
-  padding: 16px;
+#loadingOverlay div {
   text-align: center;
-  color: #7a7a7a;
-  font-size: 13px;
-}
-
-/* ====== MOBILE ====== */
-@media (max-width: 768px) {
-  .banner {
-    grid-template-columns: 1fr;
-  }
 }
