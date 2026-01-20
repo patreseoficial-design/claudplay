@@ -16,7 +16,7 @@
   <main class="container">
 
     <!-- BANNER PRINCIPAL -->
-    <a href="javascript:void(0)" class="banner" id="bannerPrincipal" onclick="abrirJogo('Emuladores/SuperNintendo/snes.html')">
+    <a href="javascript:void(0)" class="banner" id="bannerPrincipal" onclick="abrirJogo('Emuladores/SuperNintendo/snes.html', true)">
       <div class="banner-img">
         <img src="Banner/mario_banner.jpeg" alt="Super Mario World" id="bannerImg" />
       </div>
@@ -37,15 +37,34 @@
       </div>
 
       <div class="carrossel-items" id="carrossel">
-        <a class="item" href="javascript:void(0)" data-title="Super Mario World" data-desc="Jogue direto no navegador como se fosse um jogo em nuvem." data-img="Banner/mario_banner.jpeg" data-link="Emuladores/SuperNintendo/snes.html" onclick="abrirJogo(this.dataset.link)">
+
+        <a class="item" href="javascript:void(0)"
+           data-title="Super Mario World"
+           data-desc="Jogue direto no navegador como se fosse um jogo em nuvem."
+           data-img="Banner/mario_banner.jpeg"
+           data-link="Emuladores/SuperNintendo/snes.html"
+           onclick="abrirJogo(this.dataset.link, true)">
           <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
         </a>
-        <a class="item" href="javascript:void(0)" data-title="Sonic" data-desc="Jogue Sonic direto no navegador." data-img="Banner/sonic_banner.jpeg" data-link="Emuladores/MegaDrive/megadrive.html" onclick="abrirJogo(this.dataset.link)">
+
+        <a class="item" href="javascript:void(0)"
+           data-title="Sonic"
+           data-desc="Jogue Sonic direto no navegador."
+           data-img="Banner/sonic_banner.jpeg"
+           data-link="Emuladores/MegaDrive/megadrive.html"
+           onclick="abrirJogo(this.dataset.link, false)">
           <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
         </a>
-        <a class="item" href="javascript:void(0)" data-title="Super Mario Bros" data-desc="Clássico do NES jogável online." data-img="Banner/bannersupermariobros.png" data-link="Emuladores/NES/nes.html" onclick="abrirJogo(this.dataset.link)">
+
+        <a class="item" href="javascript:void(0)"
+           data-title="Super Mario Bros"
+           data-desc="Clássico do NES jogável online."
+           data-img="Banner/bannersupermariobros.png"
+           data-link="Emuladores/NES/nes.html"
+           onclick="abrirJogo(this.dataset.link, false)">
           <img src="Banner/bannersupermariobros.png" alt="Super Mario Bros" />
         </a>
+
       </div>
     </section>
   </main>
@@ -68,9 +87,9 @@
       Carregando jogo...
     </div>
 
-    <!-- AQUI VOCÊ COLOCA O ANÚNCIO OU IMAGEM -->
+    <!-- ANÚNCIO FAKE -->
     <div style="width:300px; height:250px; background:#111; display:flex; justify-content:center; align-items:center; border:1px solid #444;">
-      <span style="color:#fff;">SEU ANÚNCIO AQUI</span>
+      <span style="color:#fff;">ANÚNCIO</span>
     </div>
   </div>
 
@@ -115,15 +134,25 @@
       mudarBanner(indexAtual);
     }, 4000);
 
-    function abrirJogo(url){
-      // mostra overlay de carregando
+    // FUNÇÃO PARA ABRIR O JOGO
+    function abrirJogo(url, comAnuncio){
+      // MOSTRA OVERLAY
       document.getElementById("loadingOverlay").style.display = "flex";
 
-      // abre o iframe
+      // se for Mario, mantém por 5s antes de abrir
+      if(comAnuncio){
+        setTimeout(() => {
+          abrirIframe(url);
+        }, 5000);
+      } else {
+        abrirIframe(url);
+      }
+    }
+
+    function abrirIframe(url){
       document.getElementById("jogoArea").style.display = "block";
       document.getElementById("iframeJogo").src = url;
 
-      // quando o iframe carregar, fecha o overlay
       document.getElementById("iframeJogo").onload = function(){
         document.getElementById("loadingOverlay").style.display = "none";
       }
