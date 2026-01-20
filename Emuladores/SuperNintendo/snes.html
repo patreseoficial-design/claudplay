@@ -4,28 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SNES - ClaudPlay</title>
-
-  <style>
-    body { margin:0; background:#000; display:flex; justify-content:center; align-items:center; height:100vh; }
-    #game { width:100%; height:100%; }
-  </style>
 </head>
 <body>
+  <h1>Super Nintendo - ClaudPlay</h1>
 
-<div id="game"></div>
+  <script>
+    // Caminho da ROM
+    const url = "../Emuladores/SuperNintendo/roms/SuperMarioWorld.sfc";
 
-<script src="https://unpkg.com/snes9x-js@0.1.3/dist/snes9x.min.js"></script>
+    window.EJS_player = "#game";
+    window.EJS_gameName = "Super Mario World";
+    window.EJS_gameUrl = url;
+    window.EJS_core = "snes9x";
+    window.EJS_pathtodata = "../../emulatorjs/data/";
+    window.EJS_startOnLoaded = true;
 
-<script>
-  const romUrl = "roms/SuperMarioWorld.sfc";
+    const script = document.createElement("script");
+    script.src = "../../emulatorjs/data/loader.js";
+    document.body.appendChild(script);
+  </script>
 
-  const emulator = new Snes9x({
-    canvas: document.getElementById("game"),
-    rom: romUrl
-  });
-
-  emulator.start();
-</script>
-
+  <div id="game"></div>
 </body>
 </html>
