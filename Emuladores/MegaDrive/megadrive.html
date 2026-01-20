@@ -2,35 +2,18 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mega Drive - ClaudPlay</title>
-  <style>
-    body {
-      margin: 0;
-      background: black;
-    }
-    #game {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body style="margin:0; background:black;">
 
   <div id="game"></div>
 
   <script>
-    // ROM DO MEGA DRIVE
-    const url = "./roms/Sonic.md";
-
     window.EJS_player = "#game";
     window.EJS_gameName = "Sonic the Hedgehog";
-    window.EJS_gameUrl = url;
-
-    // 🔴 CORE CERTO DO MEGA DRIVE
+    window.EJS_gameUrl = "./roms/Sonic.md";
     window.EJS_core = "genesis";
-
-    // CAMINHO DO EMULATORJS
     window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
     window.EJS_startOnLoaded = true;
 
