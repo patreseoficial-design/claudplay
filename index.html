@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaudPlay</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="topo">
+    <div class="logo">ClaudPlay</div>
+    <div class="beta">BETA</div>
+  </header>
+
+  <main class="container">
+
+    <!-- BANNER PRINCIPAL (CLICÁVEL) -->
+    <a href="Snes.html" class="banner" id="bannerPrincipal">
+      <div class="banner-img">
+        <img src="Banner/mario_banner.jpeg" alt="Super Mario World" id="bannerImg" />
+      </div>
+      <div class="banner-info">
+        <h1 id="bannerTitle">Super Mario World</h1>
+        <p id="bannerDesc">Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+      </div>
+    </a>
+
+    <!-- CARROSSEL -->
+    <section class="carrossel">
+      <div class="carrossel-title">
+        <h2>Jogos</h2>
+        <div class="carrossel-arrows">
+          <button id="prev">⟵</button>
+          <button id="next">⟶</button>
+        </div>
+      </div>
+
+      <div class="carrossel-items" id="carrossel">
+
+        <!-- MARIO (SNES) -->
+        <a class="item" href="Snes.html" data-title="Super Mario World" data-desc="Jogue direto no navegador como se fosse um jogo em nuvem." data-img="Banner/mario_banner.jpeg" data-link="Snes.html">
+          <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
+        </a>
+
+        <!-- RACE -->
+        <a class="item" href="Race.html" data-title="Race Pro Max" data-desc="Jogue corrida em nuvem sem travar." data-img="Banner/Racepromaxbanner.jpeg" data-link="Race.html">
+          <img src="Banner/Racepromaxbanner.jpeg" alt="Race Pro Max" />
+        </a>
+
+        <!-- SONIC (MEGA DRIVE) -->
+        <a class="item" href="MegaDrive.html" data-title="Sonic" data-desc="Jogue Sonic direto no navegador." data-img="Banner/sonic_banner.jpeg" data-link="MegaDrive.html">
+          <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
+        </a>
+
+        <!-- MARIO BROS (NES) -->
+        <a class="item" href="Nes.html" data-title="Super Mario Bros" data-desc="Clássico do NES jogável online." data-img="Banner/bannersupermariobros.png" data-link="Nes.html">
+          <img src="Banner/bannersupermariobros.png" alt="Super Mario Bros" />
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Versão Beta • ClaudPlay ©</p>
+  </footer>
+
+  <script>
+    const carrossel = document.getElementById("carrossel");
+    const bannerImg = document.getElementById("bannerImg");
+    const bannerTitle = document.getElementById("bannerTitle");
+    const bannerDesc = document.getElementById("bannerDesc");
+    const bannerPrincipal = document.getElementById("bannerPrincipal");
+
+    const itens = document.querySelectorAll(".item");
+    let indexAtual = 0;
+
+    // FUNÇÃO PARA MUDAR O BANNER
+    function mudarBanner(i) {
+      const item = itens[i];
+      bannerImg.src = item.dataset.img;
+      bannerTitle.innerText = item.dataset.title;
+      bannerDesc.innerText = item.dataset.desc;
+      bannerPrincipal.href = item.dataset.link;
+    }
+
+    // CLICK NO ITEM DO CARROSSEL (muda o banner)
+    itens.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        indexAtual = index;
+        mudarBanner(indexAtual);
+      });
+    });
+
+    // SETAS DO CARROSSEL
+    document.getElementById("prev").onclick = () => {
+      carrossel.scrollBy({ left: -300, behavior: "smooth" });
+      indexAtual = (indexAtual - 1 + itens.length) % itens.length;
+      mudarBanner(indexAtual);
+    };
+    document.getElementById("next").onclick = () => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+      indexAtual = (indexAtual + 1) % itens.length;
+      mudarBanner(indexAtual);
+    };
+
+    // AUTOPLAY (4s)
+    setInterval(() => {
+      carrossel.scrollBy({ left: 300, behavior: "smooth" });
+      indexAtual = (indexAtual + 1) % itens.length;
+      mudarBanner(indexAtual);
+    }, 4000);
+
+  </script>
+</body>
+</html>
