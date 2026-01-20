@@ -38,22 +38,22 @@
 
       <div class="carrossel-items" id="carrossel">
 
-        <!-- MARIO (INTERNO - CORRETO) -->
+        <!-- MARIO (SNES) -->
         <a class="item" href="Snes.html">
           <img src="Banner/mario_banner.jpeg" alt="Super Mario World" />
         </a>
 
-        <!-- RACE (INTERNO) -->
+        <!-- RACE (EXTERNO) -->
         <a class="item" href="Race.html">
           <img src="Banner/Racepromaxbanner.jpeg" alt="Race Pro Max" />
         </a>
 
-        <!-- SONIC (INTERNO) -->
-        <a class="item" href="Sonic.html">
+        <!-- SONIC (MEGA DRIVE) -->
+        <a class="item" href="MegaDrive.html">
           <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
         </a>
 
-        <!-- MARIO BROS (INTERNO) -->
+        <!-- MARIO BROS (NES) -->
         <a class="item" href="Nes.html">
           <img src="Banner/bannersupermariobros.png" alt="Super Mario Bros" />
         </a>
@@ -65,17 +65,6 @@
   <footer class="rodape">
     <p>Versão Beta • ClaudPlay ©</p>
   </footer>
-
-  <!-- LOGIN (MANTIDO) -->
-  <div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:999; justify-content:center; align-items:center;">
-    <div style="background:#151515; padding:25px; border-radius:14px; width:300px;">
-      <h2 style="margin-bottom:15px;">Entrar</h2>
-      <input type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
-      <input type="password" placeholder="Senha" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:none;">
-      <button style="width:100%; padding:10px; background:#e50914; border:none; border-radius:20px; color:#fff;">Entrar</button>
-      <p onclick="fecharLogin()" style="margin-top:10px; text-align:center; cursor:pointer; color:#aaa;">Cancelar</p>
-    </div>
-  </div>
 
   <script>
     const carrossel = document.getElementById("carrossel");
@@ -89,9 +78,6 @@
     setInterval(() => {
       carrossel.scrollBy({ left: 300, behavior: "smooth" });
     }, 4000);
-
-    function abrirLogin(){ document.getElementById('loginModal').style.display='flex'; }
-    function fecharLogin(){ document.getElementById('loginModal').style.display='none'; }
   </script>
 </body>
 </html>
