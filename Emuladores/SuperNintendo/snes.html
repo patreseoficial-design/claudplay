@@ -11,23 +11,23 @@
 
   <button onclick="startGame()">Jogar Super Mario World</button>
 
+  <div id="game"></div>
+
   <script>
     function startGame(){
-      const url = "../Emuladores/SuperNintendo/Roms/SuperMarioWorld.sfc";
+      const url = "Roms/SuperMarioWorld.sfc"; // CORRETO
 
       window.EJS_player = "#game";
       window.EJS_gameName = "Super Mario World";
       window.EJS_gameUrl = url;
       window.EJS_core = "snes9x";
-      window.EJS_pathtodata = "../../emulatorjs/data/";
+      window.EJS_pathtodata = "../../emulatorjs/data/"; // CORRETO
       window.EJS_startOnLoaded = true;
 
       const script = document.createElement("script");
-      script.src = "../../emulatorjs/data/loader.js";
+      script.src = "../../emulatorjs/data/loader.js"; // CORRETO
       document.body.appendChild(script);
     }
   </script>
-
-  <div id="game"></div>
 </body>
 </html>
