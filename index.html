@@ -101,6 +101,7 @@
 
     const itens = document.querySelectorAll(".item");
     let indexAtual = 0;
+    let autoplayInterval;
 
     function mudarBanner(i) {
       const item = itens[i];
@@ -128,12 +129,23 @@
       mudarBanner(indexAtual);
     };
 
-    // AQUI É O TEMPO DE MUDAR AUTOMATICAMENTE (10 SEGUNDOS)
-    setInterval(() => {
-      carrossel.scrollBy({ left: 300, behavior: "smooth" });
-      indexAtual = (indexAtual + 1) % itens.length;
-      mudarBanner(indexAtual);
-    }, 10000);
+    // AUTOPLAY A CADA 40 SEGUNDOS
+    function iniciarAutoplay(){
+      autoplayInterval = setInterval(() => {
+        carrossel.scrollBy({ left: 300, behavior: "smooth" });
+        indexAtual = (indexAtual + 1) % itens.length;
+        mudarBanner(indexAtual);
+      }, 40000); // 40 segundos
+    }
+
+    function pararAutoplay(){
+      clearInterval(autoplayInterval);
+    }
+
+    carrossel.addEventListener("mouseenter", pararAutoplay);
+    carrossel.addEventListener("mouseleave", iniciarAutoplay);
+
+    iniciarAutoplay(); // inicia o autoplay
 
     // FUNÇÃO PARA ABRIR O JOGO
     function abrirJogo(url, comAnuncio){
