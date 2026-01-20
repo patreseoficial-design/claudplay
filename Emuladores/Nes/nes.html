@@ -7,25 +7,21 @@
 </head>
 <body>
   <h1>NES - ClaudPlay</h1>
-  <p>Clique no botão para carregar o jogo:</p>
-
-  <button onclick="startGame()">Jogar Super Mario Bros</button>
 
   <div id="game"></div>
 
   <script>
-    function startGame() {
-      window.EJS_player = "#game";
-      window.EJS_gameName = "Super Mario Bros";
-      window.EJS_gameUrl = "roms/SuperMarioBros.nes";
-      window.EJS_core = "nes";
-      window.EJS_pathtodata = "../../emulatorjs/data/";
-      window.EJS_startOnLoaded = true;
+    // inicia automático quando abrir a página
+    window.EJS_player = "#game";
+    window.EJS_gameName = "Super Mario Bros";
+    window.EJS_gameUrl = "roms/SuperMarioBros.nes";
+    window.EJS_core = "nes";
+    window.EJS_pathtodata = "../../emulatorjs/data/";
+    window.EJS_startOnLoaded = true;
 
-      const script = document.createElement("script");
-      script.src = "../../emulatorjs/data/loader.js";
-      document.body.appendChild(script);
-    }
+    const script = document.createElement("script");
+    script.src = "../../emulatorjs/data/loader.js";
+    document.body.appendChild(script);
   </script>
 </body>
 </html>
