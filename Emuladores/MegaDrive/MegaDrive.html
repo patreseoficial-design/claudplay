@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MegaDrive - ClaudPlay</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mega Drive - ClaudPlay</title>
 </head>
 <body>
   <div id="game"></div>
 
   <script>
-    // Caminho da ROM
-    const url = "./roms/aladdin.bin";
+    // Caminho da ROM (ajustado para abrir via index)
+    const url = "./Emuladores/MegaDrive/roms/aladdin.bin";
 
     window.EJS_player = "#game";
     window.EJS_gameName = "Aladdin";
     window.EJS_gameUrl = url;
-    window.EJS_core = "genesis";  // CORRETO para MegaDrive
+
+    // Core do Mega Drive (PICODRIVE)
+    window.EJS_core = "picodrive";
+
     window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
     window.EJS_startOnLoaded = true;
 
