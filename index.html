@@ -16,7 +16,7 @@
   <main class="container">
 
     <!-- BANNER PRINCIPAL -->
-    <a href="javascript:void(0)" class="banner" id="bannerPrincipal" onclick="abrirJogo('Emuladores/SuperNintendo/snes.html', true)">
+    <a href="javascript:void(0)" class="banner" id="bannerPrincipal" data-link="Emuladores/SuperNintendo/snes.html" onclick="abrirJogo(bannerPrincipal.dataset.link, true)">
       <div class="banner-img">
         <img src="Banner/mario_banner.jpeg" alt="Super Mario World" id="bannerImg" />
       </div>
@@ -98,6 +98,7 @@
     const bannerImg = document.getElementById("bannerImg");
     const bannerTitle = document.getElementById("bannerTitle");
     const bannerDesc = document.getElementById("bannerDesc");
+    const bannerPrincipal = document.getElementById("bannerPrincipal");
 
     const itens = document.querySelectorAll(".item");
     let indexAtual = 0;
@@ -108,6 +109,9 @@
       bannerImg.src = item.dataset.img;
       bannerTitle.innerText = item.dataset.title;
       bannerDesc.innerText = item.dataset.desc;
+
+      // 🚀 IMPORTANTE: atualiza o link do banner
+      bannerPrincipal.dataset.link = item.dataset.link;
     }
 
     itens.forEach((item, index) => {
