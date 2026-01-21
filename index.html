@@ -16,7 +16,7 @@
   <main class="container">
 
     <!-- BANNER PRINCIPAL -->
-    <a href="javascript:void(0)" class="banner" id="bannerPrincipal" data-link="Emuladores/SuperNintendo/snes.html" onclick="abrirJogo(bannerPrincipal.dataset.link, true)">
+    <a href="javascript:void(0)" class="banner" id="bannerPrincipal">
       <div class="banner-img">
         <img src="Banner/mario_banner.jpeg" alt="Super Mario World" id="bannerImg" />
       </div>
@@ -54,6 +54,16 @@
            data-link="Emuladores/MegaDrive/megadrive.html"
            onclick="abrirJogo(this.dataset.link, false)">
           <img src="Banner/sonic_banner.jpeg" alt="Sonic" />
+        </a>
+
+        <!-- ✅ AQUI ESTÁ O ALADDIN -->
+        <a class="item" href="javascript:void(0)"
+           data-title="Aladdin"
+           data-desc="Jogue Aladdin direto no navegador."
+           data-img="Banner/aladdin.jpeg"
+           data-link="Emuladores/MegaDrive/megadrive.html"
+           onclick="abrirJogo(this.dataset.link, false)">
+          <img src="Banner/aladdin.jpeg" alt="Aladdin" />
         </a>
 
         <a class="item" href="javascript:void(0)"
@@ -109,9 +119,6 @@
       bannerImg.src = item.dataset.img;
       bannerTitle.innerText = item.dataset.title;
       bannerDesc.innerText = item.dataset.desc;
-
-      // 🚀 IMPORTANTE: atualiza o link do banner
-      bannerPrincipal.dataset.link = item.dataset.link;
     }
 
     itens.forEach((item, index) => {
@@ -150,6 +157,12 @@
     carrossel.addEventListener("mouseleave", iniciarAutoplay);
 
     iniciarAutoplay(); // inicia o autoplay
+
+    // CLIQUE NO BANNER PRINCIPAL (abre o jogo que está no banner)
+    bannerPrincipal.addEventListener("click", () => {
+      const item = itens[indexAtual];
+      abrirJogo(item.dataset.link, item.dataset.link.includes("SuperNintendo"));
+    });
 
     // FUNÇÃO PARA ABRIR O JOGO
     function abrirJogo(url, comAnuncio){
