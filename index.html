@@ -108,7 +108,7 @@
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
 
-  <!-- BOTÃO FECHAR À ESQUERDA -->
+  <!-- ✅ BOTÃO FECHAR À ESQUERDA -->
   <button onclick="fecharJogo()"
     style="
       position:absolute;
@@ -130,16 +130,10 @@
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
-<!-- LOADING (ANIMAÇÃO PERSONALIZADA) -->
+<!-- LOADING -->
 <div id="loadingOverlay"
-  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; display:flex; justify-content:center; align-items:center;">
-  
-  <!-- Loading personalizado -->
-  <div style="text-align:center;">
-    <div class="loader"></div>
-    <div style="margin-top:10px; font-size:16px;">Carregando jogo...</div>
-  </div>
-
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
+  Carregando jogo...
 </div>
 
 <script>
@@ -177,7 +171,6 @@ document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
-/* LOADING FIXO (evita travar na tela preta) */
 function abrirJogo(url){
   const loading = document.getElementById("loadingOverlay");
   const area = document.getElementById("jogoArea");
@@ -187,9 +180,9 @@ function abrirJogo(url){
   area.style.display = "block";
   iframe.src = url;
 
-  setTimeout(() => {
+  iframe.onload = () => {
     loading.style.display = "none";
-  }, 1500);
+  };
 }
 
 function fecharJogo(){
