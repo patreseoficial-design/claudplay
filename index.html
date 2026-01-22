@@ -45,7 +45,7 @@
          data-desc="Clássico absoluto do Super Nintendo."
          data-img="Banner/bannersupermarioworld.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html"
-         onclick="abrirJogo(this.dataset.link, true)">
+         data-anuncio="true">
         <img src="Banner/bannersupermarioworld.jpeg">
       </a>
 
@@ -54,7 +54,7 @@
          data-desc="Yoshi’s Island."
          data-img="Banner/bannersupermarioworld2.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html"
-         onclick="abrirJogo(this.dataset.link, true)">
+         data-anuncio="true">
         <img src="Banner/bannersupermarioworld2.jpeg">
       </a>
 
@@ -63,7 +63,7 @@
          data-desc="Um dos melhores jogos do SNES."
          data-img="Banner/bannerdonkeykong.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html"
-         onclick="abrirJogo(this.dataset.link, true)">
+         data-anuncio="true">
         <img src="Banner/bannerdonkeykong.jpeg">
       </a>
 
@@ -72,7 +72,7 @@
          data-desc="Corridas clássicas do SNES."
          data-img="Banner/bannersupermariokart.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html"
-         onclick="abrirJogo(this.dataset.link, true)">
+         data-anuncio="true">
         <img src="Banner/bannersupermariokart.jpeg">
       </a>
 
@@ -81,7 +81,7 @@
          data-desc="Todos os Marios clássicos."
          data-img="Banner/bannersupermarioall-star.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html"
-         onclick="abrirJogo(this.dataset.link, true)">
+         data-anuncio="true">
         <img src="Banner/bannersupermarioall-star.jpeg">
       </a>
 
@@ -91,7 +91,7 @@
          data-desc="Clássico do NES."
          data-img="Banner/bannerbomberman.jpeg"
          data-link="Emuladores/Nes/nes.html"
-         onclick="abrirJogo(this.dataset.link, false)">
+         data-anuncio="false">
         <img src="Banner/bannerbomberman.jpeg">
       </a>
 
@@ -100,7 +100,7 @@
          data-desc="Ação intensa no NES."
          data-img="Banner/bannercontra.jpeg"
          data-link="Emuladores/Nes/nes.html"
-         onclick="abrirJogo(this.dataset.link, false)">
+         data-anuncio="false">
         <img src="Banner/bannercontra.jpeg">
       </a>
 
@@ -120,8 +120,8 @@
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
-<!-- LOADING -->
-<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:#000; z-index:1000; display:flex; justify-content:center; align-items:center; color:#fff;">
+<!-- LOADING (CORRIGIDO) -->
+<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:#000; z-index:1000; justify-content:center; align-items:center; color:#fff;">
   Carregando jogo...
 </div>
 
@@ -130,14 +130,20 @@ const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
+const bannerPrincipal = document.getElementById("bannerPrincipal");
 let indexAtual = 0;
 
 function mudarBanner(i){
+  if (!itens[i]) return;
+
   bannerImg.src = itens[i].dataset.img;
   bannerTitle.innerText = itens[i].dataset.title;
   bannerDesc.innerText = itens[i].dataset.desc;
 }
 
+mudarBanner(0);
+
+// setas
 document.getElementById("prev").onclick = () => {
   indexAtual = (indexAtual - 1 + itens.length) % itens.length;
   mudarBanner(indexAtual);
@@ -148,12 +154,32 @@ document.getElementById("next").onclick = () => {
   mudarBanner(indexAtual);
 };
 
+// clique nos cards
+itens.forEach((item, index) => {
+  item.addEventListener("click", () => {
+    indexAtual = index;
+    mudarBanner(index);
+    abrirJogo(item.dataset.link, item.dataset.anuncio === "true");
+  });
+});
+
+// clique no banner principal
+bannerPrincipal.addEventListener("click", () => {
+  const item = itens[indexAtual];
+  abrirJogo(item.dataset.link, item.dataset.anuncio === "true");
+});
+
 function abrirJogo(url, anuncio){
-  document.getElementById("loadingOverlay").style.display = "flex";
+  const overlay = document.getElementById("loadingOverlay");
+  const jogo = document.getElementById("jogoArea");
+  const iframe = document.getElementById("iframeJogo");
+
+  overlay.style.display = "flex";
+
   setTimeout(() => {
-    document.getElementById("jogoArea").style.display = "block";
-    document.getElementById("iframeJogo").src = url;
-    document.getElementById("loadingOverlay").style.display = "none";
+    jogo.style.display = "block";
+    iframe.src = url;
+    overlay.style.display = "none";
   }, anuncio ? 4000 : 800);
 }
 
