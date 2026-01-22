@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Mega Drive - ClaudPlay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="margin:0; background:#000;">
 
 <div id="game" style="width:100vw; height:100vh;"></div>
 
 <script>
-  // Lê a ROM da URL
   const params = new URLSearchParams(window.location.search);
   const rom = params.get("rom");
 
@@ -19,17 +18,11 @@
     throw new Error("ROM não definida");
   }
 
-  // Configurações do EmulatorJS
   window.EJS_player = "#game";
   window.EJS_gameName = rom.replace(".zip", "");
   window.EJS_gameUrl = "./roms/" + rom;
-
-  // **Core do Mega Drive**
   window.EJS_core = "genesis_plus_gx";
-
-  // Path do CDN (IMPORTANTE)
   window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-
   window.EJS_startOnLoaded = true;
 
   const script = document.createElement("script");
