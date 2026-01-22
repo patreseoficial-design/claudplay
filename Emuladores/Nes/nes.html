@@ -2,8 +2,8 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NES - ClaudPlay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="margin:0; background:#000;">
 <div id="game" style="width:100vw; height:100vh;"></div>
@@ -20,14 +20,14 @@
   window.EJS_player = "#game";
   window.EJS_gameName = rom.replace(".nes", "");
   window.EJS_gameUrl = "./roms/" + rom;
-  window.EJS_core = "core-fceumm";
-  window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/Data/";
+  window.EJS_core = "fceumm";
+
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
   window.EJS_startOnLoaded = true;
 
   const script = document.createElement("script");
-  script.src = "../../emulatorjs/EmulatorJS/Data/loader.js";
+  script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
   document.body.appendChild(script);
 </script>
-
 </body>
 </html>
