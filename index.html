@@ -23,7 +23,7 @@
     </div>
     <div class="banner-info">
       <h1 id="bannerTitle">Super Mario World</h1>
-      <p id="bannerDesc">Jogue direto no navegador como se fosse um jogo em nuvem.</p>
+      <p id="bannerDesc">Jogue direto no navegador</p>
     </div>
   </a>
 
@@ -37,31 +37,64 @@
       </div>
     </div>
 
-    <div class="carrossel-items">
+    <div class="carrossel-items" id="carrossel">
 
       <!-- SNES -->
       <a class="item"
          data-title="Super Mario World"
-         data-desc="Clássico absoluto do Super Nintendo."
+         data-desc="Clássico absoluto do Super Nintendo"
          data-img="Banner/mario_banner.jpeg"
-         data-rom="Super Mario World.sfc">
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
         <img src="Banner/mario_banner.jpeg">
       </a>
 
       <a class="item"
          data-title="Super Mario World 2"
-         data-desc="Yoshi’s Island."
+         data-desc="Yoshi’s Island"
          data-img="Banner/bannersupermariowolrd.jpeg"
-         data-rom="Super Mario World 2.sfc">
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc">
         <img src="Banner/bannersupermariowolrd.jpeg">
       </a>
 
       <a class="item"
          data-title="Donkey Kong Country"
-         data-desc="Um dos melhores jogos do SNES."
+         data-desc="Clássico do SNES"
          data-img="Banner/bannerdonkeykong.jpeg"
-         data-rom="Donkey Kong Country.sfc">
+         data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc">
         <img src="Banner/bannerdonkeykong.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Super Mario Kart"
+         data-desc="Corridas clássicas"
+         data-img="Banner/bannersupermariokart.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc">
+        <img src="Banner/bannersupermariokart.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Super Mario All-Stars"
+         data-desc="Todos os Marios clássicos"
+         data-img="Banner/bannersupermarioall-star.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioAll-Stars.sfc">
+        <img src="Banner/bannersupermarioall-star.jpeg">
+      </a>
+
+      <!-- NES -->
+      <a class="item"
+         data-title="Bomberman"
+         data-desc="Clássico do NES"
+         data-img="Banner/bannerbomberman.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
+        <img src="Banner/bannerbomberman.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Contra"
+         data-desc="Ação intensa"
+         data-img="Banner/bannercontra.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Contra.nes">
+        <img src="Banner/bannercontra.jpeg">
       </a>
 
     </div>
@@ -73,44 +106,33 @@
 </footer>
 
 <!-- ÁREA DO JOGO -->
-<div id="jogoArea"
-  style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
+<div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
 
-  <!-- BOTÃO FECHAR (CORRIGIDO) -->
+  <!-- BOTÃO FECHAR (AJUSTADO) -->
   <button onclick="fecharJogo()"
     style="
-      position:fixed;
+      position:absolute;
       bottom:20px;
-      right:20px;
+      left:20px;
       z-index:1000;
-      padding:10px 14px;
-      background:#111;
-      color:#fff;
-      border:1px solid #444;
-      border-radius:8px;
+      padding:10px 16px;
       font-size:14px;
-      opacity:0.85;
+      background:#6b00ff;
+      color:#fff;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      opacity:0.9;
     ">
-    FECHAR
+    ⬅ Voltar
   </button>
 
-  <iframe id="iframeJogo"
-    style="width:100%; height:100%; border:none;"></iframe>
+  <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
 <!-- LOADING -->
 <div id="loadingOverlay"
-  style="
-    display:none;
-    position:fixed;
-    inset:0;
-    background:#000;
-    z-index:1001;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  ">
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; display:flex; justify-content:center; align-items:center;">
   Carregando jogo...
 </div>
 
@@ -119,8 +141,6 @@ const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
-const bannerPrincipal = document.getElementById("bannerPrincipal");
-
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -128,8 +148,6 @@ function mudarBanner(i){
   bannerTitle.innerText = itens[i].dataset.title;
   bannerDesc.innerText = itens[i].dataset.desc;
 }
-
-mudarBanner(0);
 
 document.getElementById("prev").onclick = () => {
   indexAtual = (indexAtual - 1 + itens.length) % itens.length;
@@ -141,25 +159,30 @@ document.getElementById("next").onclick = () => {
   mudarBanner(indexAtual);
 };
 
-bannerPrincipal.onclick = () => {
-  abrirJogo(itens[indexAtual);
-};
-
-itens.forEach(item => {
-  item.onclick = () => abrirJogo(item);
+itens.forEach((item, i) => {
+  item.addEventListener("click", () => {
+    indexAtual = i;
+    mudarBanner(i);
+    abrirJogo(item.dataset.link);
+  });
 });
 
-function abrirJogo(item){
-  const rom = item.dataset.rom;
+document.getElementById("bannerPrincipal").onclick = () => {
+  abrirJogo(itens[indexAtual].dataset.link);
+};
 
-  document.getElementById("loadingOverlay").style.display = "flex";
+function abrirJogo(url){
+  const loading = document.getElementById("loadingOverlay");
+  const area = document.getElementById("jogoArea");
+  const iframe = document.getElementById("iframeJogo");
 
-  setTimeout(() => {
-    document.getElementById("jogoArea").style.display = "block";
-    document.getElementById("iframeJogo").src =
-      "Emuladores/SuperNintendo/snes.html?rom=" + encodeURIComponent(rom);
-    document.getElementById("loadingOverlay").style.display = "none";
-  }, 1200);
+  loading.style.display = "flex";
+  area.style.display = "block";
+  iframe.src = url;
+
+  iframe.onload = () => {
+    loading.style.display = "none";
+  };
 }
 
 function fecharJogo(){
