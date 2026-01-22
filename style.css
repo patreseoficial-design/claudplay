@@ -199,3 +199,63 @@ a {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+/* =========================
+RESPONSIVO MOBILE
+========================= */
+@media (max-width: 600px){
+
+  /* Banner principal */
+  .banner {
+    flex-direction: column;
+  }
+
+  .banner-img img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .banner-info {
+    padding: 15px;
+  }
+
+  .banner-info h1{
+    font-size: 18px !important;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .banner-info p{
+    font-size: 13px !important;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  /* Carrossel */
+  .carrossel-items{
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .item{
+    width: 160px;
+    height: 100px;
+  }
+
+  /* Botões do carrossel */
+  .carrossel-arrows button{
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+
+  /* Topo */
+  .topo{
+    padding: 12px 10px;
+  }
+
+  /* Container */
+  .container{
+    padding: 15px 10px;
+  }
+}
