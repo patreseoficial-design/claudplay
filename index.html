@@ -41,59 +41,59 @@
 
       <!-- SNES -->
       <a class="item"
-        data-title="Super Mario World"
-        data-desc="Clássico absoluto do Super Nintendo"
-        data-img="Banner/mario_banner.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
+         data-title="Super Mario World"
+         data-desc="Clássico absoluto do Super Nintendo"
+         data-img="Banner/mario_banner.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
         <img src="Banner/mario_banner.jpeg">
       </a>
 
       <a class="item"
-        data-title="Super Mario World 2"
-        data-desc="Yoshi’s Island"
-        data-img="Banner/bannersupermariowolrd.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc">
+         data-title="Super Mario World 2"
+         data-desc="Yoshi’s Island"
+         data-img="Banner/bannersupermariowolrd.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc">
         <img src="Banner/bannersupermariowolrd.jpeg">
       </a>
 
       <a class="item"
-        data-title="Donkey Kong Country"
-        data-desc="Clássico do SNES"
-        data-img="Banner/bannerdonkeykong.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc">
+         data-title="Donkey Kong Country"
+         data-desc="Clássico do SNES"
+         data-img="Banner/bannerdonkeykong.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc">
         <img src="Banner/bannerdonkeykong.jpeg">
       </a>
 
       <a class="item"
-        data-title="Super Mario Kart"
-        data-desc="Corridas clássicas"
-        data-img="Banner/bannersupermariokart.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc">
+         data-title="Super Mario Kart"
+         data-desc="Corridas clássicas"
+         data-img="Banner/bannersupermariokart.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc">
         <img src="Banner/bannersupermariokart.jpeg">
       </a>
 
       <a class="item"
-        data-title="Super Mario All-Stars"
-        data-desc="Todos os Marios clássicos"
-        data-img="Banner/bannersupermarioall-star.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioAll-Stars.sfc">
+         data-title="Super Mario All-Stars"
+         data-desc="Todos os Marios clássicos"
+         data-img="Banner/bannersupermarioall-star.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioAll-Stars.sfc">
         <img src="Banner/bannersupermarioall-star.jpeg">
       </a>
 
       <!-- NES -->
       <a class="item"
-        data-title="Bomberman"
-        data-desc="Clássico do NES"
-        data-img="Banner/bannerbomberman.jpeg"
-        data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
+         data-title="Bomberman"
+         data-desc="Clássico do NES"
+         data-img="Banner/bannerbomberman.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
         <img src="Banner/bannerbomberman.jpeg">
       </a>
 
       <a class="item"
-        data-title="Contra"
-        data-desc="Ação intensa"
-        data-img="Banner/bannercontra.jpeg"
-        data-link="Emuladores/Nes/nes.html?rom=Contra.nes">
+         data-title="Contra"
+         data-desc="Ação intensa"
+         data-img="Banner/bannercontra.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Contra.nes">
         <img src="Banner/bannercontra.jpeg">
       </a>
 
@@ -107,32 +107,16 @@
 
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
-
-  <!-- BOTÃO VOLTAR -->
   <button onclick="fecharJogo()"
-    style="
-      position:absolute;
-      bottom:20px;
-      left:20px;
-      z-index:1000;
-      padding:10px 16px;
-      font-size:14px;
-      background:#6b00ff;
-      color:#fff;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      opacity:0.9;
-    ">
-    ⬅ Voltar
+    style="position:absolute; top:10px; right:10px; z-index:1000;">
+    FECHAR
   </button>
-
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
 <!-- LOADING -->
 <div id="loadingOverlay"
-  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; display:flex; justify-content:center; align-items:center;">
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
   Carregando jogo...
 </div>
 
@@ -171,21 +155,18 @@ document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
-/* ✅ FUNÇÃO ESTÁVEL PARA EMULATORJS */
 function abrirJogo(url){
   const loading = document.getElementById("loadingOverlay");
   const area = document.getElementById("jogoArea");
   const iframe = document.getElementById("iframeJogo");
 
-  area.style.display = "block";
   loading.style.display = "flex";
+  area.style.display = "block";
+  iframe.src = url;
 
-  iframe.src = "";
-
-  setTimeout(() => {
-    iframe.src = url;
+  iframe.onload = () => {
     loading.style.display = "none";
-  }, 300);
+  };
 }
 
 function fecharJogo(){
