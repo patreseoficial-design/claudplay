@@ -107,10 +107,26 @@
 
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
+
+  <!-- ✅ BOTÃO FECHAR À ESQUERDA -->
   <button onclick="fecharJogo()"
-    style="position:absolute; top:10px; right:10px; z-index:1000;">
-    FECHAR
+    style="
+      position:absolute;
+      top:10px;
+      left:10px;
+      z-index:1000;
+      padding:8px 14px;
+      font-size:14px;
+      background:#6b00ff;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      opacity:0.9;
+    ">
+    ⬅ Fechar
   </button>
+
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
