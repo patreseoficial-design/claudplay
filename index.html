@@ -44,7 +44,7 @@
          data-title="Super Mario World"
          data-desc="Clássico absoluto do Super Nintendo."
          data-img="Banner/mario_banner.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc"
          onclick="abrirJogo(this.dataset.link, true)">
         <img src="Banner/mario_banner.jpeg">
       </a>
@@ -53,7 +53,7 @@
          data-title="Super Mario World 2"
          data-desc="Yoshi’s Island."
          data-img="Banner/bannersupermariowolrd.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc"
          onclick="abrirJogo(this.dataset.link, true)">
         <img src="Banner/bannersupermariowolrd.jpeg">
       </a>
@@ -62,7 +62,7 @@
          data-title="Donkey Kong Country"
          data-desc="Um dos melhores jogos do SNES."
          data-img="Banner/bannerdonkeykong.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc"
          onclick="abrirJogo(this.dataset.link, true)">
         <img src="Banner/bannerdonkeykong.jpeg">
       </a>
@@ -71,7 +71,7 @@
          data-title="Super Mario Kart"
          data-desc="Corridas clássicas do SNES."
          data-img="Banner/bannersupermariokart.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc"
          onclick="abrirJogo(this.dataset.link, true)">
         <img src="Banner/bannersupermariokart.jpeg">
       </a>
@@ -80,7 +80,7 @@
          data-title="Super Mario All-Stars"
          data-desc="Todos os Marios clássicos."
          data-img="Banner/bannersupermarioall-star.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioAll-Stars.sfc"
          onclick="abrirJogo(this.dataset.link, true)">
         <img src="Banner/bannersupermarioall-star.jpeg">
       </a>
@@ -90,7 +90,7 @@
          data-title="Bomberman"
          data-desc="Clássico do NES."
          data-img="Banner/bannerbomberman.jpeg"
-         data-link="Emuladores/Nes/nes.html"
+         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes"
          onclick="abrirJogo(this.dataset.link, false)">
         <img src="Banner/bannerbomberman.jpeg">
       </a>
@@ -99,7 +99,7 @@
          data-title="Contra"
          data-desc="Ação intensa no NES."
          data-img="Banner/bannercontra.jpeg"
-         data-link="Emuladores/Nes/nes.html"
+         data-link="Emuladores/Nes/nes.html?rom=Contra.nes"
          onclick="abrirJogo(this.dataset.link, false)">
         <img src="Banner/bannercontra.jpeg">
       </a>
@@ -131,6 +131,7 @@ const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
 const bannerPrincipal = document.getElementById("bannerPrincipal");
+
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -154,12 +155,17 @@ document.getElementById("next").onclick = () => {
 };
 
 function abrirJogo(url, anuncio){
-  document.getElementById("loadingOverlay").style.display = "flex";
+  const overlay = document.getElementById("loadingOverlay");
+  const area = document.getElementById("jogoArea");
+  const iframe = document.getElementById("iframeJogo");
+
+  overlay.style.display = "flex";
+  area.style.display = "block";
+  iframe.src = url;
+
   setTimeout(() => {
-    document.getElementById("jogoArea").style.display = "block";
-    document.getElementById("iframeJogo").src = url;
-    document.getElementById("loadingOverlay").style.display = "none";
-  }, anuncio ? 3000 : 800);
+    overlay.style.display = "none";
+  }, anuncio ? 4000 : 2000);
 }
 
 function fecharJogo(){
