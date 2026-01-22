@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Boy - ClaudPlay</title>
 </head>
 <body style="margin:0; background:#000;">
-
 <div id="game" style="width:100vw; height:100vh;"></div>
 
 <script>
@@ -21,12 +20,12 @@
   window.EJS_player = "#game";
   window.EJS_gameName = rom.replace(".gb", "");
   window.EJS_gameUrl = "./roms/" + rom;
-  window.EJS_core = "core-gambatte";  // CORRETO
-  window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/"; // se o data está aí mesmo
+  window.EJS_core = "core-gambatte";
+  window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/Data/";
   window.EJS_startOnLoaded = true;
 
   const script = document.createElement("script");
-  script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
+  script.src = "../../emulatorjs/EmulatorJS/Data/loader.js";
   document.body.appendChild(script);
 </script>
 
