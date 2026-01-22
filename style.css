@@ -1,164 +1,69 @@
-/* ===== Estilo base ===== */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: #fff;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===== Cabeçalho ===== */
-.topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: #101010;
-  border-bottom: 1px solid #222;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.beta {
-  background: #6b00ff;
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-/* ===== Container ===== */
-.container {
-  padding: 20px 40px;
-}
-
-/* ===== Banner ===== */
-.banner {
-  display: flex;
-  align-items: center;
-  background: #1a1a1a;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-bottom: 30px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.banner:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-}
-
-.banner-img img {
-  width: 260px;
-  height: 160px;
-  object-fit: cover;
-}
-
-.banner-info {
-  padding: 20px;
-}
-
-.banner-info h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.banner-info p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #cfcfcf;
-}
-
-/* ===== Carrossel ===== */
-.carrossel {
-  margin-top: 20px;
-}
-
-.carrossel-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.carrossel-title h2 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.carrossel-arrows button {
-  background: #2b2b2b;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 8px 12px;
-  font-size: 18px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.carrossel-arrows button:hover {
-  background: #3a3a3a;
-}
-
-.carrossel-items {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
-
-.carrossel-items::-webkit-scrollbar {
-  height: 8px;
-}
-
-.carrossel-items::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 10px;
-}
-
-.item img {
-  width: 220px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 15px;
-  transition: transform 0.3s ease;
-}
-
-.item:hover img {
-  transform: scale(1.05);
-}
-
-/* ===== Rodapé ===== */
-.rodape {
-  padding: 20px 40px;
-  text-align: center;
-  border-top: 1px solid #222;
-  background: #0a0a0a;
-}
-
-/* ===== Overlay de carregando ===== */
 #loadingOverlay {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
+  inset: 0;
+  background: #000;
   z-index: 1000;
+  color: #fff;
+  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
-#loadingOverlay div {
-  text-align: center;
+.loadingBox {
+  width: 320px;
+  height: 120px;
+  border: 2px solid #6b00ff;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 0 20px #6b00ff;
+}
+
+.loadingTitle {
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.loadingBar {
+  width: 90%;
+  height: 12px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #6b00ff;
+}
+
+.loadingFill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6b00ff, #ff00d4);
+  animation: fill 2s linear infinite;
+}
+
+@keyframes fill {
+  0% { width: 0; }
+  50% { width: 100%; }
+  100% { width: 0; }
+}
+
+.loadingDots span {
+  font-size: 20px;
+  opacity: 0;
+  animation: dots 1.2s infinite;
+}
+
+.loadingDots span:nth-child(1) { animation-delay: 0s; }
+.loadingDots span:nth-child(2) { animation-delay: 0.2s; }
+.loadingDots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dots {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
 }
