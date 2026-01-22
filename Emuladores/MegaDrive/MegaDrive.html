@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mega Drive - ClaudPlay</title>
 </head>
 <body style="margin:0; background:#000;">
@@ -17,12 +18,9 @@
   }
 
   window.EJS_player = "#game";
-  window.EJS_gameName = rom.replace(".bin", "");
-  window.EJS_gameUrl = "./roms/" + rom;
-
-  // TROQUE AQUI o core:
-  window.EJS_core = "genesis_plus_gx"; // ou "picodrive"
-
+  window.EJS_gameName = rom.split("/").pop();
+  window.EJS_gameUrl = "./" + rom;
+  window.EJS_core = "picodrive";
   window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
   window.EJS_startOnLoaded = true;
 
