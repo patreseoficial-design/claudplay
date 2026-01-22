@@ -7,18 +7,20 @@
 </head>
 <body style="margin:0; background:#000;">
 
-<div id="game"></div>
+<div id="game" style="width:100vw; height:100vh;"></div>
 
 <script>
+  // LÊ A ROM DA URL
   const params = new URLSearchParams(window.location.search);
   const rom = params.get("rom");
 
   if (!rom) {
-    alert("Nenhuma ROM definida");
+    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Nenhuma ROM definida</h2>";
+    throw new Error("ROM não definida");
   }
 
   window.EJS_player = "#game";
-  window.EJS_gameName = rom;
+  window.EJS_gameName = rom.replace(".sfc", "");
   window.EJS_gameUrl = "./roms/" + rom;
   window.EJS_core = "snes9x";
   window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
