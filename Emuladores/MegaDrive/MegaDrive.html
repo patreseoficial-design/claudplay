@@ -4,15 +4,25 @@
   <meta charset="UTF-8">
   <title>Mega Drive - ClaudPlay</title>
 </head>
-<body>
-
-<div id="game"></div>
+<body style="margin:0; background:#000;">
+<div id="game" style="width:100vw; height:100vh;"></div>
 
 <script>
+  const params = new URLSearchParams(window.location.search);
+  const rom = params.get("rom");
+
+  if (!rom) {
+    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Nenhuma ROM definida</h2>";
+    throw new Error("ROM não definida");
+  }
+
   window.EJS_player = "#game";
-  window.EJS_gameName = "Aladdin";
-  window.EJS_gameUrl = "./roms/aladdin.bin";
-  window.EJS_core = "genesis_plus_gx";
+  window.EJS_gameName = rom.replace(".bin", "");
+  window.EJS_gameUrl = "./roms/" + rom;
+
+  // TROQUE AQUI o core:
+  window.EJS_core = "genesis_plus_gx"; // ou "picodrive"
+
   window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
   window.EJS_startOnLoaded = true;
 
@@ -20,6 +30,5 @@
   script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
   document.body.appendChild(script);
 </script>
-
 </body>
 </html>
