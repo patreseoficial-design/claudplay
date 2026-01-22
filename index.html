@@ -131,9 +131,16 @@
 </div>
 
 <!-- LOADING -->
-<div id="loadingOverlay"
-  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
-  Carregando jogo...
+<div id="loadingOverlay">
+  <div class="loadingBox">
+    <div class="loadingTitle">Carregando jogo...</div>
+    <div class="loadingBar">
+      <div class="loadingFill"></div>
+    </div>
+    <div class="loadingDots">
+      <span>.</span><span>.</span><span>.</span>
+    </div>
+  </div>
 </div>
 
 <script>
