@@ -108,7 +108,7 @@
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
 
-  <!-- BOTÃO VOLTAR (NÃO ATRAPALHA O EMULADOR) -->
+  <!-- BOTÃO VOLTAR -->
   <button onclick="fecharJogo()"
     style="
       position:absolute;
@@ -171,19 +171,21 @@ document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
-/* ✅ SOLUÇÃO DEFINITIVA */
+/* ✅ FUNÇÃO ESTÁVEL PARA EMULATORJS */
 function abrirJogo(url){
   const loading = document.getElementById("loadingOverlay");
   const area = document.getElementById("jogoArea");
   const iframe = document.getElementById("iframeJogo");
 
-  loading.style.display = "flex";
   area.style.display = "block";
-  iframe.src = url;
+  loading.style.display = "flex";
+
+  iframe.src = "";
 
   setTimeout(() => {
+    iframe.src = url;
     loading.style.display = "none";
-  }, 1500);
+  }, 300);
 }
 
 function fecharJogo(){
