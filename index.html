@@ -131,16 +131,9 @@
 </div>
 
 <!-- LOADING -->
-<div id="loadingOverlay">
-  <div class="loadingBox">
-    <div class="loadingTitle">Carregando jogo...</div>
-    <div class="loadingBar">
-      <div class="loadingFill"></div>
-    </div>
-    <div class="loadingDots">
-      <span>.</span><span>.</span><span>.</span>
-    </div>
-  </div>
+<div id="loadingOverlay"
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
+  Carregando jogo...
 </div>
 
 <script>
@@ -178,6 +171,7 @@ document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
+/* ✅ SOLUÇÃO DEFINITIVA: LOADING COM TEMPO FIXO */
 function abrirJogo(url){
   const loading = document.getElementById("loadingOverlay");
   const area = document.getElementById("jogoArea");
@@ -187,9 +181,10 @@ function abrirJogo(url){
   area.style.display = "block";
   iframe.src = url;
 
-  iframe.onload = () => {
+  // Esconde o loading após 1,5s (pode ajustar)
+  setTimeout(() => {
     loading.style.display = "none";
-  };
+  }, 1500);
 }
 
 function fecharJogo(){
