@@ -2,10 +2,11 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <title>Super Nintendo - ClaudPlay</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SNES - ClaudPlay</title>
 </head>
 <body style="margin:0; background:#000;">
+
 <div id="game" style="width:100vw; height:100vh;"></div>
 
 <script>
@@ -21,11 +22,11 @@
   window.EJS_gameName = rom.replace(".sfc", "");
   window.EJS_gameUrl = "./roms/" + rom;
   window.EJS_core = "core-snes9x";
-  window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/Data/";
+  window.EJS_pathtodata = "../Data/";
   window.EJS_startOnLoaded = true;
 
   const script = document.createElement("script");
-  script.src = "../../emulatorjs/EmulatorJS/Data/loader.js";
+  script.src = "../Data/loader.js";
   document.body.appendChild(script);
 </script>
 
