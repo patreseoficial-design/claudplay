@@ -21,12 +21,12 @@
   window.EJS_player = "#game";
   window.EJS_gameName = rom.replace(".zip", "");
   window.EJS_gameUrl = "./roms/" + rom;
-  window.EJS_core = "core-picodrive";   // MELHOR CORE PARA MEGA DRIVE
-  window.EJS_pathtodata = "./data/";     // <-- **IMPORTANTE**
+  window.EJS_core = "genesis_plus_gx";
+  window.EJS_pathtodata = "../Data/";
   window.EJS_startOnLoaded = true;
 
   const script = document.createElement("script");
-  script.src = "./data/loader.js";       // <-- **IMPORTANTE**
+  script.src = "../Data/loader.js";
   document.body.appendChild(script);
 </script>
 
