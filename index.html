@@ -108,7 +108,7 @@
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
 
-  <!-- ✅ BOTÃO FECHAR À ESQUERDA -->
+  <!-- BOTÃO FECHAR À ESQUERDA -->
   <button onclick="fecharJogo()"
     style="
       position:absolute;
@@ -130,10 +130,16 @@
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
-<!-- LOADING -->
+<!-- LOADING (ANIMAÇÃO PERSONALIZADA) -->
 <div id="loadingOverlay"
-  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
-  Carregando jogo...
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; display:flex; justify-content:center; align-items:center;">
+  
+  <!-- Loading personalizado -->
+  <div style="text-align:center;">
+    <div class="loader"></div>
+    <div style="margin-top:10px; font-size:16px;">Carregando jogo...</div>
+  </div>
+
 </div>
 
 <script>
@@ -171,7 +177,7 @@ document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
-/* ✅ SOLUÇÃO DEFINITIVA: LOADING COM TEMPO FIXO */
+/* LOADING FIXO (evita travar na tela preta) */
 function abrirJogo(url){
   const loading = document.getElementById("loadingOverlay");
   const area = document.getElementById("jogoArea");
@@ -181,7 +187,6 @@ function abrirJogo(url){
   area.style.display = "block";
   iframe.src = url;
 
-  // Esconde o loading após 1,5s (pode ajustar)
   setTimeout(() => {
     loading.style.display = "none";
   }, 1500);
