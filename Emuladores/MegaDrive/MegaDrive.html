@@ -3,30 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mega Drive - ClaudPlay</title>
+  <title>ClaudPlay - Mega Drive</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    #gameArea {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    #closeBtn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      padding: 8px 14px;
+      font-size: 14px;
+      background: #6b00ff;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    #loadingOverlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      color: #fff;
+      z-index: 999;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<body style="margin:0; background:#000;">
-<div id="game" style="width:100vw; height:100vh;"></div>
+
+<body>
+
+<div id="loadingOverlay">Carregando jogo...</div>
+
+<div id="gameArea">
+  <button id="closeBtn" onclick="fecharJogo()">⬅ Fechar</button>
+
+  <!-- Aqui o emulador vai carregar -->
+  <div id="game"></div>
+</div>
+
+<!-- CONFIG DO EMULATORJS -->
+<script>
+  window.EJS_player = "#game";
+  window.EJS_gameUrl = "./roms/ALADDIN.ZIP";   // ROM dentro da pasta roms
+  window.EJS_core = "segaMD";                 // Core do Mega Drive
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  window.EJS_startOnLoaded = true;
+</script>
+
+<!-- LOADER DO EMULATORJS (CDN) -->
+<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const rom = params.get("rom");
-
-  if (!rom) {
-    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Nenhuma ROM definida</h2>";
-    throw new Error("ROM não definida");
+  function fecharJogo() {
+    // Fecha o jogo e volta para sua página
+    window.location.href = "../index.html";
   }
 
-  window.EJS_player = "#game";
-  window.EJS_gameName = rom.split("/").pop();
-  window.EJS_gameUrl = "./" + rom;
-  window.EJS_core = "picodrive";
-  window.EJS_pathtodata = "../../emulatorjs/EmulatorJS/data/";
-  window.EJS_startOnLoaded = true;
-
-  const script = document.createElement("script");
-  script.src = "../../emulatorjs/EmulatorJS/data/loader.js";
-  document.body.appendChild(script);
+  // ESCONDER LOADING QUANDO O JOGO CARREGAR
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("loadingOverlay").style.display = "none";
+    }, 1200);
+  });
 </script>
+
 </body>
 </html>
