@@ -145,6 +145,20 @@
   <p>Versão Beta • ClaudPlay ©</p>
 </footer>
 
+<!-- ÁREA DO JOGO -->
+<div id="jogoArea" class="jogoArea">
+
+  <button onclick="fecharJogo()" class="btnFechar">
+    ⬅ Fechar
+  </button>
+
+  <iframe id="iframeJogo" class="iframeJogo"></iframe>
+</div>
+
+<div id="loadingOverlay" class="loadingOverlay">
+  Carregando jogo...
+</div>
+
 </div> <!-- FIM MAIN APP -->
 
 <script>
@@ -372,12 +386,293 @@ document.getElementById("btnBeta").onclick = () => {
 checarLogin();
 
 /* =========================
-   ABRIR JOGO (COM LOADING)
+   ABRIR JOGO + FULLSCREEN + LANDSCAPE
 ========================= */
-function abrirJogo(url){
-  // abre o loading e passa a url do jogo
-  window.location.href = `loading.html?game=${encodeURIComponent(url)}`;
+
+async function abrirJogo(url){
+  document.getElementById("loadingOverlay").style.display = "flex";
+  document.getElementById("jogoArea").style.display = "flex";
+  const iframe = document.getElementById("iframeJogo");
+  iframe.src = url;
+
+  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
+  try {
+    await document.documentElement.requestFullscreen();
+  } catch (e) {
+    // se não der, continua normal
+  }
+
+  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
+  try {
+    await screen.orientation.lock("landscape");
+  } catch (e) {
+    // se não der, continua normal
+  }
+
+  iframe.onload = () => {
+    document.getElementById("loadingOverlay").style.display = "none";
+  };
 }
+
+function fecharJogo(){
+  document.getElementById("jogoArea").style.display = "none";
+  document.getElementById("iframeJogo").src = "";
+
+  // SAI DO FULLSCREEN
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+
+  // DESBLOQUEIA ORIENTAÇÃO
+  try {
+    screen.orientation.unlock();
+  } catch (e) {}
+}
+</script>
+
+<style>
+/* ===== LOGIN ===== */
+.loginScreen{
+  position:fixed;
+  inset:0;
+  background: linear-gradient(180deg, #0a0f18, #05070a);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.loginBox{
+  background: rgba(10, 13, 18, 0.9);
+  border: 1px solid #2d6cff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 380px;
+  text-align:center;
+  box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
+}
+
+.loginBox h2{
+  margin: 0;
+  font-size: 28px;
+  color: #eaf1ff;
+}
+
+#loginMsg{
+  margin-top: 8px;
+  font-size: 14px;
+  color: #c7d9ff;
+}
+
+.loginBox input{
+  width:100%;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #2d6cff;
+  background:#0d1320;
+  color:#eaf1ff;
+  font-size: 16px;
+}
+
+.btnPrimary{
+  width:100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2d6cff;
+  color:#fff;
+  font-weight: bold;
+  font-size: 16px;
+  cursor:pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.btnPrimary:hover{
+  background: #3a7bff;
+}
+
+.switchText{
+  margin-top: 14px;
+  color:#aebdff;
+  font-size: 14px;
+}
+
+.switchLink{
+  color:#2d6cff;
+  cursor:pointer;
+  font-weight: bold;
+}
+
+/* ===== TOPO ===== */
+.topo{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+  background:#0c1018;
+  color:#fff;
+}
+
+.logo{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.logoutBtn{
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* Estrela */
+.fav{
+  position:absolute;
+  top:8px;
+  right:10px;
+  font-size:20px;
+  cursor:pointer;
+  z-index:3;
+}
+
+/* BOTÃO BETA */
+.betaBtn{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 12px;
+  background: #2d6cff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 100;
+  box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
+}
+
+/* Favoritos estilo Netflix */
+.favoritos{
+  margin-top: 30px;
+}
+
+.favoritos-items{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.favItem{
+  min-width: 160px;
+  background:#111;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  cursor:pointer;
+  position:relative;
+}
+
+.favItem img{
+  width:100%;
+  height: 100px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.favInfo h3{
+  margin:0;
+  font-size:14px;
+}
+
+.favInfo p{
+  margin:0;
+  font-size:12px;
+  color:#ccc;
+}
+
+.remFav{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#2d6cff;
+  border:none;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+@media (max-width: 600px){
+  .favItem{ min-width: 130px; }
+}
+
+/* =========================
+   JOGO (CENTRALIZADO)
+========================= */
+.jogoArea{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
+
+.iframeJogo{
+  width: 90vw;
+  height: 85vh;
+  max-width: 1200px;
+  max-height: 720px;
+  border:none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.12);
+}
+
+.btnFechar{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:1000;
+  padding:8px 14px;
+  font-size:14px;
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.loadingOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  color:#fff;
+  justify-content:center;
+  align-items:center;
+}
+</style>
+
+<!-- =========================
+   REGISTRO DO SERVICE WORKER
+========================= -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log("Service Worker registrado"))
+      .catch((err) => console.log("Erro SW:", err));
+  }
 </script>
 
 </body>
