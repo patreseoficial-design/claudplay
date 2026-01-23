@@ -79,7 +79,7 @@
   </section>
 
   <!-- FAVORITOS (NOVO) -->
-  <section class="favoritos" id="favoritosSec" style="display:none;">
+  <section class="favoritos" id="favoritosSec">
     <h2>Favoritos</h2>
     <div class="favoritos-items" id="favoritosItems"></div>
   </section>
@@ -115,8 +115,6 @@ const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
 const favoritosItems = document.getElementById("favoritosItems");
-const favoritosSec = document.getElementById("favoritosSec");
-
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -173,12 +171,13 @@ let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 function atualizarFavoritos(){
   favoritosItems.innerHTML = "";
 
+  // SE NÃO TIVER FAVORITOS, ESCONDE A SEÇÃO
   if (favoritos.length === 0) {
-    favoritosSec.style.display = "none";
+    document.getElementById("favoritosSec").style.display = "none";
     return;
+  } else {
+    document.getElementById("favoritosSec").style.display = "block";
   }
-
-  favoritosSec.style.display = "block";
 
   favoritos.forEach(fav => {
     const item = Array.from(itens).find(i => i.dataset.link === fav);
@@ -193,12 +192,16 @@ function atualizarFavoritos(){
         </div>
         <button class="remFav">Remover</button>
       `;
-      div.querySelector(".remFav").onclick = () => {
+
+      // 👇 ESSA LINHA RESOLVE O PROBLEMA
+      div.querySelector(".remFav").onclick = (e) => {
+        e.stopPropagation(); // impede de abrir o jogo
         favoritos = favoritos.filter(f => f !== fav);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         atualizarFavoritos();
         atualizarEstrelas();
       };
+
       div.onclick = () => abrirJogo(item.dataset.link);
       favoritosItems.appendChild(div);
     }
