@@ -104,6 +104,9 @@
     </div>
   </section>
 
+  <!-- BOTÃO BETA (ABAIXO DO CARROSSEL) -->
+  <button id="btnBeta" class="betaBtn">BETA</button>
+
   <!-- FAVORITOS (NOVO) -->
   <section class="favoritos" id="favoritosSec">
     <h2>Favoritos</h2>
@@ -350,6 +353,15 @@ document.querySelectorAll(".fav").forEach(fav => {
   };
 });
 
+/* =========================
+   BOTÃO BETA (VOLTA PRA TELA INICIAL)
+========================= */
+document.getElementById("btnBeta").onclick = () => {
+  indexAtual = 0;
+  mudarBanner(0);
+  window.scrollTo(0, 0);
+};
+
 checarLogin();
 
 function abrirJogo(url){
@@ -437,6 +449,19 @@ function fecharJogo(){
   font-size:20px;
   cursor:pointer;
   z-index:3;
+}
+
+/* BOTÃO BETA */
+.betaBtn{
+  width: 100%;
+  margin: 20px 0;
+  padding: 12px 0;
+  background: #6b00ff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* Favoritos estilo Netflix */
