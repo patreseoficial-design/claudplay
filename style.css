@@ -308,3 +308,55 @@ a {
     white-space: normal;
   }
 }
+/* =========================
+   MODO TV / ANDROID TV
+========================= */
+
+@media (min-width: 1024px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Grid estilo Netflix */
+  .catalogo,
+  .grid,
+  .lista,
+  .carrossel-items {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  /* Item focável */
+  .item,
+  .jogo {
+    outline: none;
+    transform: scale(1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  /* FOCO DO CONTROLE */
+  .item:focus,
+  .jogo:focus {
+    transform: scale(1.12);
+    z-index: 10;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.9),
+      0 0 0 4px #00aaff;
+  }
+
+  /* Banner */
+  .item img,
+  .jogo .banner img {
+    border-radius: 14px;
+  }
+
+  /* Texto sempre visível na TV */
+  .item span,
+  .jogo span {
+    opacity: 1;
+    transform: none;
+    font-size: 16px;
+  }
+}
