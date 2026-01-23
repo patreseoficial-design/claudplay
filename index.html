@@ -148,8 +148,7 @@
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" class="jogoArea">
 
-  <button onclick="fecharJogo()"
-    class="btnFechar">
+  <button onclick="fecharJogo()" class="btnFechar">
     ⬅ Fechar
   </button>
 
@@ -386,11 +385,30 @@ document.getElementById("btnBeta").onclick = () => {
 
 checarLogin();
 
-function abrirJogo(url){
+/* =========================
+   ABRIR JOGO + FULLSCREEN + LANDSCAPE
+========================= */
+
+async function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
   document.getElementById("jogoArea").style.display = "flex";
   const iframe = document.getElementById("iframeJogo");
   iframe.src = url;
+
+  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
+  try {
+    await document.documentElement.requestFullscreen();
+  } catch (e) {
+    // se não der, continua normal
+  }
+
+  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
+  try {
+    await screen.orientation.lock("landscape");
+  } catch (e) {
+    // se não der, continua normal
+  }
+
   iframe.onload = () => {
     document.getElementById("loadingOverlay").style.display = "none";
   };
@@ -399,6 +417,16 @@ function abrirJogo(url){
 function fecharJogo(){
   document.getElementById("jogoArea").style.display = "none";
   document.getElementById("iframeJogo").src = "";
+
+  // SAI DO FULLSCREEN
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+
+  // DESBLOQUEIA ORIENTAÇÃO
+  try {
+    screen.orientation.unlock();
+  } catch (e) {}
 }
 </script>
 
