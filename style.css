@@ -230,3 +230,40 @@ a {
     flex-direction: column;
   }
 }
+/* ===== BANNER PRINCIPAL - MOBILE FIX ===== */
+@media (max-width: 600px){
+
+  /* Banner vira coluna */
+  .banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Imagem em cima */
+  .banner-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  /* Texto DESCE pra baixo */
+  .banner-info {
+    position: static;
+    width: 100%;
+    padding: 14px 10px;
+    background: #0b0b0b;
+    text-align: left;
+  }
+
+  .banner-info h1 {
+    font-size: 18px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .banner-info p {
+    font-size: 13px;
+    line-height: 1.3;
+    color: #cfcfcf;
+  }
+}
