@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Boy Color - ClaudPlay</title>
+</head>
+<body style="margin:0; background:#000;">
+  <div id="emu"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emulatorjs@latest/dist/emulatorjs.min.js"></script>
+
+  <script>
+    const romUrl = new URLSearchParams(window.location.search).get("rom");
+
+    if (!romUrl) {
+      document.getElementById("emu").innerHTML = "ROM não encontrada!";
+    } else {
+      new EmulatorJS({
+        element: "emu",
+        rom: romUrl,
+        system: "gbc"
+      });
+    }
+  </script>
+</body>
+</html>
