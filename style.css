@@ -259,3 +259,15 @@ RESPONSIVO MOBILE
     padding: 15px 10px;
   }
 }
+.jogo {
+  width: 180px;
+  text-align: center;
+}
+
+.jogo img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
