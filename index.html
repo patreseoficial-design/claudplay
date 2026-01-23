@@ -40,73 +40,44 @@
 
     <div class="carrossel-items" id="carrossel">
 
-      <!-- SNES -->
-      <a class="item" tabindex="0"
-        data-title="Super Mario World"
-        data-desc="Clássico absoluto do Super Nintendo"
-        data-img="Banner/mario_banner.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
+      <a class="item"
+         data-title="Super Mario World"
+         data-desc="Clássico absoluto do Super Nintendo"
+         data-img="Banner/mario_banner.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
         <img src="Banner/mario_banner.jpeg">
       </a>
 
-      <a class="item" tabindex="0"
-        data-title="Yoshi’s Island"
-        data-desc="Super Mario World 2"
-        data-img="Banner/bannersupermariowolrd.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc">
-        <img src="Banner/bannersupermariowolrd.jpeg">
-      </a>
-
-      <a class="item" tabindex="0"
-        data-title="Donkey Kong Country"
-        data-desc="Clássico do SNES"
-        data-img="Banner/bannerdonkeykong.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc">
+      <a class="item"
+         data-title="Donkey Kong Country"
+         data-desc="Clássico do SNES"
+         data-img="Banner/bannerdonkeykong.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=DonkeyKongCountry.sfc">
         <img src="Banner/bannerdonkeykong.jpeg">
       </a>
 
-      <a class="item" tabindex="0"
-        data-title="Super Mario Kart"
-        data-desc="Corridas clássicas"
-        data-img="Banner/bannersupermariokart.jpeg"
-        data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc">
-        <img src="Banner/bannersupermariokart.jpeg">
-      </a>
-
-      <!-- NES -->
-      <a class="item" tabindex="0"
-        data-title="Bomberman"
-        data-desc="Clássico do NES"
-        data-img="Banner/bannerbomberman.jpeg"
-        data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
-        <img src="Banner/bannerbomberman.jpeg">
-      </a>
-
-      <!-- MEGA DRIVE -->
-      <a class="item" tabindex="0"
-        data-title="Aladdin"
-        data-desc="Clássico do Mega Drive"
-        data-img="Banner/aladdin.jpeg"
-        data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
+      <a class="item"
+         data-title="Aladdin"
+         data-desc="Clássico do Mega Drive"
+         data-img="Banner/aladdin.jpeg"
+         data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
         <img src="Banner/aladdin.jpeg">
       </a>
 
-      <!-- NINTENDO 64 -->
-      <a class="item" tabindex="0"
-        data-title="Nintendo 64"
-        data-desc="International Superstar Soccer 64"
-        data-img="Banner/bannerfutebol64.jpeg"
-        data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
+      <a class="item"
+         data-title="Nintendo 64"
+         data-desc="International Superstar Soccer 64"
+         data-img="Banner/bannerfutebol64.jpeg"
+         data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
         <img src="Banner/bannerfutebol64.jpeg">
       </a>
 
-      <!-- GAME BOY -->
-      <a class="item" tabindex="0"
-        data-title="Super Mario Land 2"
-        data-desc="6 Golden Coins"
-        data-img="Banner/bannersupermarioland2-6golden.jpg"
-        data-link="Emuladores/GameBoy/gameboy.html?rom=SuperMarioLand2-6GoldenCoins.gb">
-        <img src="Banner/bannersupermarioland2-6golden.jpg">
+      <a class="item"
+         data-title="Contra"
+         data-desc="Ação intensa"
+         data-img="Banner/bannercontra.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Contra.nes">
+        <img src="Banner/bannercontra.jpeg">
       </a>
 
     </div>
@@ -119,20 +90,41 @@
 
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
+
   <button onclick="fecharJogo()"
-    style="position:absolute;top:10px;left:10px;z-index:1000;
-    padding:8px 14px;background:#6b00ff;color:#fff;
-    border:none;border-radius:10px;">
+    style="
+      position:absolute;
+      top:10px;
+      left:10px;
+      z-index:1000;
+      padding:8px 14px;
+      font-size:14px;
+      background:#6b00ff;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    ">
     ⬅ Fechar
   </button>
 
-  <iframe id="iframeJogo" style="width:100%;height:100%;border:none;"></iframe>
+  <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
+<!-- LOADING -->
 <div id="loadingOverlay"
-  style="display:none;position:fixed;inset:0;background:#000;
-  z-index:1000;color:#fff;display:flex;
-  justify-content:center;align-items:center;">
+  style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:1000;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+  ">
   Carregando jogo...
 </div>
 
@@ -141,6 +133,7 @@ const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
+
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -165,11 +158,6 @@ itens.forEach((item, i) => {
     mudarBanner(i);
     abrirJogo(item.dataset.link);
   });
-
-  item.addEventListener("focus", () => {
-    indexAtual = i;
-    mudarBanner(i);
-  });
 });
 
 document.getElementById("bannerPrincipal").onclick = () => {
@@ -177,37 +165,26 @@ document.getElementById("bannerPrincipal").onclick = () => {
 };
 
 function abrirJogo(url){
-  loadingOverlay.style.display = "flex";
-  jogoArea.style.display = "block";
-  iframeJogo.src = url;
+  const loading = document.getElementById("loadingOverlay");
+  const area = document.getElementById("jogoArea");
+  const iframe = document.getElementById("iframeJogo");
 
-  iframeJogo.onload = () => {
-    loadingOverlay.style.display = "none";
+  loading.style.display = "flex";
+  area.style.display = "block";
+  iframe.src = url;
+
+  iframe.onload = () => {
+    loading.style.display = "none";
   };
 }
 
 function fecharJogo(){
-  jogoArea.style.display = "none";
-  iframeJogo.src = "";
+  const area = document.getElementById("jogoArea");
+  const iframe = document.getElementById("iframeJogo");
+
+  area.style.display = "none";
+  iframe.src = "";
 }
-
-/* ===== CONTROLE / TV ===== */
-const focaveis = Array.from(document.querySelectorAll('.item'));
-let focoIndex = 0;
-focaveis[0].focus();
-
-document.addEventListener('keydown', e => {
-  const colunas = window.innerWidth >= 1024 ? 5 : 2;
-
-  if (e.key === 'ArrowRight') focoIndex++;
-  if (e.key === 'ArrowLeft') focoIndex--;
-  if (e.key === 'ArrowDown') focoIndex += colunas;
-  if (e.key === 'ArrowUp') focoIndex -= colunas;
-  if (e.key === 'Enter') focaveis[focoIndex].click();
-
-  focoIndex = Math.max(0, Math.min(focoIndex, focaveis.length - 1));
-  focaveis[focoIndex].focus();
-});
 </script>
 
 </body>
