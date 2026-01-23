@@ -45,7 +45,7 @@
          data-img="Banner/mario_banner.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
         <img src="Banner/mario_banner.jpeg">
-        <span class="fav">⭐</span>
+        <span class="fav" data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">☆</span>
       </a>
 
       <a class="item"
@@ -54,7 +54,7 @@
          data-img="Banner/bannerbomberman.jpeg"
          data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
         <img src="Banner/bannerbomberman.jpeg">
-        <span class="fav">⭐</span>
+        <span class="fav" data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">☆</span>
       </a>
 
       <a class="item"
@@ -63,7 +63,7 @@
          data-img="Banner/aladdin.jpeg"
          data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
         <img src="Banner/aladdin.jpeg">
-        <span class="fav">⭐</span>
+        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">☆</span>
       </a>
 
       <a class="item"
@@ -72,11 +72,18 @@
          data-img="Banner/bannerfutebol64.jpeg"
          data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
         <img src="Banner/bannerfutebol64.jpeg">
-        <span class="fav">⭐</span>
+        <span class="fav" data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">☆</span>
       </a>
 
     </div>
   </section>
+
+  <!-- FAVORITOS (NOVO) -->
+  <section class="favoritos" id="favoritosSec">
+    <h2>Favoritos</h2>
+    <div class="favoritos-items" id="favoritosItems"></div>
+  </section>
+
 </main>
 
 <footer class="rodape">
@@ -107,7 +114,7 @@ const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
-const bannerPrincipal = document.getElementById("bannerPrincipal");
+const favoritosItems = document.getElementById("favoritosItems");
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -135,7 +142,7 @@ itens.forEach((item, i) => {
   });
 });
 
-bannerPrincipal.onclick = () => {
+document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
 };
 
@@ -156,26 +163,65 @@ if (salvo){
   bannerImg.src = jogo.img;
   bannerTitle.innerText = jogo.title;
   bannerDesc.innerText = jogo.desc;
-  bannerPrincipal.onclick = () => abrirJogo(jogo.link);
 }
 
 // ===== FAVORITOS =====
-document.querySelectorAll(".fav").forEach((fav, i) => {
+let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+function atualizarFavoritos(){
+  favoritosItems.innerHTML = "";
+
+  favoritos.forEach(fav => {
+    const item = Array.from(itens).find(i => i.dataset.link === fav);
+    if (item){
+      const div = document.createElement("div");
+      div.className = "favItem";
+      div.innerHTML = `
+        <img src="${item.dataset.img}">
+        <div class="favInfo">
+          <h3>${item.dataset.title}</h3>
+          <p>${item.dataset.desc}</p>
+        </div>
+        <button class="remFav">Remover</button>
+      `;
+      div.querySelector(".remFav").onclick = () => {
+        favoritos = favoritos.filter(f => f !== fav);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        atualizarFavoritos();
+        atualizarEstrelas();
+      };
+      div.onclick = () => abrirJogo(item.dataset.link);
+      favoritosItems.appendChild(div);
+    }
+  });
+}
+
+function atualizarEstrelas(){
+  document.querySelectorAll(".fav").forEach(fav => {
+    const link = fav.dataset.link;
+    fav.innerText = favoritos.includes(link) ? "★" : "☆";
+  });
+}
+
+document.querySelectorAll(".fav").forEach(fav => {
   fav.onclick = (e) => {
     e.stopPropagation();
-    let favs = JSON.parse(localStorage.getItem("favoritos")) || [];
-    const jogo = itens[i].dataset.link;
+    const link = fav.dataset.link;
 
-    if (favs.includes(jogo)){
-      favs = favs.filter(f => f !== jogo);
-      fav.style.color = "#fff";
+    if (favoritos.includes(link)) {
+      favoritos = favoritos.filter(f => f !== link);
     } else {
-      favs.push(jogo);
-      fav.style.color = "gold";
+      favoritos.push(link);
     }
-    localStorage.setItem("favoritos", JSON.stringify(favs));
+
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    atualizarFavoritos();
+    atualizarEstrelas();
   };
 });
+
+atualizarFavoritos();
+atualizarEstrelas();
 
 function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
@@ -194,6 +240,7 @@ function fecharJogo(){
 </script>
 
 <style>
+/* Estrela */
 .fav{
   position:absolute;
   top:8px;
@@ -201,6 +248,52 @@ function fecharJogo(){
   font-size:20px;
   cursor:pointer;
   z-index:3;
+}
+
+/* Favoritos */
+.favoritos{
+  margin-top: 30px;
+}
+.favoritos-items{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.favItem{
+  width: calc(50% - 10px);
+  background:#111;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  gap:10px;
+  cursor:pointer;
+}
+.favItem img{
+  width: 80px;
+  height: 60px;
+  object-fit:cover;
+  border-radius:8px;
+}
+.favInfo h3{
+  margin:0;
+  font-size:14px;
+}
+.favInfo p{
+  margin:0;
+  font-size:12px;
+  color:#ccc;
+}
+.remFav{
+  margin-left:auto;
+  background:#6b00ff;
+  border:none;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+@media (max-width: 600px){
+  .favItem{ width:100%; }
 }
 </style>
 
