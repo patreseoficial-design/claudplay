@@ -287,25 +287,84 @@ RESPONSIVO MOBILE
   max-height: 100%;
   object-fit: contain;     /* nunca corta */
 }
-/* ZOOM SUAVE NOS BANNERS */
+
+/* ===== NETFLIX / PS5 STYLE ===== */
+
+.item,
+.jogo {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Imagem */
 .item img,
 .jogo .banner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s ease, filter 0.35s ease;
+  transition: transform 0.45s ease, filter 0.45s ease;
 }
 
-/* EFEITO AO PASSAR O MOUSE */
+/* Hover principal */
+.item:hover,
+.jogo:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(0, 140, 255, 0.45);
+}
+
+/* Zoom da imagem */
 .item:hover img,
 .jogo:hover .banner img {
-  transform: scale(1.08);
-  filter: brightness(1.05);
+  transform: scale(1.12);
+  filter: brightness(1.1) contrast(1.05);
 }
 
-/* GARANTE QUE O ZOOM NÃO ESTOURE O CARD */
-.item,
-.jogo {
-  overflow: hidden;
-  border-radius: 12px;
+/* Overlay escuro estilo Netflix */
+.item::after,
+.jogo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0)
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.item:hover::after,
+.jogo:hover::after {
+  opacity: 1;
+}
+
+/* Título estilo PS5 */
+.jogo span,
+.item span {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  z-index: 2;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.9);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.35s ease;
+}
+
+.jogo:hover span,
+.item:hover span {
+  opacity: 1;
+  transform: translateY(0);
 }
