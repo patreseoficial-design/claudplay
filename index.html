@@ -14,18 +14,25 @@
 ========================= -->
 <div id="loginScreen" class="loginScreen">
   <div class="loginBox">
-    <h2>Entrar</h2>
+    <h2 id="loginTitle">Entrar</h2>
+
     <input type="text" id="loginUser" placeholder="Usuário">
     <input type="password" id="loginPass" placeholder="Senha">
+
     <button id="btnLogin">Entrar</button>
+
     <p id="loginMsg"></p>
+
+    <p style="margin-top:15px; color:#fff;">
+      Não tem conta? <span id="btnSwitch" style="color:#6b00ff; cursor:pointer;">Criar conta</span>
+    </p>
   </div>
 </div>
 
 <!-- =========================
      PÁGINA PRINCIPAL
 ========================= -->
-<div id="mainApp" style="display:none;">
+<div id="mainApp">
 
 <header class="topo">
   <div class="logo">ClaudPlay 🎮</div>
@@ -96,7 +103,7 @@
     </div>
   </section>
 
-  <!-- FAVORITOS (NETFLIX) -->
+  <!-- FAVORITOS (NOVO) -->
   <section class="favoritos" id="favoritosSec">
     <h2>Favoritos</h2>
     <div class="favoritos-items" id="favoritosItems"></div>
@@ -108,16 +115,16 @@
   <p>Versão Beta • ClaudPlay ©</p>
 </footer>
 
-</div>
-
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
+
   <button onclick="fecharJogo()"
     style="position:absolute;top:10px;left:10px;z-index:1000;
     padding:8px 14px;font-size:14px;background:#6b00ff;
     color:#fff;border:none;border-radius:10px;cursor:pointer;">
     ⬅ Fechar
   </button>
+
   <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
 </div>
 
@@ -127,13 +134,20 @@
   Carregando jogo...
 </div>
 
+</div> <!-- FIM MAIN APP -->
+
 <script>
 /* =========================
-   LOGIN SIMPLES
+   LOGIN + CADASTRO
 ========================= */
 const loginScreen = document.getElementById("loginScreen");
 const mainApp = document.getElementById("mainApp");
 const btnLogin = document.getElementById("btnLogin");
+const btnSwitch = document.getElementById("btnSwitch");
+const loginTitle = document.getElementById("loginTitle");
+const loginMsg = document.getElementById("loginMsg");
+
+let modo = "login"; // login ou cadastro
 
 function checarLogin(){
   const logado = localStorage.getItem("logado");
@@ -146,23 +160,59 @@ function checarLogin(){
   }
 }
 
+btnSwitch.onclick = () => {
+  if (modo === "login"){
+    modo = "cadastro";
+    loginTitle.innerText = "Criar Conta";
+    btnLogin.innerText = "Criar";
+    btnSwitch.innerText = "Voltar ao login";
+    loginMsg.innerText = "";
+  } else {
+    modo = "login";
+    loginTitle.innerText = "Entrar";
+    btnLogin.innerText = "Entrar";
+    btnSwitch.innerText = "Criar conta";
+    loginMsg.innerText = "";
+  }
+}
+
 btnLogin.onclick = () => {
   const user = document.getElementById("loginUser").value;
   const pass = document.getElementById("loginPass").value;
 
-  if(user === "admin" && pass === "123"){
-    localStorage.setItem("logado", "true");
-    checarLogin();
+  if (!user || !pass){
+    loginMsg.innerText = "Preencha usuário e senha";
+    return;
+  }
+
+  if (modo === "cadastro"){
+    localStorage.setItem("user", user);
+    localStorage.setItem("pass", pass);
+    loginMsg.innerText = "Conta criada! Agora faça login";
+    modo = "login";
+    loginTitle.innerText = "Entrar";
+    btnLogin.innerText = "Entrar";
+    btnSwitch.innerText = "Criar conta";
   } else {
-    document.getElementById("loginMsg").innerText = "Usuário ou senha incorretos";
+    const savedUser = localStorage.getItem("user");
+    const savedPass = localStorage.getItem("pass");
+
+    if (user === savedUser && pass === savedPass){
+      localStorage.setItem("logado", "true");
+      checarLogin();
+    } else {
+      loginMsg.innerText = "Usuário ou senha incorretos";
+    }
   }
 }
 
 checarLogin();
 
+
 /* =========================
-   RESTO DO CÓDIGO
+   SEU CÓDIGO DO SITE (carrossel, favoritos...)
 ========================= */
+
 const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
@@ -224,13 +274,6 @@ let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 function atualizarFavoritos(){
   favoritosItems.innerHTML = "";
 
-  if (favoritos.length === 0) {
-    document.getElementById("favoritosSec").style.display = "none";
-    return;
-  } else {
-    document.getElementById("favoritosSec").style.display = "block";
-  }
-
   favoritos.forEach(fav => {
     const item = Array.from(itens).find(i => i.dataset.link === fav);
     if (item){
@@ -241,18 +284,9 @@ function atualizarFavoritos(){
         <div class="favInfo">
           <h3>${item.dataset.title}</h3>
           <p>${item.dataset.desc}</p>
-          <div class="favBtns">
-            <button class="playFav">▶</button>
-            <button class="remFav">Remover</button>
-          </div>
         </div>
+        <button class="remFav">Remover</button>
       `;
-
-      div.querySelector(".playFav").onclick = (e) => {
-        e.stopPropagation();
-        abrirJogo(item.dataset.link);
-      };
-
       div.querySelector(".remFav").onclick = (e) => {
         e.stopPropagation();
         favoritos = favoritos.filter(f => f !== fav);
@@ -260,11 +294,13 @@ function atualizarFavoritos(){
         atualizarFavoritos();
         atualizarEstrelas();
       };
-
       div.onclick = () => abrirJogo(item.dataset.link);
       favoritosItems.appendChild(div);
     }
   });
+
+  // só mostra favoritos se tiver
+  document.getElementById("favoritosSec").style.display = favoritos.length ? "block" : "none";
 }
 
 function atualizarEstrelas(){
@@ -311,6 +347,48 @@ function fecharJogo(){
 </script>
 
 <style>
+/* ===== LOGIN ===== */
+.loginScreen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.loginBox{
+  background:#111;
+  padding:20px;
+  border-radius:12px;
+  width: 90%;
+  max-width: 350px;
+  text-align:center;
+}
+.loginBox input{
+  width:100%;
+  margin:8px 0;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  background:#222;
+  color:#fff;
+}
+.loginBox button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#6b00ff;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+.loginBox p{
+  margin:10px 0 0;
+  color:#ccc;
+}
+
 /* Estrela */
 .fav{
   position:absolute;
@@ -321,101 +399,50 @@ function fecharJogo(){
   z-index:3;
 }
 
-/* Favoritos estilo Netflix */
+/* Favoritos */
 .favoritos{
   margin-top: 30px;
 }
 .favoritos-items{
   display:flex;
-  overflow-x:auto;
-  gap:12px;
-  padding:10px 0;
+  flex-wrap:wrap;
+  gap:10px;
 }
 .favItem{
-  min-width: 320px;
+  width: calc(50% - 10px);
   background:#111;
-  padding:12px;
-  border-radius:12px;
+  padding:10px;
+  border-radius:10px;
   display:flex;
-  gap:12px;
+  gap:10px;
   cursor:pointer;
-  position:relative;
 }
 .favItem img{
-  width: 120px;
-  height: 80px;
+  width: 80px;
+  height: 60px;
   object-fit:cover;
-  border-radius:10px;
-}
-.favInfo{
-  flex:1;
+  border-radius:8px;
 }
 .favInfo h3{
   margin:0;
-  font-size:16px;
+  font-size:14px;
 }
 .favInfo p{
-  margin:6px 0 10px;
-  font-size:13px;
+  margin:0;
+  font-size:12px;
   color:#ccc;
 }
-.favBtns{
-  display:flex;
-  gap:10px;
-}
-.playFav, .remFav{
+.remFav{
+  margin-left:auto;
   background:#6b00ff;
   border:none;
   color:#fff;
-  padding:8px 12px;
-  border-radius:10px;
+  padding:6px 10px;
+  border-radius:8px;
   cursor:pointer;
-}
-.playFav{
-  background:#1f1f1f;
-}
-.remFav{
-  background:#ff0000;
 }
 @media (max-width: 600px){
-  .favItem{ min-width: 260px; }
-}
-
-/* LOGIN */
-.loginScreen{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.loginBox{
-  background:#111;
-  padding:30px;
-  border-radius:15px;
-  text-align:center;
-}
-.loginBox input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:10px;
-  border:none;
-  outline:none;
-}
-.loginBox button{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#6b00ff;
-  color:#fff;
-  cursor:pointer;
-}
-.loginBox p{
-  margin-top:10px;
-  color:#f00;
+  .favItem{ width:100%; }
 }
 </style>
 
