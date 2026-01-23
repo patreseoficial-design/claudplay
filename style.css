@@ -368,3 +368,57 @@ RESPONSIVO MOBILE
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ===== MOBILE PERFECT FIX ===== */
+@media (max-width: 768px) {
+
+  .item,
+  .jogo {
+    border-radius: 12px;
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  /* Banner com proporção fixa */
+  .item img,
+  .jogo .banner img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* Remove zoom exagerado no toque */
+  .item:hover,
+  .jogo:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Overlay sempre visível no mobile */
+  .item::after,
+  .jogo::after {
+    opacity: 1;
+  }
+
+  /* Título sempre visível */
+  .item span,
+  .jogo span {
+    opacity: 1;
+    transform: none;
+    font-size: 14px;
+    bottom: 10px;
+    left: 12px;
+  }
+
+  /* Grid mais bonito */
+  .grid,
+  .lista,
+  .catalogo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+}
