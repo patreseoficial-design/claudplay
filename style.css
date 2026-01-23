@@ -270,10 +270,11 @@ RESPONSIVO MOBILE
 
 .jogo img {
   width: 100%;
-  height: 220px;          /* ALTURA PADRÃO */
-  object-fit: cover;     /* corta sem deformar */
+  height: 220px;              /* tamanho fixo */
+  object-fit: contain;        /* NÃO corta a imagem */
+  background-color: #000;     /* fundo preto para sobrar espaço */
   border-radius: 12px;
-  background: #111;
+  padding: 8px;               /* respiro interno */
 }
 
 .jogo span {
