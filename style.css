@@ -562,3 +562,75 @@ a {
 @media (max-width: 600px){
   .favItem{ min-width: 130px; }
 }
+
+/* ===== LOGIN ===== */
+.loginScreen{
+  position:fixed;
+  inset:0;
+  background: linear-gradient(180deg, #0a0f18, #05070a);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.loginBox{
+  box-sizing: border-box;   /* importante */
+  width: 90%;
+  max-width: 380px;
+  padding: 30px 20px;
+  background: rgba(10, 13, 18, 0.9);
+  border: 1px solid #2d6cff;
+  border-radius: 16px;
+  text-align:center;
+  box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
+}
+
+.loginBox h2{
+  margin: 0 0 12px 0;
+  font-size: 28px;
+  color: #eaf1ff;
+}
+
+.loginBox input{
+  width: 100%;
+  box-sizing: border-box; /* importante */
+  margin: 10px 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #2d6cff;
+  background:#0d1320;
+  color:#eaf1ff;
+  font-size: 16px;
+}
+
+.btnPrimary{
+  width: 100%;
+  box-sizing: border-box; /* importante */
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2d6cff;
+  color:#fff;
+  font-weight: bold;
+  font-size: 16px;
+  cursor:pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.btnPrimary:hover{
+  background: #3a7bff;
+}
+
+.switchText{
+  margin-top: 14px;
+  color:#aebdff;
+  font-size: 14px;
+}
+
+.switchLink{
+  color:#2d6cff;
+  cursor:pointer;
+  font-weight: bold;
+}
