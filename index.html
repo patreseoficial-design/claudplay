@@ -158,9 +158,12 @@ function checarLogin(){
     usuarioAtual = localStorage.getItem("userLogado");
     loginScreen.style.display = "none";
     mainApp.style.display = "block";
+    btnLogout.style.display = "block";
+    carregarFavoritos(); // AGORA SIM
   } else {
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
+    btnLogout.style.display = "none";
   }
 }
 
@@ -204,7 +207,6 @@ btnLogin.onclick = () => {
       localStorage.setItem("userLogado", user);
       usuarioAtual = user;
       checarLogin();
-      carregarFavoritos();
     } else {
       loginMsg.innerText = "Usuário ou senha incorretos";
     }
@@ -287,6 +289,7 @@ function getKeyFavoritos(){
 }
 
 function carregarFavoritos(){
+  if (!usuarioAtual) return;
   favoritos = JSON.parse(localStorage.getItem(getKeyFavoritos())) || [];
   atualizarFavoritos();
   atualizarEstrelas();
@@ -348,7 +351,6 @@ document.querySelectorAll(".fav").forEach(fav => {
 });
 
 checarLogin();
-if (usuarioAtual) carregarFavoritos();
 
 function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
