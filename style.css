@@ -633,4 +633,15 @@ a {
   color:#2d6cff;
   cursor:pointer;
   font-weight: bold;
+
+.rodape{
+  text-align: center;
+  padding: 12px 0;
+  color: #fff;
+  background: #0b0f13;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+}
 }
