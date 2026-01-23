@@ -360,3 +360,7 @@ a {
     font-size: 16px;
   }
 }
+/* ===== FAVORITOS: Esconde se estiver vazio ===== */
+#favoritosSec {
+  display: none; /* fica escondido por padrão */
+}
