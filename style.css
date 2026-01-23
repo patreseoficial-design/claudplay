@@ -433,3 +433,55 @@ a {
     color: #cfcfcf;
   }
 }
+/* =========================
+   AREA DO JOGO (CENTRALIZADO)
+========================= */
+.jogoArea{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 20px;
+}
+
+.iframeJogo{
+  width: 95vw;
+  height: 85vh;
+  max-width: 980px;
+  max-height: 720px;
+  border:none;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+/* Botão fechar */
+.btnFechar{
+  position:absolute;
+  top: 12px;
+  left: 12px;
+  z-index:1000;
+  padding: 8px 14px;
+  font-size: 14px;
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* Loading */
+.loadingOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
