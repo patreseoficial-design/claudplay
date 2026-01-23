@@ -110,7 +110,6 @@ a {
   transition: transform 0.45s ease, filter 0.45s ease;
 }
 
-/* Hover Netflix / PS5 */
 .item:hover {
   transform: scale(1.06);
   box-shadow:
@@ -123,7 +122,6 @@ a {
   filter: brightness(1.1) contrast(1.05);
 }
 
-/* Overlay */
 .item::after {
   content: "";
   position: absolute;
@@ -146,7 +144,6 @@ a {
  MOBILE – ESTILO NETFLIX
 ================================ */
 @media (max-width: 768px) {
-
   .container {
     padding: 12px;
   }
@@ -170,20 +167,12 @@ a {
   .item::after {
     opacity: 1;
   }
-
-  .grid,
-  .catalogo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
 }
 
 /* ===============================
  TV / ANDROID TV
 ================================ */
 @media (min-width: 1200px) {
-
   .grid,
   .catalogo {
     display: grid;
@@ -197,299 +186,119 @@ a {
     z-index: 10;
   }
 }
-/* TEXTO SOBRE O BANNER (PC / TV) */
-.banner {
-  position: relative;
-}
 
-.banner .titulo {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  color: #fff;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-  text-align: center;
-  box-sizing: border-box;
-}
-
-/* 📱 MOBILE: texto fora do banner */
-@media (max-width: 600px) {
-  .banner .titulo {
-    position: static;
-    background: none;
-    color: #fff;
-    padding: 6px 0 0;
-    font-size: 13px;
-  }
-
-  .banner {
-    display: flex;
-    flex-direction: column;
-  }
-}
-/* ===== BANNER PRINCIPAL - MOBILE FIX ===== */
-@media (max-width: 600px){
-
-  /* Banner vira coluna */
-  .banner {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  /* Imagem em cima */
-  .banner-img img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  /* Texto DESCE pra baixo */
-  .banner-info {
-    position: static;
-    width: 100%;
-    padding: 14px 10px;
-    background: #0b0b0b;
-    text-align: left;
-  }
-
-  .banner-info h1 {
-    font-size: 18px;
-    line-height: 1.3;
-    margin-bottom: 6px;
-  }
-
-  .banner-info p {
-    font-size: 13px;
-    line-height: 1.3;
-    color: #cfcfcf;
-  }
-}
-/* ===== FIX BANNER PRINCIPAL MOBILE ===== */
-@media (max-width: 600px){
-
-  /* Banner vira coluna */
-  .banner {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
-  }
-
-  /* IMAGEM DO BANNER (direto dentro dele) */
-  .banner > img,
-  .banner img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* TEXTO DESCE PRA BAIXO */
-  .banner-info {
-    width: 100%;
-    padding: 14px 12px;
-    background: #0b0b0b;
-    position: static;
-  }
-
-  .banner-info h1 {
-    font-size: 18px;
-    line-height: 1.3;
-    margin: 0 0 6px 0;
-    white-space: normal;
-  }
-
-  .banner-info p {
-    font-size: 13px;
-    line-height: 1.3;
-    white-space: normal;
-  }
-}
-/* =========================
-   MODO TV / ANDROID TV
-========================= */
-
-@media (min-width: 1024px) {
-
-  body {
-    overflow-x: hidden;
-  }
-
-  /* Grid estilo Netflix */
-  .catalogo,
-  .grid,
-  .lista,
-  .carrossel-items {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 24px;
-  }
-
-  /* Item focável */
-  .item,
-  .jogo {
-    outline: none;
-    transform: scale(1);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  /* FOCO DO CONTROLE */
-  .item:focus,
-  .jogo:focus {
-    transform: scale(1.12);
-    z-index: 10;
-    box-shadow:
-      0 30px 80px rgba(0,0,0,0.9),
-      0 0 0 4px #00aaff;
-  }
-
-  /* Banner */
-  .item img,
-  .jogo .banner img {
-    border-radius: 14px;
-  }
-
-  /* Texto sempre visível na TV */
-  .item span,
-  .jogo span {
-    opacity: 1;
-    transform: none;
-    font-size: 16px;
-  }
-}
-/* ===== FAVORITOS: Esconde se estiver vazio ===== */
-#favoritosSec {
-  display: none; /* fica escondido por padrão */
-}
-
-/* BOTÃO BETA (CANTO DIREITO) */
-.betaBtn{
-  width: 120px;          /* tamanho pequeno */
-  padding: 10px 0;
-  background: #6b00ff;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-  margin-left: auto;     /* faz ele ir pro lado direito */
-  display: block;
-}
-/* ===== LOGIN ===== */
-.loginScreen{
-  position:fixed;
-  inset:0;
+/* ===============================
+ LOGIN
+================================ */
+.loginScreen {
+  position: fixed;
+  inset: 0;
   background: linear-gradient(180deg, #0a0f18, #05070a);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.loginBox{
-  background: rgba(10, 13, 18, 0.9);
-  border: 1px solid #2d6cff;
-  padding: 30px 25px;
-  border-radius: 16px;
+.loginBox {
+  box-sizing: border-box;
   width: 90%;
   max-width: 380px;
-  text-align:center;
+  padding: 30px 20px;
+  background: rgba(10, 13, 18, 0.9);
+  border: 1px solid #2d6cff;
+  border-radius: 16px;
+  text-align: center;
   box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
 }
 
-.loginBox h2{
-  margin: 0;
+.loginBox h2 {
+  margin: 0 0 12px 0;
   font-size: 28px;
   color: #eaf1ff;
 }
 
-#loginMsg{
-  margin-top: 8px;
-  font-size: 14px;
-  color: #c7d9ff;
-}
-
-.loginBox input{
-  width:100%;
-  margin: 12px 0;
+.loginBox input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
   padding: 14px;
   border-radius: 12px;
   border: 1px solid #2d6cff;
-  background:#0d1320;
-  color:#eaf1ff;
+  background: #0d1320;
+  color: #eaf1ff;
   font-size: 16px;
 }
 
-.btnPrimary{
-  width:100%;
+.btnPrimary {
+  width: 100%;
+  box-sizing: border-box;
   padding: 14px;
   border-radius: 12px;
   border: none;
   background: #2d6cff;
-  color:#fff;
+  color: #fff;
   font-weight: bold;
   font-size: 16px;
-  cursor:pointer;
+  cursor: pointer;
   margin-top: 10px;
   transition: 0.2s;
 }
 
-.btnPrimary:hover{
+.btnPrimary:hover {
   background: #3a7bff;
 }
 
-.switchText{
+.switchText {
   margin-top: 14px;
-  color:#aebdff;
+  color: #aebdff;
   font-size: 14px;
 }
 
-.switchLink{
-  color:#2d6cff;
-  cursor:pointer;
+.switchLink {
+  color: #2d6cff;
+  cursor: pointer;
   font-weight: bold;
 }
 
-/* ===== TOPO ===== */
-.topo{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 20px;
-  background:#0c1018;
-  color:#fff;
+/* ===============================
+ TOPO
+================================ */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #0c1018;
+  color: #fff;
 }
 
-.logo{
-  font-weight:bold;
-  font-size:18px;
+.logo {
+  font-weight: bold;
+  font-size: 18px;
 }
 
-.logoutBtn{
-  background:#2d6cff;
-  color:#fff;
-  border:none;
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
+.logoutBtn {
+  background: #2d6cff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 /* Estrela */
-.fav{
-  position:absolute;
-  top:8px;
-  right:10px;
-  font-size:20px;
-  cursor:pointer;
-  z-index:3;
+.fav {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 3;
 }
 
 /* BOTÃO BETA */
-.betaBtn{
+.betaBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -505,136 +314,72 @@ a {
   box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
 }
 
-/* Favoritos estilo Netflix */
-.favoritos{
+/* ===============================
+ FAVORITOS
+================================ */
+.favoritos {
   margin-top: 30px;
 }
 
-.favoritos-items{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding-bottom:10px;
+.favoritos-items {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
 }
 
-.favItem{
+.favItem {
   min-width: 160px;
-  background:#111;
-  padding:10px;
-  border-radius:10px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  cursor:pointer;
-  position:relative;
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
 }
 
-.favItem img{
-  width:100%;
+.favItem img {
+  width: 100%;
   height: 100px;
-  object-fit:cover;
-  border-radius:8px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.favInfo h3{
-  margin:0;
-  font-size:14px;
-}
-
-.favInfo p{
-  margin:0;
-  font-size:12px;
-  color:#ccc;
-}
-
-.remFav{
-  position:absolute;
-  top:8px;
-  right:8px;
-  background:#2d6cff;
-  border:none;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-@media (max-width: 600px){
-  .favItem{ min-width: 130px; }
-}
-
-/* ===== LOGIN ===== */
-.loginScreen{
-  position:fixed;
-  inset:0;
-  background: linear-gradient(180deg, #0a0f18, #05070a);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.loginBox{
-  box-sizing: border-box;   /* importante */
-  width: 90%;
-  max-width: 380px;
-  padding: 30px 20px;
-  background: rgba(10, 13, 18, 0.9);
-  border: 1px solid #2d6cff;
-  border-radius: 16px;
-  text-align:center;
-  box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
-}
-
-.loginBox h2{
-  margin: 0 0 12px 0;
-  font-size: 28px;
-  color: #eaf1ff;
-}
-
-.loginBox input{
-  width: 100%;
-  box-sizing: border-box; /* importante */
-  margin: 10px 0;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #2d6cff;
-  background:#0d1320;
-  color:#eaf1ff;
-  font-size: 16px;
-}
-
-.btnPrimary{
-  width: 100%;
-  box-sizing: border-box; /* importante */
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: #2d6cff;
-  color:#fff;
-  font-weight: bold;
-  font-size: 16px;
-  cursor:pointer;
-  margin-top: 10px;
-  transition: 0.2s;
-}
-
-.btnPrimary:hover{
-  background: #3a7bff;
-}
-
-.switchText{
-  margin-top: 14px;
-  color:#aebdff;
+.favInfo h3 {
+  margin: 0;
   font-size: 14px;
 }
 
-.switchLink{
-  color:#2d6cff;
-  cursor:pointer;
-  font-weight: bold;
+.favInfo p {
+  margin: 0;
+  font-size: 12px;
+  color: #ccc;
+}
 
-.rodape{
+.remFav {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #2d6cff;
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .favItem {
+    min-width: 130px;
+  }
+}
+
+/* ===============================
+ RODAPÉ
+================================ */
+.rodape {
   text-align: center;
   padding: 12px 0;
   color: #fff;
@@ -643,5 +388,4 @@ a {
   bottom: 0;
   width: 100%;
   font-size: 14px;
-}
 }
