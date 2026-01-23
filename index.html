@@ -155,8 +155,16 @@
   <iframe id="iframeJogo" class="iframeJogo"></iframe>
 </div>
 
+<!-- TELA DE LOADING COM FOGUETE -->
 <div id="loadingOverlay" class="loadingOverlay">
-  Carregando jogo...
+  <div class="loadingBox">
+    <div class="rocket">
+      <div class="rocket-body"></div>
+      <div class="rocket-window"></div>
+      <div class="rocket-fire"></div>
+    </div>
+    <div class="loadingMsg" id="loadingMsg">A diversão chegou</div>
+  </div>
 </div>
 
 </div> <!-- FIM MAIN APP -->
@@ -386,31 +394,54 @@ document.getElementById("btnBeta").onclick = () => {
 checarLogin();
 
 /* =========================
-   ABRIR JOGO + FULLSCREEN + LANDSCAPE
+   ABRIR JOGO + FULLSCREEN + LOADING MENSAGENS
 ========================= */
+
+const mensagens = [
+  "A diversão chegou",
+  "ClaudPlay preparando o jogo",
+  "Clique em Fullscreen e divirta-se",
+  "Clique no menu do jogo para inserir os botões",
+  "Quase pronto..."
+];
+
+let msgIndex = 0;
+let msgInterval;
 
 async function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
   document.getElementById("jogoArea").style.display = "flex";
+
+  // Inicia mensagens
+  msgIndex = 0;
+  document.getElementById("loadingMsg").innerText = mensagens[msgIndex];
+
+  msgInterval = setInterval(() => {
+    msgIndex++;
+    if (msgIndex >= mensagens.length) msgIndex = 0;
+    document.getElementById("loadingMsg").innerText = mensagens[msgIndex];
+  }, 4000);
+
   const iframe = document.getElementById("iframeJogo");
   iframe.src = url;
 
-  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
+  // TENTA FULLSCREEN
   try {
     await document.documentElement.requestFullscreen();
-  } catch (e) {
-    // se não der, continua normal
-  }
+  } catch (e) {}
 
-  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
+  // TENTA LANDSCAPE
   try {
     await screen.orientation.lock("landscape");
-  } catch (e) {
-    // se não der, continua normal
-  }
+  } catch (e) {}
 
   iframe.onload = () => {
+    // FIM DO LOADING
+    clearInterval(msgInterval);
     document.getElementById("loadingOverlay").style.display = "none";
+
+    // FOGUETE DECOLA (animação)
+    document.querySelector(".rocket").classList.add("rocketLaunch");
   };
 }
 
@@ -652,6 +683,9 @@ function fecharJogo(){
   cursor:pointer;
 }
 
+/* =========================
+   LOADING (FOGUETE + MENSAGENS)
+========================= */
 .loadingOverlay{
   display:none;
   position:fixed;
@@ -661,6 +695,73 @@ function fecharJogo(){
   color:#fff;
   justify-content:center;
   align-items:center;
+}
+
+.loadingBox{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+/* foguete */
+.rocket{
+  width: 80px;
+  height: 160px;
+  position:relative;
+  animation: float 1.2s infinite ease-in-out;
+}
+
+.rocket-body{
+  width: 80px;
+  height: 140px;
+  background: linear-gradient(180deg, #ffffff, #d9d9d9);
+  border-radius: 40px 40px 35px 35px;
+  position:absolute;
+  top:0;
+  left:0;
+}
+
+.rocket-window{
+  width: 30px;
+  height: 30px;
+  background: #0a0f18;
+  border-radius: 50%;
+  position:absolute;
+  top:40px;
+  left:25px;
+}
+
+.rocket-fire{
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 35px solid #ff6b00;
+  position:absolute;
+  bottom:-35px;
+  left:20px;
+  opacity:0.8;
+}
+
+/* animação de decolagem */
+.rocketLaunch{
+  animation: launch 1.2s forwards ease-in;
+}
+
+@keyframes float{
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes launch{
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-600px); opacity: 0; }
+}
+
+.loadingMsg{
+  font-size: 18px;
+  color:#c7d9ff;
 }
 </style>
 
