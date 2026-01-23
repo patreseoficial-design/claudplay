@@ -364,3 +364,18 @@ a {
 #favoritosSec {
   display: none; /* fica escondido por padrão */
 }
+
+/* BOTÃO BETA (CANTO DIREITO) */
+.betaBtn{
+  width: 120px;          /* tamanho pequeno */
+  padding: 10px 0;
+  background: #6b00ff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  margin-left: auto;     /* faz ele ir pro lado direito */
+  display: block;
+}
