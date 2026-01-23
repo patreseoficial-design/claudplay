@@ -287,3 +287,25 @@ RESPONSIVO MOBILE
   max-height: 100%;
   object-fit: contain;     /* nunca corta */
 }
+/* ZOOM SUAVE NOS BANNERS */
+.item img,
+.jogo .banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+/* EFEITO AO PASSAR O MOUSE */
+.item:hover img,
+.jogo:hover .banner img {
+  transform: scale(1.08);
+  filter: brightness(1.05);
+}
+
+/* GARANTE QUE O ZOOM NÃO ESTOURE O CARD */
+.item,
+.jogo {
+  overflow: hidden;
+  border-radius: 12px;
+}
