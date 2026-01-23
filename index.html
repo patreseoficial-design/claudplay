@@ -21,7 +21,6 @@
     <div class="banner-img">
       <img src="Banner/mario_banner.jpeg" id="bannerImg" />
     </div>
-
     <div class="banner-info">
       <h1 id="bannerTitle">Super Mario World</h1>
       <p id="bannerDesc">Jogue direto no navegador</p>
@@ -40,12 +39,21 @@
 
     <div class="carrossel-items" id="carrossel">
 
+      <!-- SNES -->
       <a class="item"
          data-title="Super Mario World"
          data-desc="Clássico absoluto do Super Nintendo"
          data-img="Banner/mario_banner.jpeg"
          data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
         <img src="Banner/mario_banner.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Super Mario World 2"
+         data-desc="Yoshi’s Island"
+         data-img="Banner/bannersupermariowolrd.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld2.sfc">
+        <img src="Banner/bannersupermariowolrd.jpeg">
       </a>
 
       <a class="item"
@@ -57,6 +65,32 @@
       </a>
 
       <a class="item"
+         data-title="Super Mario Kart"
+         data-desc="Corridas clássicas"
+         data-img="Banner/bannersupermariokart.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioKart.sfc">
+        <img src="Banner/bannersupermariokart.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Super Mario All-Stars"
+         data-desc="Todos os Marios clássicos"
+         data-img="Banner/bannersupermarioall-star.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioAll-Stars.sfc">
+        <img src="Banner/bannersupermarioall-star.jpeg">
+      </a>
+
+      <!-- NES -->
+      <a class="item"
+         data-title="Bomberman"
+         data-desc="Clássico do NES"
+         data-img="Banner/bannerbomberman.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
+        <img src="Banner/bannerbomberman.jpeg">
+      </a>
+
+      <!-- MEGA DRIVE -->
+      <a class="item"
          data-title="Aladdin"
          data-desc="Clássico do Mega Drive"
          data-img="Banner/aladdin.jpeg"
@@ -64,6 +98,7 @@
         <img src="Banner/aladdin.jpeg">
       </a>
 
+      <!-- N64 -->
       <a class="item"
          data-title="Nintendo 64"
          data-desc="International Superstar Soccer 64"
@@ -78,6 +113,14 @@
          data-img="Banner/bannercontra.jpeg"
          data-link="Emuladores/Nes/nes.html?rom=Contra.nes">
         <img src="Banner/bannercontra.jpeg">
+      </a>
+
+      <a class="item"
+         data-title="Super Mario Land 2 - 6 Golden Coins"
+         data-desc="Clássico do Game Boy"
+         data-img="Banner/bannersupermarioland2-6golden.jpg"
+         data-link="Emuladores/GameBoy/gameboy.html?rom=SuperMarioLand2-6GoldenCoins.gb">
+        <img src="Banner/bannersupermarioland2-6golden.jpg">
       </a>
 
     </div>
@@ -104,6 +147,7 @@
       border:none;
       border-radius:10px;
       cursor:pointer;
+      opacity:0.9;
     ">
     ⬅ Fechar
   </button>
@@ -113,18 +157,7 @@
 
 <!-- LOADING -->
 <div id="loadingOverlay"
-  style="
-    display:none;
-    position:fixed;
-    inset:0;
-    background:#000;
-    z-index:1000;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:18px;
-  ">
+  style="display:none; position:fixed; inset:0; background:#000; z-index:1000; color:#fff; justify-content:center; align-items:center;">
   Carregando jogo...
 </div>
 
@@ -133,7 +166,6 @@ const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
-
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -179,13 +211,46 @@ function abrirJogo(url){
 }
 
 function fecharJogo(){
-  const area = document.getElementById("jogoArea");
-  const iframe = document.getElementById("iframeJogo");
-
-  area.style.display = "none";
-  iframe.src = "";
+  document.getElementById("jogoArea").style.display = "none";
+  document.getElementById("iframeJogo").src = "";
 }
 </script>
+
+<!-- ✅ FIX BANNER PRINCIPAL MOBILE -->
+<style>
+@media (max-width: 600px) {
+
+  #bannerPrincipal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #bannerPrincipal .banner-img img {
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    object-fit: contain;
+    background: #000;
+  }
+
+  #bannerPrincipal .banner-info {
+    padding: 14px 12px;
+    background: #111;
+  }
+
+  #bannerPrincipal .banner-info h1 {
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  #bannerPrincipal .banner-info p {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #ccc;
+  }
+}
+</style>
 
 </body>
 </html>
