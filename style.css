@@ -1,4 +1,6 @@
-/* ===== Estilo base ===== */
+/* ===============================
+ ESTILO BASE
+================================ */
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +14,9 @@ a {
   color: inherit;
 }
 
-/* ===== Cabeçalho ===== */
+/* ===============================
+ TOPO
+================================ */
 .topo {
   display: flex;
   justify-content: space-between;
@@ -35,12 +39,16 @@ a {
   font-weight: bold;
 }
 
-/* ===== Container ===== */
+/* ===============================
+ CONTAINER
+================================ */
 .container {
   padding: 20px 40px;
 }
 
-/* ===== Banner ===== */
+/* ===============================
+ BANNER DESTAQUE
+================================ */
 .banner {
   display: flex;
   align-items: center;
@@ -48,12 +56,6 @@ a {
   border-radius: 20px;
   overflow: hidden;
   margin-bottom: 30px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.banner:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 .banner-img img {
@@ -66,18 +68,9 @@ a {
   padding: 20px;
 }
 
-.banner-info h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.banner-info p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #cfcfcf;
-}
-
-/* ===== Carrossel ===== */
+/* ===============================
+ CARROSSEL
+================================ */
 .carrossel {
   margin-top: 20px;
 }
@@ -86,247 +79,52 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
 }
 
-.carrossel-title h2 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.carrossel-arrows button {
-  background: #2b2b2b;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 8px 12px;
-  font-size: 18px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.carrossel-arrows button:hover {
-  background: #3b3b3b;
-}
-
-/* ===== Itens do Carrossel ===== */
 .carrossel-items {
   display: flex;
   gap: 15px;
   overflow-x: auto;
   padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: #6b00ff #222;
 }
 
-.carrossel-items::-webkit-scrollbar {
-  height: 8px;
-}
-
-.carrossel-items::-webkit-scrollbar-thumb {
-  background: #6b00ff;
-  border-radius: 10px;
-}
-
-.carrossel-items::-webkit-scrollbar-track {
-  background: #222;
-  border-radius: 10px;
-}
-
+/* ===============================
+ CARD DE JOGO (PADRÃO NETFLIX)
+================================ */
 .item {
   flex: 0 0 auto;
-  width: 180px;
-  height: 120px;
-  border-radius: 18px;
+  width: 220px;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
   overflow: hidden;
-  border: 1px solid #333;
+  position: relative;
+  background: #000;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-}
-
-/* ===== Rodapé ===== */
-.rodape {
-  text-align: center;
-  padding: 20px;
-  color: #cfcfcf;
-  font-size: 14px;
-}
-
-/* ===== LOADING ===== */
-#loadingOverlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 1000;
-  color: #fff;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.loading-box {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.loading-circle {
-  width: 18px;
-  height: 18px;
-  border: 3px solid #6b00ff;
-  border-top: 3px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-.loading-text {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-/* =========================
-RESPONSIVO MOBILE
-========================= */
-@media (max-width: 600px){
-
-  /* Banner principal */
-  .banner {
-    flex-direction: column;
-  }
-
-  .banner-img img {
-    width: 100%;
-    height: 180px;
-  }
-
-  .banner-info {
-    padding: 15px;
-  }
-
-  .banner-info h1{
-    font-size: 18px !important;
-    line-height: 1.2;
-    word-break: break-word;
-  }
-
-  .banner-info p{
-    font-size: 13px !important;
-    line-height: 1.2;
-    word-break: break-word;
-  }
-
-  /* Carrossel */
-  .carrossel-items{
-    gap: 10px;
-    padding: 10px 0;
-  }
-
-  .item{
-    width: 190px;
-    height: 100px;
-  }
-
-  /* Botões do carrossel */
-  .carrossel-arrows button{
-    padding: 6px 10px;
-    font-size: 16px;
-  }
-
-  /* Topo */
-  .topo{
-    padding: 12px 10px;
-  }
-
-  /* Container */
-  .container{
-    padding: 15px 10px;
-  }
-}
-.jogo {
-  width: 160px;
-  text-decoration: none;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* CAIXA PADRÃO DO BANNER */
-.jogo .banner {
-  width: 100%;
-  aspect-ratio: 3 / 4;      /* padrão de capa */
-  background: #000;
-  border-radius: 12px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* IMAGEM LIVRE */
-.jogo .banner img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;     /* nunca corta */
-}
-
-/* ===== NETFLIX / PS5 STYLE ===== */
-
-.item,
-.jogo {
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #000;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-/* Imagem */
-.item img,
-.jogo .banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   transition: transform 0.45s ease, filter 0.45s ease;
 }
 
-/* Hover principal */
-.item:hover,
-.jogo:hover {
+/* Hover Netflix / PS5 */
+.item:hover {
   transform: scale(1.06);
   box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.8),
-    0 0 25px rgba(0, 140, 255, 0.45);
+    0 25px 60px rgba(0,0,0,0.8),
+    0 0 25px rgba(0,140,255,0.45);
 }
 
-/* Zoom da imagem */
-.item:hover img,
-.jogo:hover .banner img {
+.item:hover img {
   transform: scale(1.12);
   filter: brightness(1.1) contrast(1.05);
 }
 
-/* Overlay escuro estilo Netflix */
-.item::after,
-.jogo::after {
+/* Overlay */
+.item::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -338,87 +136,64 @@ RESPONSIVO MOBILE
   );
   opacity: 0;
   transition: opacity 0.35s ease;
-  pointer-events: none;
 }
 
-.item:hover::after,
-.jogo:hover::after {
+.item:hover::after {
   opacity: 1;
 }
 
-/* Título estilo PS5 */
-.jogo span,
-.item span {
-  position: absolute;
-  bottom: 14px;
-  left: 16px;
-  z-index: 2;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-shadow: 0 3px 12px rgba(0,0,0,0.9);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.35s ease;
-}
-
-.jogo:hover span,
-.item:hover span {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ===== MOBILE PERFECT FIX ===== */
+/* ===============================
+ MOBILE – ESTILO NETFLIX
+================================ */
 @media (max-width: 768px) {
 
-  .item,
-  .jogo {
-    border-radius: 12px;
-    transform: none !important;
-    box-shadow: none;
+  .container {
+    padding: 12px;
   }
 
-  /* Banner com proporção fixa */
-  .item img,
-  .jogo .banner img {
+  .carrossel-items {
+    gap: 12px;
+  }
+
+  .item {
     width: 100%;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .item img {
     transform: none !important;
     filter: none !important;
   }
 
-  /* Remove zoom exagerado no toque */
-  .item:hover,
-  .jogo:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* Overlay sempre visível no mobile */
-  .item::after,
-  .jogo::after {
+  .item::after {
     opacity: 1;
   }
 
-  /* Título sempre visível */
-  .item span,
-  .jogo span {
-    opacity: 1;
-    transform: none;
-    font-size: 14px;
-    bottom: 10px;
-    left: 12px;
-  }
-
-  /* Grid mais bonito */
   .grid,
-  .lista,
   .catalogo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    padding: 12px;
+  }
+}
+
+/* ===============================
+ TV / ANDROID TV
+================================ */
+@media (min-width: 1200px) {
+
+  .grid,
+  .catalogo {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+
+  .item:focus {
+    outline: 3px solid #fff;
+    transform: scale(1.08);
+    z-index: 10;
   }
 }
