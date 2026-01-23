@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Game Boy Color - ClaudPlay</title>
 
-  <!-- CDN EmulatorJS (GameBoy Color) -->
+  <!-- Carrega o EmulatorJS via CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emulatorjs@latest/dist/emulator.css" />
 </head>
 <body style="margin:0; background:#000;">
@@ -21,12 +21,11 @@
       document.body.innerHTML = "<h2 style='color:#fff; text-align:center; padding-top:20px;'>ROM não encontrada.</h2>";
     } else {
       EmulatorJS.init({
-        "target": "#emulator",
-        "system": "gbc",
-        "rom": rom
+        target: "#emulator",
+        system: "gbc",
+        rom: rom
       });
     }
   </script>
-
 </body>
 </html>
