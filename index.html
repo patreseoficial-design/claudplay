@@ -79,7 +79,7 @@
   </section>
 
   <!-- FAVORITOS (NOVO) -->
-  <section class="favoritos" id="favoritosSec">
+  <section class="favoritos" id="favoritosSec" style="display:none;">
     <h2>Favoritos</h2>
     <div class="favoritos-items" id="favoritosItems"></div>
   </section>
@@ -115,6 +115,8 @@ const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
 const favoritosItems = document.getElementById("favoritosItems");
+const favoritosSec = document.getElementById("favoritosSec");
+
 let indexAtual = 0;
 
 function mudarBanner(i){
@@ -170,6 +172,13 @@ let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
 function atualizarFavoritos(){
   favoritosItems.innerHTML = "";
+
+  if (favoritos.length === 0) {
+    favoritosSec.style.display = "none";
+    return;
+  }
+
+  favoritosSec.style.display = "block";
 
   favoritos.forEach(fav => {
     const item = Array.from(itens).find(i => i.dataset.link === fav);
