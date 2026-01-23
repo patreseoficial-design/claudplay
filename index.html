@@ -8,7 +8,7 @@
 
   <!-- =========================
        MANIFEST E ÍCONES PWA
-  ========================== -->
+  ========================= -->
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
   <meta name="theme-color" content="#6b00ff" />
@@ -146,21 +146,17 @@
 </footer>
 
 <!-- ÁREA DO JOGO -->
-<div id="jogoArea" style="display:none; position:fixed; inset:0; background:#000; z-index:999;">
+<div id="jogoArea" class="jogoArea">
 
   <button onclick="fecharJogo()"
-    style="position:absolute;top:10px;left:10px;z-index:1000;
-    padding:8px 14px;font-size:14px;background:#2d6cff;
-    color:#fff;border:none;border-radius:10px;cursor:pointer;">
+    class="btnFechar">
     ⬅ Fechar
   </button>
 
-  <iframe id="iframeJogo" style="width:100%; height:100%; border:none;"></iframe>
+  <iframe id="iframeJogo" class="iframeJogo"></iframe>
 </div>
 
-<div id="loadingOverlay"
-  style="display:none; position:fixed; inset:0; background:#000;
-  z-index:1000; color:#fff; justify-content:center; align-items:center;">
+<div id="loadingOverlay" class="loadingOverlay">
   Carregando jogo...
 </div>
 
@@ -392,7 +388,7 @@ checarLogin();
 
 function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
-  document.getElementById("jogoArea").style.display = "block";
+  document.getElementById("jogoArea").style.display = "flex";
   const iframe = document.getElementById("iframeJogo");
   iframe.src = url;
   iframe.onload = () => {
@@ -589,6 +585,54 @@ function fecharJogo(){
 
 @media (max-width: 600px){
   .favItem{ min-width: 130px; }
+}
+
+/* =========================
+   JOGO (CENTRALIZADO)
+========================= */
+.jogoArea{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
+
+.iframeJogo{
+  width: 90vw;
+  height: 85vh;
+  max-width: 1200px;
+  max-height: 720px;
+  border:none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.12);
+}
+
+.btnFechar{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:1000;
+  padding:8px 14px;
+  font-size:14px;
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.loadingOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  color:#fff;
+  justify-content:center;
+  align-items:center;
 }
 </style>
 
