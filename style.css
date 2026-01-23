@@ -197,3 +197,36 @@ a {
     z-index: 10;
   }
 }
+/* TEXTO SOBRE O BANNER (PC / TV) */
+.banner {
+  position: relative;
+}
+
+.banner .titulo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* 📱 MOBILE: texto fora do banner */
+@media (max-width: 600px) {
+  .banner .titulo {
+    position: static;
+    background: none;
+    color: #fff;
+    padding: 6px 0 0;
+    font-size: 13px;
+  }
+
+  .banner {
+    display: flex;
+    flex-direction: column;
+  }
+}
