@@ -19,86 +19,30 @@ body{
 }
 
 .logo{
-  font-size:20px;
+  font-size:22px;
   font-weight:bold;
 }
 
 .menu{
-  margin-top:6px;
+  margin-top:8px;
   font-size:14px;
-  color:#9f9f9f;
+  color:#aaa;
   cursor:pointer;
 }
 
-.menu:hover{
-  color:#6b00ff;
-}
+.menu:hover{color:#fff}
 
-.container{
-  padding:20px;
-  display:none;
-}
+.container{padding:20px}
 
-.carrossel-items{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-}
-
-.item{
-  min-width:220px;
-  aspect-ratio:16/9;
-  border-radius:14px;
-  overflow:hidden;
-  cursor:pointer;
-  background:#000;
-}
-
-.item img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.jogoArea{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:999;
-  justify-content:center;
-  align-items:center;
-}
-
-.iframeJogo{
-  width:95vw;
-  height:85vh;
-  max-width:980px;
-  max-height:720px;
-  border:none;
-}
-
-.btnFechar{
-  position:absolute;
-  top:12px;
-  left:12px;
-  background:#6b00ff;
-  color:#fff;
-  border:none;
-  padding:8px 14px;
-  border-radius:10px;
+.categoria{
+  margin-top:20px;
+  padding:14px;
+  background:#161616;
+  border-radius:12px;
   cursor:pointer;
 }
 
-.loadingOverlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:1000;
-  justify-content:center;
-  align-items:center;
-}
+.categoria:hover{background:#1f1f1f}
 </style>
 </head>
 
@@ -106,63 +50,18 @@ body{
 
 <div class="topo">
   <div class="logo">ClaudPlay</div>
-  <div class="menu" onclick="abrirSuperNintendo()">Todos os jogos</div>
+  <div class="menu" onclick="mostrarCategorias()">Todos os jogos</div>
 </div>
 
-<div class="container">
-  <h2>Super Nintendo</h2>
-  <div class="carrossel-items"></div>
-</div>
-
-<div class="jogoArea">
-  <button class="btnFechar" onclick="fecharJogo()">Fechar</button>
-  <iframe class="iframeJogo"></iframe>
-</div>
-
-<div class="loadingOverlay">
-  <h2>Carregando jogo...</h2>
+<div class="container" id="categorias" style="display:none">
+  <div class="categoria" onclick="location.href='Emuladores/SuperNintendo/supernintendo.html'">
+    🎮 Super Nintendo
+  </div>
 </div>
 
 <script>
-const container = document.querySelector(".container");
-const carrossel = document.querySelector(".carrossel-items");
-
-function abrirSuperNintendo(){
-  container.style.display = "block";
-  carregarJogos();
-}
-
-function carregarJogos(){
-  fetch("Emuladores/SuperNintendo/games.json")
-    .then(res => res.json())
-    .then(jogos => {
-      carrossel.innerHTML = "";
-      jogos.forEach(jogo => {
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `<img src="${jogo.banner}" alt="${jogo.nome}">`;
-        div.onclick = () => abrirJogo(jogo);
-        carrossel.appendChild(div);
-      });
-    });
-}
-
-function abrirJogo(jogo){
-  document.querySelector(".loadingOverlay").style.display="flex";
-  document.querySelector(".jogoArea").style.display="flex";
-
-  document.querySelector(".iframeJogo").src =
-    "Emuladores/SuperNintendo/snes.html?rom=" +
-    encodeURIComponent(jogo.rom);
-
-  setTimeout(()=>{
-    document.querySelector(".loadingOverlay").style.display="none";
-  },1200);
-}
-
-function fecharJogo(){
-  document.querySelector(".jogoArea").style.display="none";
-  document.querySelector(".iframeJogo").src="";
+function mostrarCategorias(){
+  document.getElementById("categorias").style.display="block";
 }
 </script>
 
