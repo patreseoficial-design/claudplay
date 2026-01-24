@@ -70,61 +70,7 @@
     </div>
 
     <div class="carrossel-items" id="carrossel">
-
-      <a class="item"
-         data-title="Super Mario World"
-         data-desc="Clássico absoluto do Super Nintendo"
-         data-img="Banner/mario_banner.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
-        <img src="Banner/mario_banner.jpeg">
-        <span class="fav" data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Bomberman"
-         data-desc="Clássico do NES"
-         data-img="Banner/bannerbomberman.jpeg"
-         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
-        <img src="Banner/bannerbomberman.jpeg">
-        <span class="fav" data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Aladdin"
-         data-desc="Clássico do Mega Drive"
-         data-img="Banner/aladdin.jpeg"
-         data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
-        <img src="Banner/aladdin.jpeg">
-        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Sonic"
-         data-desc="Clássico do Mega Drive"
-         data-img="Banner/sonic_banner.jpeg"
-         data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICK.ZIP">
-        <img src="Banner/sonic_banner.jpeg">
-        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICSB.ZIP">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Super Mario Bros Deluxe"
-         data-desc="Game Boy Color"
-         data-img="Banner/bannersuoermariodeluxe.jpeg"
-         data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">
-        <img src="Banner/bannersuoermariodeluxe.jpeg">
-        <span class="fav" data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Nintendo 64"
-         data-desc="International Superstar Soccer 64"
-         data-img="Banner/bannerfutebol64.jpeg"
-         data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
-        <img src="Banner/bannerfutebol64.jpeg">
-        <span class="fav" data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">☆</span>
-      </a>
-
+      <!-- OS JOGOS SERÃO GERADOS AQUI -->
     </div>
   </section>
 
@@ -183,7 +129,7 @@ function checarLogin(){
     loginScreen.style.display = "none";
     mainApp.style.display = "block";
     btnLogout.style.display = "block";
-    carregarFavoritos(); // AGORA SIM
+    carregarFavoritos();
   } else {
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
@@ -245,15 +191,73 @@ btnLogout.onclick = () => {
 }
 
 /* =========================
-   SEU CÓDIGO DO SITE (carrossel, favoritos...)
+   CARROSSEL DINÂMICO DO JSON
 ========================= */
 
-const itens = document.querySelectorAll(".item");
+const carrossel = document.getElementById("carrossel");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
 const favoritosItems = document.getElementById("favoritosItems");
+
+let jogos = [];
+let itens = [];
 let indexAtual = 0;
+
+async function carregarJogos(){
+  const response = await fetch("Emuladores/SuperNintendo/games.json");
+  jogos = await response.json();
+
+  carrossel.innerHTML = "";
+
+  jogos.forEach((jogo, i) => {
+    const item = document.createElement("a");
+    item.className = "item";
+    item.dataset.title = jogo.title;
+    item.dataset.desc = jogo.console;
+    item.dataset.img = "Banner/" + jogo.banner;
+    item.dataset.link = `Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(jogo.rom)}`;
+
+    item.innerHTML = `
+      <img src="${item.dataset.img}">
+      <span class="fav" data-link="${item.dataset.link}">☆</span>
+    `;
+
+    carrossel.appendChild(item);
+  });
+
+  itens = document.querySelectorAll(".item");
+  atualizarEventos();
+  mudarBanner(0);
+}
+
+function atualizarEventos(){
+  itens.forEach((item, i) => {
+    item.addEventListener("click", () => {
+      indexAtual = i;
+      mudarBanner(i);
+      salvarUltimoJogo(item);
+      abrirJogo(item.dataset.link);
+    });
+  });
+
+  document.querySelectorAll(".fav").forEach(fav => {
+    fav.onclick = (e) => {
+      e.stopPropagation();
+      const link = fav.dataset.link;
+
+      if (favoritos.includes(link)) {
+        favoritos = favoritos.filter(f => f !== link);
+      } else {
+        favoritos.push(link);
+      }
+
+      localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
+      atualizarFavoritos();
+      atualizarEstrelas();
+    };
+  });
+}
 
 function mudarBanner(i){
   bannerImg.src = itens[i].dataset.img;
@@ -270,15 +274,6 @@ document.getElementById("next").onclick = () => {
   indexAtual = (indexAtual + 1) % itens.length;
   mudarBanner(indexAtual);
 };
-
-itens.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    indexAtual = i;
-    mudarBanner(i);
-    salvarUltimoJogo(item);
-    abrirJogo(item.dataset.link);
-  });
-});
 
 document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
@@ -357,23 +352,6 @@ function atualizarEstrelas(){
   });
 }
 
-document.querySelectorAll(".fav").forEach(fav => {
-  fav.onclick = (e) => {
-    e.stopPropagation();
-    const link = fav.dataset.link;
-
-    if (favoritos.includes(link)) {
-      favoritos = favoritos.filter(f => f !== link);
-    } else {
-      favoritos.push(link);
-    }
-
-    localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
-    atualizarFavoritos();
-    atualizarEstrelas();
-  };
-});
-
 /* =========================
    BOTÃO BETA (VOLTA PRA TELA INICIAL)
 ========================= */
@@ -395,19 +373,13 @@ async function abrirJogo(url){
   const iframe = document.getElementById("iframeJogo");
   iframe.src = url;
 
-  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
   try {
     await document.documentElement.requestFullscreen();
-  } catch (e) {
-    // se não der, continua normal
-  }
+  } catch (e) {}
 
-  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
   try {
     await screen.orientation.lock("landscape");
-  } catch (e) {
-    // se não der, continua normal
-  }
+  } catch (e) {}
 
   iframe.onload = () => {
     document.getElementById("loadingOverlay").style.display = "none";
@@ -418,12 +390,10 @@ function fecharJogo(){
   document.getElementById("jogoArea").style.display = "none";
   document.getElementById("iframeJogo").src = "";
 
-  // SAI DO FULLSCREEN
   if (document.fullscreenElement) {
     document.exitFullscreen();
   }
 
-  // DESBLOQUEIA ORIENTAÇÃO
   try {
     screen.orientation.unlock();
   } catch (e) {}
