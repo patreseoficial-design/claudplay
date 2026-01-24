@@ -1,679 +1,581 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>ClaudPlay</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- =========================
-       MANIFEST E ÍCONES PWA
-  ========================= -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-  <meta name="theme-color" content="#6b00ff" />
+  <!-- CSS -->
+  <style>
+    /* ===============================
+    ESTILO BASE
+    ================================ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===============================
+    TOPO
+    ================================ */
+    .topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #101010;
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .beta {
+      background: #6b00ff;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* ===============================
+    CONTAINER
+    ================================ */
+    .container {
+      padding: 20px 40px;
+    }
+
+    /* ===============================
+    BANNER DESTAQUE
+    ================================ */
+    .banner {
+      display: flex;
+      align-items: center;
+      background: #1a1a1a;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .banner-img img {
+      width: 260px;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .banner-info {
+      padding: 20px;
+    }
+
+    /* ===============================
+    CARROSSEL
+    ================================ */
+    .carrossel {
+      margin-top: 20px;
+    }
+
+    .carrossel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .carrossel-items {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    /* ===============================
+    CARD DE JOGO (PADRÃO NETFLIX)
+    ================================ */
+    .item {
+      flex: 0 0 auto;
+      width: 220px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+      cursor: pointer;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease, filter 0.45s ease;
+    }
+
+    .item:hover {
+      transform: scale(1.06);
+      box-shadow:
+        0 25px 60px rgba(0,0,0,0.8),
+        0 0 25px rgba(0,140,255,0.45);
+    }
+
+    .item:hover img {
+      transform: scale(1.12);
+      filter: brightness(1.1) contrast(1.05);
+    }
+
+    .item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.15),
+        rgba(0,0,0,0)
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .item:hover::after {
+      opacity: 1;
+    }
+
+    /* ===============================
+    MOBILE – ESTILO NETFLIX
+    ================================ */
+    @media (max-width: 768px) {
+      .container {
+        padding: 12px;
+      }
+
+      .carrossel-items {
+        gap: 12px;
+      }
+
+      .item {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .item img {
+        transform: none !important;
+        filter: none !important;
+      }
+
+      .item::after {
+        opacity: 1;
+      }
+    }
+
+    /* ===============================
+    TV / ANDROID TV
+    ================================ */
+    @media (min-width: 1200px) {
+      .grid,
+      .catalogo {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 20px;
+      }
+
+      .item:focus {
+        outline: 3px solid #fff;
+        transform: scale(1.08);
+        z-index: 10;
+      }
+    }
+
+    /* ===============================
+    LOGIN
+    ================================ */
+    .loginScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, #0a0f18, #05070a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loginBox {
+      box-sizing: border-box;
+      width: 90%;
+      max-width: 380px;
+      padding: 30px 20px;
+      background: rgba(10, 13, 18, 0.9);
+      border: 1px solid #2d6cff;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
+    }
+
+    .loginBox h2 {
+      margin: 0 0 12px 0;
+      font-size: 28px;
+      color: #eaf1ff;
+    }
+
+    .loginBox input {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 10px 0;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #2d6cff;
+      background: #0d1320;
+      color: #eaf1ff;
+      font-size: 16px;
+    }
+
+    .btnPrimary {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: #2d6cff;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    .btnPrimary:hover {
+      background: #3a7bff;
+    }
+
+    .switchText {
+      margin-top: 14px;
+      color: #aebdff;
+      font-size: 14px;
+    }
+
+    .switchLink {
+      color: #2d6cff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* ===============================
+    TOPO
+    ================================ */
+    .topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: #0c1018;
+      color: #fff;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .logoutBtn {
+      background: #2d6cff;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Estrela */
+    .fav {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    /* BOTÃO BETA */
+    .betaBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 12px;
+      background: #2d6cff;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 12px;
+      z-index: 100;
+      box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
+    }
+
+    /* ===============================
+    FAVORITOS
+    ================================ */
+    .favoritos {
+      margin-top: 30px;
+    }
+
+    .favoritos-items {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .favItem {
+      min-width: 160px;
+      background: #111;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .favItem img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .favInfo h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .favInfo p {
+      margin: 0;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .remFav {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #2d6cff;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .favItem {
+        min-width: 130px;
+      }
+    }
+
+    /* ===============================
+    RODAPÉ
+    ================================ */
+    .rodape {
+      text-align: center;
+      padding: 12px 0;
+      color: #fff;
+      background: #0b0f13;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    /* =========================
+       BANNER MOBILE - TEXTO ABAIXO
+    ========================= */
+    @media (max-width: 600px) {
+
+      .banner {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+      }
+
+      .banner-img {
+        width: 100%;
+      }
+
+      .banner-img img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .banner-info {
+        width: 100%;
+        padding: 14px 12px;
+        background: #0b0b0b;
+        position: static;
+        text-align: left;
+      }
+
+      .banner-info h1 {
+        font-size: 18px;
+        line-height: 1.3;
+        margin: 0 0 6px 0;
+        color: #fff;
+      }
+
+      .banner-info p {
+        font-size: 13px;
+        line-height: 1.3;
+        margin: 0;
+        color: #cfcfcf;
+      }
+    }
+
+    /* =========================
+       AREA DO JOGO (CENTRALIZADO)
+    ========================= */
+    .jogoArea{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#000;
+      z-index:999;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 20px;
+    }
+
+    .iframeJogo{
+      width: 95vw;
+      height: 85vh;
+      max-width: 980px;
+      max-height: 720px;
+      border:none;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    }
+
+    /* Botão fechar */
+    .btnFechar{
+      position:absolute;
+      top: 12px;
+      left: 12px;
+      z-index:1000;
+      padding: 8px 14px;
+      font-size: 14px;
+      background:#2d6cff;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    /* Loading */
+    .loadingOverlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#000;
+      z-index:1000;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- =========================
-     TELA DE LOGIN
-========================= -->
-<div id="loginScreen" class="loginScreen">
-  <div class="loginBox">
-    <h2 id="loginTitle">Entrar</h2>
-
-    <input type="text" id="loginUser" placeholder="Usuário">
-    <input type="password" id="loginPass" placeholder="Senha">
-
-    <button id="btnLogin" class="btnPrimary">Entrar</button>
-
-    <p id="loginMsg"></p>
-
-    <p class="switchText">
-      Não tem conta? <span id="btnSwitch" class="switchLink">Criar conta</span>
-    </p>
+  <!-- TOPO -->
+  <div class="topo">
+    <div class="logo">ClaudPlay</div>
+    <div class="beta">BETA</div>
   </div>
-</div>
 
-<!-- =========================
-     PÁGINA PRINCIPAL
-========================= -->
-<div id="mainApp">
-
-<header class="topo">
-  <div class="logo">ClaudPlay 🎮</div>
-  <button id="btnLogout" class="logoutBtn">Sair</button>
-</header>
-
-<main class="container">
-
-  <!-- BANNER PRINCIPAL -->
-  <a href="javascript:void(0)" class="banner" id="bannerPrincipal">
-    <div class="banner-img">
-      <img src="Banner/mario_banner.jpeg" id="bannerImg" />
-    </div>
-    <div class="banner-info">
-      <h1 id="bannerTitle">Super Mario World</h1>
-      <p id="bannerDesc">Jogue direto no navegador</p>
-    </div>
-  </a>
-
-  <!-- CARROSSEL -->
-  <section class="carrossel">
-    <div class="carrossel-title">
-      <h2>Jogos</h2>
-      <div class="carrossel-arrows">
-        <button id="prev">⟵</button>
-        <button id="next">⟶</button>
+  <!-- CONTAINER -->
+  <div class="container">
+    <div class="banner">
+      <div class="banner-img">
+        <img src="banner.jpg" alt="Banner">
+      </div>
+      <div class="banner-info">
+        <h1>Bem-vindo ao ClaudPlay</h1>
+        <p>Escolha um jogo abaixo para começar.</p>
       </div>
     </div>
 
-    <div class="carrossel-items" id="carrossel">
-
-      <a class="item"
-         data-title="Super Mario World"
-         data-desc="Clássico absoluto do Super Nintendo"
-         data-img="Banner/mario_banner.jpeg"
-         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
-        <img src="Banner/mario_banner.jpeg">
-        <span class="fav" data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Bomberman"
-         data-desc="Clássico do NES"
-         data-img="Banner/bannerbomberman.jpeg"
-         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
-        <img src="Banner/bannerbomberman.jpeg">
-        <span class="fav" data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Aladdin"
-         data-desc="Clássico do Mega Drive"
-         data-img="Banner/aladdin.jpeg"
-         data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
-        <img src="Banner/aladdin.jpeg">
-        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Sonic"
-         data-desc="Clássico do Mega Drive"
-         data-img="Banner/sonic_banner.jpeg"
-         data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICK.ZIP">
-        <img src="Banner/sonic_banner.jpeg">
-        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICSB.ZIP">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Super Mario Bros Deluxe"
-         data-desc="Game Boy Color"
-         data-img="Banner/bannersuoermariodeluxe.jpeg"
-         data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">
-        <img src="Banner/bannersuoermariodeluxe.jpeg">
-        <span class="fav" data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">☆</span>
-      </a>
-
-      <a class="item"
-         data-title="Nintendo 64"
-         data-desc="International Superstar Soccer 64"
-         data-img="Banner/bannerfutebol64.jpeg"
-         data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
-        <img src="Banner/bannerfutebol64.jpeg">
-        <span class="fav" data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">☆</span>
-      </a>
-
+    <!-- CARROSSEL -->
+    <div class="carrossel">
+      <div class="carrossel-title">
+        <h2>Jogos</h2>
+      </div>
+      <div class="carrossel-items">
+        <!-- Itens serão inseridos via JS -->
+      </div>
     </div>
-  </section>
-
-  <!-- BOTÃO BETA (CANTO DIREITO) -->
-  <div class="betaContainer">
-    <button id="btnBeta" class="betaBtn">BETA</button>
   </div>
 
-  <!-- FAVORITOS (NOVO) -->
-  <section class="favoritos" id="favoritosSec">
-    <h2>Favoritos</h2>
-    <div class="favoritos-items" id="favoritosItems"></div>
-  </section>
+  <!-- AREA DO JOGO -->
+  <div class="jogoArea">
+    <button class="btnFechar" onclick="fecharJogo()">Fechar</button>
+    <iframe class="iframeJogo" src="" frameborder="0"></iframe>
+  </div>
 
-</main>
+  <!-- LOADING -->
+  <div class="loadingOverlay">
+    <h2>Carregando o jogo...</h2>
+  </div>
 
-<footer class="rodape">
-  <p>Versão Beta • ClaudPlay ©</p>
-</footer>
+  <!-- SCRIPT -->
+  <script>
+    const jogos = [
+      { nome: "Sonic", rom: "SONICK.ZIP", banner: "banners/sonic.jpg" },
+      { nome: "Sonic 2", rom: "SONICSB.ZIP", banner: "banners/sonic2.jpg" },
+      { nome: "Aladdin", rom: "ALADDIN.ZIP", banner: "banners/aladdin.jpg" }
+    ];
 
-<!-- ÁREA DO JOGO -->
-<div id="jogoArea" class="jogoArea">
+    const carrossel = document.querySelector(".carrossel-items");
 
-  <button onclick="fecharJogo()" class="btnFechar">
-    ⬅ Fechar
-  </button>
+    jogos.forEach(jogo => {
+      const item = document.createElement("div");
+      item.classList.add("item");
+      item.innerHTML = `<img src="${jogo.banner}" alt="${jogo.nome}" />`;
+      item.addEventListener("click", () => {
+        abrirJogo(jogo);
+      });
+      carrossel.appendChild(item);
+    });
 
-  <iframe id="iframeJogo" class="iframeJogo"></iframe>
-</div>
+    function abrirJogo(jogo) {
+      document.querySelector(".loadingOverlay").style.display = "flex";
+      document.querySelector(".jogoArea").style.display = "flex";
 
-<div id="loadingOverlay" class="loadingOverlay">
-  Carregando jogo...
-</div>
+      const iframe = document.querySelector(".iframeJogo");
+      iframe.src = `Emuladores/SuperNintendo/snes.html?rom=${jogo.rom}`;
 
-</div> <!-- FIM MAIN APP -->
-
-<script>
-/* =========================
-   LOGIN + CADASTRO
-========================= */
-const loginScreen = document.getElementById("loginScreen");
-const mainApp = document.getElementById("mainApp");
-const btnLogin = document.getElementById("btnLogin");
-const btnSwitch = document.getElementById("btnSwitch");
-const loginTitle = document.getElementById("loginTitle");
-const loginMsg = document.getElementById("loginMsg");
-const btnLogout = document.getElementById("btnLogout");
-
-let modo = "login"; // login ou cadastro
-let usuarioAtual = null;
-
-function checarLogin(){
-  const logado = localStorage.getItem("logado");
-  if (logado === "true"){
-    usuarioAtual = localStorage.getItem("userLogado");
-    loginScreen.style.display = "none";
-    mainApp.style.display = "block";
-    btnLogout.style.display = "block";
-    carregarFavoritos(); // AGORA SIM
-  } else {
-    loginScreen.style.display = "flex";
-    mainApp.style.display = "none";
-    btnLogout.style.display = "none";
-  }
-}
-
-btnSwitch.onclick = () => {
-  if (modo === "login"){
-    modo = "cadastro";
-    loginTitle.innerText = "Criar Conta";
-    btnLogin.innerText = "Criar";
-    btnSwitch.innerText = "Voltar ao login";
-    loginMsg.innerText = "";
-  } else {
-    modo = "login";
-    loginTitle.innerText = "Entrar";
-    btnLogin.innerText = "Entrar";
-    btnSwitch.innerText = "Criar conta";
-    loginMsg.innerText = "";
-  }
-}
-
-btnLogin.onclick = () => {
-  const user = document.getElementById("loginUser").value;
-  const pass = document.getElementById("loginPass").value;
-
-  if (!user || !pass){
-    loginMsg.innerText = "Preencha usuário e senha";
-    return;
-  }
-
-  if (modo === "cadastro"){
-    localStorage.setItem("user_" + user, pass);
-    loginMsg.innerText = "Conta criada! Agora faça login";
-    modo = "login";
-    loginTitle.innerText = "Entrar";
-    btnLogin.innerText = "Entrar";
-    btnSwitch.innerText = "Criar conta";
-  } else {
-    const savedPass = localStorage.getItem("user_" + user);
-
-    if (pass === savedPass){
-      localStorage.setItem("logado", "true");
-      localStorage.setItem("userLogado", user);
-      usuarioAtual = user;
-      checarLogin();
-    } else {
-      loginMsg.innerText = "Usuário ou senha incorretos";
-    }
-  }
-}
-
-btnLogout.onclick = () => {
-  localStorage.setItem("logado", "false");
-  localStorage.removeItem("userLogado");
-  usuarioAtual = null;
-  checarLogin();
-}
-
-/* =========================
-   SEU CÓDIGO DO SITE (carrossel, favoritos...)
-========================= */
-
-const itens = document.querySelectorAll(".item");
-const bannerImg = document.getElementById("bannerImg");
-const bannerTitle = document.getElementById("bannerTitle");
-const bannerDesc = document.getElementById("bannerDesc");
-const favoritosItems = document.getElementById("favoritosItems");
-let indexAtual = 0;
-
-function mudarBanner(i){
-  bannerImg.src = itens[i].dataset.img;
-  bannerTitle.innerText = itens[i].dataset.title;
-  bannerDesc.innerText = itens[i].dataset.desc;
-}
-
-document.getElementById("prev").onclick = () => {
-  indexAtual = (indexAtual - 1 + itens.length) % itens.length;
-  mudarBanner(indexAtual);
-};
-
-document.getElementById("next").onclick = () => {
-  indexAtual = (indexAtual + 1) % itens.length;
-  mudarBanner(indexAtual);
-};
-
-itens.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    indexAtual = i;
-    mudarBanner(i);
-    salvarUltimoJogo(item);
-    abrirJogo(item.dataset.link);
-  });
-});
-
-document.getElementById("bannerPrincipal").onclick = () => {
-  abrirJogo(itens[indexAtual].dataset.link);
-};
-
-// ===== SALVAR ÚLTIMO JOGO =====
-function salvarUltimoJogo(item){
-  localStorage.setItem("ultimoJogo", JSON.stringify({
-    title: item.dataset.title,
-    desc: item.dataset.desc,
-    img: item.dataset.img,
-    link: item.dataset.link
-  }));
-}
-
-// ===== RESTAURAR ÚLTIMO JOGO =====
-const salvo = localStorage.getItem("ultimoJogo");
-if (salvo){
-  const jogo = JSON.parse(salvo);
-  bannerImg.src = jogo.img;
-  bannerTitle.innerText = jogo.title;
-  bannerDesc.innerText = jogo.desc;
-}
-
-/* =========================
-   FAVORITOS POR USUÁRIO
-========================= */
-let favoritos = [];
-
-function getKeyFavoritos(){
-  return "favoritos_" + usuarioAtual;
-}
-
-function carregarFavoritos(){
-  if (!usuarioAtual) return;
-  favoritos = JSON.parse(localStorage.getItem(getKeyFavoritos())) || [];
-  atualizarFavoritos();
-  atualizarEstrelas();
-}
-
-function atualizarFavoritos(){
-  favoritosItems.innerHTML = "";
-
-  favoritos.forEach(fav => {
-    const item = Array.from(itens).find(i => i.dataset.link === fav);
-    if (item){
-      const div = document.createElement("div");
-      div.className = "favItem";
-      div.innerHTML = `
-        <img src="${item.dataset.img}">
-        <div class="favInfo">
-          <h3>${item.dataset.title}</h3>
-          <p>${item.dataset.desc}</p>
-        </div>
-        <button class="remFav">Remover</button>
-      `;
-      div.querySelector(".remFav").onclick = (e) => {
-        e.stopPropagation();
-        favoritos = favoritos.filter(f => f !== fav);
-        localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
-        atualizarFavoritos();
-        atualizarEstrelas();
-      };
-      div.onclick = () => abrirJogo(item.dataset.link);
-      favoritosItems.appendChild(div);
-    }
-  });
-
-  document.getElementById("favoritosSec").style.display = favoritos.length ? "block" : "none";
-}
-
-function atualizarEstrelas(){
-  document.querySelectorAll(".fav").forEach(fav => {
-    const link = fav.dataset.link;
-    fav.innerText = favoritos.includes(link) ? "★" : "☆";
-  });
-}
-
-document.querySelectorAll(".fav").forEach(fav => {
-  fav.onclick = (e) => {
-    e.stopPropagation();
-    const link = fav.dataset.link;
-
-    if (favoritos.includes(link)) {
-      favoritos = favoritos.filter(f => f !== link);
-    } else {
-      favoritos.push(link);
+      setTimeout(() => {
+        document.querySelector(".loadingOverlay").style.display = "none";
+      }, 4000);
     }
 
-    localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
-    atualizarFavoritos();
-    atualizarEstrelas();
-  };
-});
-
-/* =========================
-   BOTÃO BETA (VOLTA PRA TELA INICIAL)
-========================= */
-document.getElementById("btnBeta").onclick = () => {
-  indexAtual = 0;
-  mudarBanner(0);
-  window.scrollTo(0, 0);
-};
-
-checarLogin();
-
-/* =========================
-   ABRIR JOGO + FULLSCREEN + LANDSCAPE
-========================= */
-
-async function abrirJogo(url){
-  document.getElementById("loadingOverlay").style.display = "flex";
-  document.getElementById("jogoArea").style.display = "flex";
-  const iframe = document.getElementById("iframeJogo");
-  iframe.src = url;
-
-  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
-  try {
-    await document.documentElement.requestFullscreen();
-  } catch (e) {
-    // se não der, continua normal
-  }
-
-  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
-  try {
-    await screen.orientation.lock("landscape");
-  } catch (e) {
-    // se não der, continua normal
-  }
-
-  iframe.onload = () => {
-    document.getElementById("loadingOverlay").style.display = "none";
-  };
-}
-
-function fecharJogo(){
-  document.getElementById("jogoArea").style.display = "none";
-  document.getElementById("iframeJogo").src = "";
-
-  // SAI DO FULLSCREEN
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  }
-
-  // DESBLOQUEIA ORIENTAÇÃO
-  try {
-    screen.orientation.unlock();
-  } catch (e) {}
-}
-</script>
-
-<style>
-/* ===== LOGIN ===== */
-.loginScreen{
-  position:fixed;
-  inset:0;
-  background: linear-gradient(180deg, #0a0f18, #05070a);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.loginBox{
-  background: rgba(10, 13, 18, 0.9);
-  border: 1px solid #2d6cff;
-  padding: 30px 25px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 380px;
-  text-align:center;
-  box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
-}
-
-.loginBox h2{
-  margin: 0;
-  font-size: 28px;
-  color: #eaf1ff;
-}
-
-#loginMsg{
-  margin-top: 8px;
-  font-size: 14px;
-  color: #c7d9ff;
-}
-
-.loginBox input{
-  width:100%;
-  margin: 12px 0;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #2d6cff;
-  background:#0d1320;
-  color:#eaf1ff;
-  font-size: 16px;
-}
-
-.btnPrimary{
-  width:100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: #2d6cff;
-  color:#fff;
-  font-weight: bold;
-  font-size: 16px;
-  cursor:pointer;
-  margin-top: 10px;
-  transition: 0.2s;
-}
-
-.btnPrimary:hover{
-  background: #3a7bff;
-}
-
-.switchText{
-  margin-top: 14px;
-  color:#aebdff;
-  font-size: 14px;
-}
-
-.switchLink{
-  color:#2d6cff;
-  cursor:pointer;
-  font-weight: bold;
-}
-
-/* ===== TOPO ===== */
-.topo{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 20px;
-  background:#0c1018;
-  color:#fff;
-}
-
-.logo{
-  font-weight:bold;
-  font-size:18px;
-}
-
-.logoutBtn{
-  background:#2d6cff;
-  color:#fff;
-  border:none;
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* Estrela */
-.fav{
-  position:absolute;
-  top:8px;
-  right:10px;
-  font-size:20px;
-  cursor:pointer;
-  z-index:3;
-}
-
-/* BOTÃO BETA */
-.betaBtn{
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 12px;
-  background: #2d6cff;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 12px;
-  z-index: 100;
-  box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
-}
-
-/* Favoritos estilo Netflix */
-.favoritos{
-  margin-top: 30px;
-}
-
-.favoritos-items{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding-bottom:10px;
-}
-
-.favItem{
-  min-width: 160px;
-  background:#111;
-  padding:10px;
-  border-radius:10px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  cursor:pointer;
-  position:relative;
-}
-
-.favItem img{
-  width:100%;
-  height: 100px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.favInfo h3{
-  margin:0;
-  font-size:14px;
-}
-
-.favInfo p{
-  margin:0;
-  font-size:12px;
-  color:#ccc;
-}
-
-.remFav{
-  position:absolute;
-  top:8px;
-  right:8px;
-  background:#2d6cff;
-  border:none;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-@media (max-width: 600px){
-  .favItem{ min-width: 130px; }
-}
-
-/* =========================
-   JOGO (CENTRALIZADO)
-========================= */
-.jogoArea{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:999;
-  justify-content:center;
-  align-items:center;
-}
-
-.iframeJogo{
-  width: 90vw;
-  height: 85vh;
-  max-width: 1200px;
-  max-height: 720px;
-  border:none;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.12);
-}
-
-.btnFechar{
-  position:absolute;
-  top:10px;
-  left:10px;
-  z-index:1000;
-  padding:8px 14px;
-  font-size:14px;
-  background:#2d6cff;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.loadingOverlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:1000;
-  color:#fff;
-  justify-content:center;
-  align-items:center;
-}
-</style>
-
-<!-- =========================
-   REGISTRO DO SERVICE WORKER
-========================= -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log("Service Worker registrado"))
-      .catch((err) => console.log("Erro SW:", err));
-  }
-</script>
-
+    function fecharJogo() {
+      document.querySelector(".jogoArea").style.display = "none";
+      document.querySelector(".iframeJogo").src = "";
+    }
+  </script>
 </body>
 </html>
