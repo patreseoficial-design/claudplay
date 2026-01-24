@@ -42,29 +42,11 @@
 <div id="mainApp">
 
 <header class="topo">
-  <div class="logo">
-    ClaudPlay 🎮
-    <span class="subtitle">• Jogos no navegador</span>
-  </div>
-
-  <!-- ESPAÇO DO AVATAR -->
-  <div class="avatarArea">
-    <div class="avatarCircle" id="avatarCircle">👤</div>
-    <span id="userNameDisplay" class="userNameDisplay"></span>
-  </div>
-
+  <div class="logo">ClaudPlay 🎮</div>
   <button id="btnLogout" class="logoutBtn">Sair</button>
 </header>
 
 <main class="container">
-
-  <!-- TELA DE PLATAFORMAS -->
-  <section class="plataformas" id="plataformasSec">
-    <h2 class="sectionTitle">Plataformas</h2>
-    <div class="plataformasGrid" id="plataformasGrid">
-      <!-- Plataformas serão geradas aqui -->
-    </div>
-  </section>
 
   <!-- BANNER PRINCIPAL -->
   <a href="javascript:void(0)" class="banner" id="bannerPrincipal">
@@ -77,10 +59,10 @@
     </div>
   </a>
 
-  <!-- CARROSSEL (DESTAQUES) -->
+  <!-- CARROSSEL -->
   <section class="carrossel">
     <div class="carrossel-title">
-      <h2>Destaques</h2>
+      <h2>Jogos</h2>
       <div class="carrossel-arrows">
         <button id="prev">⟵</button>
         <button id="next">⟶</button>
@@ -88,20 +70,70 @@
     </div>
 
     <div class="carrossel-items" id="carrossel">
-      <!-- OS JOGOS SERÃO GERADOS AQUI -->
+
+      <a class="item"
+         data-title="Super Mario World"
+         data-desc="Clássico absoluto do Super Nintendo"
+         data-img="Banner/mario_banner.jpeg"
+         data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">
+        <img src="Banner/mario_banner.jpeg">
+        <span class="fav" data-link="Emuladores/SuperNintendo/snes.html?rom=SuperMarioWorld.sfc">☆</span>
+      </a>
+
+      <a class="item"
+         data-title="Bomberman"
+         data-desc="Clássico do NES"
+         data-img="Banner/bannerbomberman.jpeg"
+         data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">
+        <img src="Banner/bannerbomberman.jpeg">
+        <span class="fav" data-link="Emuladores/Nes/nes.html?rom=Bomberman.nes">☆</span>
+      </a>
+
+      <a class="item"
+         data-title="Aladdin"
+         data-desc="Clássico do Mega Drive"
+         data-img="Banner/aladdin.jpeg"
+         data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">
+        <img src="Banner/aladdin.jpeg">
+        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=roms/ALADDIN.ZIP">☆</span>
+      </a>
+
+      <a class="item"
+         data-title="Sonic"
+         data-desc="Clássico do Mega Drive"
+         data-img="Banner/sonic_banner.jpeg"
+         data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICK.ZIP">
+        <img src="Banner/sonic_banner.jpeg">
+        <span class="fav" data-link="Emuladores/MegaDrive/megadrive.html?rom=SONICSB.ZIP">☆</span>
+      </a>
+
+      <a class="item"
+         data-title="Super Mario Bros Deluxe"
+         data-desc="Game Boy Color"
+         data-img="Banner/bannersuoermariodeluxe.jpeg"
+         data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">
+        <img src="Banner/bannersuoermariodeluxe.jpeg">
+        <span class="fav" data-link="Emuladores/GameBoyCollor/gbc.html?rom=Super Mario Bros. Deluxe (USA, Europe) (Rev B).zip">☆</span>
+      </a>
+
+      <a class="item"
+         data-title="Nintendo 64"
+         data-desc="International Superstar Soccer 64"
+         data-img="Banner/bannerfutebol64.jpeg"
+         data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">
+        <img src="Banner/bannerfutebol64.jpeg">
+        <span class="fav" data-link="Emuladores/Nintendo64/n64.html?rom=InternationalSuperstarSoccer64.n64">☆</span>
+      </a>
+
     </div>
   </section>
 
-  <!-- TELA DE JOGOS (Netflix Style) -->
-  <section class="gamesScreen" id="gamesScreen">
-    <div class="gamesHeader">
-      <h2 id="gamesTitle"></h2>
-      <button id="btnBack" class="backBtn">Voltar</button>
-    </div>
-    <div class="gamesGrid" id="gamesGrid"></div>
-  </section>
+  <!-- BOTÃO BETA (CANTO DIREITO) -->
+  <div class="betaContainer">
+    <button id="btnBeta" class="betaBtn">BETA</button>
+  </div>
 
-  <!-- FAVORITOS -->
+  <!-- FAVORITOS (NOVO) -->
   <section class="favoritos" id="favoritosSec">
     <h2>Favoritos</h2>
     <div class="favoritos-items" id="favoritosItems"></div>
@@ -115,18 +147,24 @@
 
 <!-- ÁREA DO JOGO -->
 <div id="jogoArea" class="jogoArea">
-  <button onclick="fecharJogo()" class="btnFechar">⬅ Fechar</button>
+
+  <button onclick="fecharJogo()" class="btnFechar">
+    ⬅ Fechar
+  </button>
+
   <iframe id="iframeJogo" class="iframeJogo"></iframe>
 </div>
 
-<div id="loadingOverlay" class="loadingOverlay">Carregando jogo...</div>
+<div id="loadingOverlay" class="loadingOverlay">
+  Carregando jogo...
+</div>
 
 </div> <!-- FIM MAIN APP -->
 
 <script>
 /* =========================
    LOGIN + CADASTRO
-======================== */
+========================= */
 const loginScreen = document.getElementById("loginScreen");
 const mainApp = document.getElementById("mainApp");
 const btnLogin = document.getElementById("btnLogin");
@@ -134,9 +172,8 @@ const btnSwitch = document.getElementById("btnSwitch");
 const loginTitle = document.getElementById("loginTitle");
 const loginMsg = document.getElementById("loginMsg");
 const btnLogout = document.getElementById("btnLogout");
-const userNameDisplay = document.getElementById("userNameDisplay");
 
-let modo = "login";
+let modo = "login"; // login ou cadastro
 let usuarioAtual = null;
 
 function checarLogin(){
@@ -146,10 +183,7 @@ function checarLogin(){
     loginScreen.style.display = "none";
     mainApp.style.display = "block";
     btnLogout.style.display = "block";
-    userNameDisplay.innerText = usuarioAtual;
-    carregarFavoritos();
-    carregarPlataformas();
-    carregarJogosSNES();
+    carregarFavoritos(); // AGORA SIM
   } else {
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
@@ -211,114 +245,15 @@ btnLogout.onclick = () => {
 }
 
 /* =========================
-   PLATAFORMAS (Netflix Style)
-======================== */
-const plataformasGrid = document.getElementById("plataformasGrid");
-const gamesScreen = document.getElementById("gamesScreen");
-const gamesGrid = document.getElementById("gamesGrid");
-const gamesTitle = document.getElementById("gamesTitle");
-const btnBack = document.getElementById("btnBack");
-
-let plataformas = [
-  { id: "snes", name: "Super Nintendo", icon: "🎮", json: "Emuladores/SuperNintendo/games.json" }
-];
-
-btnBack.onclick = () => {
-  gamesScreen.style.display = "none";
-  plataformasGrid.parentElement.style.display = "block";
-};
-
-function carregarPlataformas(){
-  plataformasGrid.innerHTML = "";
-  plataformas.forEach(plata => {
-    const div = document.createElement("div");
-    div.className = "plataformaItem";
-    div.innerHTML = `
-      <div class="plataformaIcon">${plata.icon}</div>
-      <div class="plataformaName">${plata.name}</div>
-    `;
-    div.onclick = () => abrirPlataforma(plata);
-    plataformasGrid.appendChild(div);
-  });
-}
-
-async function abrirPlataforma(plata){
-  plataformasGrid.parentElement.style.display = "none";
-  gamesScreen.style.display = "block";
-  gamesTitle.innerText = plata.name;
-
-  const response = await fetch(plata.json);
-  const jogos = await response.json();
-
-  gamesGrid.innerHTML = "";
-  jogos.forEach(jogo => {
-    const div = document.createElement("div");
-    div.className = "gameItem";
-    div.innerHTML = `
-      <img src="Banner/${jogo.banner || 'default_banner.png'}">
-      <div class="gameInfo">
-        <h3>${jogo.title}</h3>
-        <p>${jogo.console}</p>
-      </div>
-      <button class="btnPlay">Jogar</button>
-    `;
-    div.querySelector(".btnPlay").onclick = () => abrirJogo(`Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(jogo.rom)}`);
-    gamesGrid.appendChild(div);
-  });
-}
-
-/* =========================
-   CARROSSEL DINÂMICO DO JSON (DESTAQUES)
+   SEU CÓDIGO DO SITE (carrossel, favoritos...)
 ========================= */
-const carrossel = document.getElementById("carrossel");
+
+const itens = document.querySelectorAll(".item");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
 const bannerDesc = document.getElementById("bannerDesc");
 const favoritosItems = document.getElementById("favoritosItems");
-
-let jogos = [];
-let itens = [];
 let indexAtual = 0;
-
-async function carregarJogosSNES(){
-  const response = await fetch("Emuladores/SuperNintendo/games.json");
-  jogos = await response.json();
-
-  carrossel.innerHTML = "";
-
-  // Selecionar só alguns para o carrossel (destaques)
-  const destaques = jogos.slice(0, 10);
-
-  destaques.forEach((jogo, i) => {
-    const item = document.createElement("a");
-    item.className = "item";
-    item.dataset.title = jogo.title;
-    item.dataset.desc = jogo.console;
-    item.dataset.img = jogo.banner ? ("Banner/" + jogo.banner) : "Banner/default_banner.png";
-    item.dataset.link = `Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(jogo.rom)}`;
-
-    item.innerHTML = `
-      <img src="${item.dataset.img}">
-      <span class="itemTitle">${jogo.title}</span>
-    `;
-
-    carrossel.appendChild(item);
-  });
-
-  itens = document.querySelectorAll(".item");
-  atualizarEventos();
-  mudarBanner(0);
-}
-
-function atualizarEventos(){
-  itens.forEach((item, i) => {
-    item.addEventListener("click", () => {
-      indexAtual = i;
-      mudarBanner(i);
-      abrirJogo(item.dataset.link);
-    });
-  });
-}
 
 function mudarBanner(i){
   bannerImg.src = itens[i].dataset.img;
@@ -336,54 +271,143 @@ document.getElementById("next").onclick = () => {
   mudarBanner(indexAtual);
 };
 
+itens.forEach((item, i) => {
+  item.addEventListener("click", () => {
+    indexAtual = i;
+    mudarBanner(i);
+    salvarUltimoJogo(item);
+    abrirJogo(item.dataset.link);
+  });
+});
+
 document.getElementById("bannerPrincipal").onclick = () => {
   abrirJogo(itens[indexAtual].dataset.link);
+};
+
+// ===== SALVAR ÚLTIMO JOGO =====
+function salvarUltimoJogo(item){
+  localStorage.setItem("ultimoJogo", JSON.stringify({
+    title: item.dataset.title,
+    desc: item.dataset.desc,
+    img: item.dataset.img,
+    link: item.dataset.link
+  }));
+}
+
+// ===== RESTAURAR ÚLTIMO JOGO =====
+const salvo = localStorage.getItem("ultimoJogo");
+if (salvo){
+  const jogo = JSON.parse(salvo);
+  bannerImg.src = jogo.img;
+  bannerTitle.innerText = jogo.title;
+  bannerDesc.innerText = jogo.desc;
 }
 
 /* =========================
-   FAVORITOS
-======================== */
-function carregarFavoritos(){
-  favoritosItems.innerHTML = "";
-  const favKey = "fav_" + usuarioAtual;
-  const favs = JSON.parse(localStorage.getItem(favKey) || "[]");
+   FAVORITOS POR USUÁRIO
+========================= */
+let favoritos = [];
 
-  favs.forEach(fav => {
-    const div = document.createElement("div");
-    div.className = "favItem";
-    div.innerHTML = `
-      <img src="Banner/${fav.banner || 'default_banner.png'}">
-      <div class="favInfo">
-        <h3>${fav.title}</h3>
-        <p>${fav.console}</p>
-      </div>
-      <button class="remFav">Remover</button>
-    `;
-    div.querySelector(".remFav").onclick = () => removerFavorito(fav.rom);
-    div.onclick = () => abrirJogo(`Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(fav.rom)}`);
-    favoritosItems.appendChild(div);
+function getKeyFavoritos(){
+  return "favoritos_" + usuarioAtual;
+}
+
+function carregarFavoritos(){
+  if (!usuarioAtual) return;
+  favoritos = JSON.parse(localStorage.getItem(getKeyFavoritos())) || [];
+  atualizarFavoritos();
+  atualizarEstrelas();
+}
+
+function atualizarFavoritos(){
+  favoritosItems.innerHTML = "";
+
+  favoritos.forEach(fav => {
+    const item = Array.from(itens).find(i => i.dataset.link === fav);
+    if (item){
+      const div = document.createElement("div");
+      div.className = "favItem";
+      div.innerHTML = `
+        <img src="${item.dataset.img}">
+        <div class="favInfo">
+          <h3>${item.dataset.title}</h3>
+          <p>${item.dataset.desc}</p>
+        </div>
+        <button class="remFav">Remover</button>
+      `;
+      div.querySelector(".remFav").onclick = (e) => {
+        e.stopPropagation();
+        favoritos = favoritos.filter(f => f !== fav);
+        localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
+        atualizarFavoritos();
+        atualizarEstrelas();
+      };
+      div.onclick = () => abrirJogo(item.dataset.link);
+      favoritosItems.appendChild(div);
+    }
+  });
+
+  document.getElementById("favoritosSec").style.display = favoritos.length ? "block" : "none";
+}
+
+function atualizarEstrelas(){
+  document.querySelectorAll(".fav").forEach(fav => {
+    const link = fav.dataset.link;
+    fav.innerText = favoritos.includes(link) ? "★" : "☆";
   });
 }
 
-function removerFavorito(rom){
-  const favKey = "fav_" + usuarioAtual;
-  let favs = JSON.parse(localStorage.getItem(favKey) || "[]");
-  favs = favs.filter(f => f.rom !== rom);
-  localStorage.setItem(favKey, JSON.stringify(favs));
-  carregarFavoritos();
-}
+document.querySelectorAll(".fav").forEach(fav => {
+  fav.onclick = (e) => {
+    e.stopPropagation();
+    const link = fav.dataset.link;
+
+    if (favoritos.includes(link)) {
+      favoritos = favoritos.filter(f => f !== link);
+    } else {
+      favoritos.push(link);
+    }
+
+    localStorage.setItem(getKeyFavoritos(), JSON.stringify(favoritos));
+    atualizarFavoritos();
+    atualizarEstrelas();
+  };
+});
 
 /* =========================
-   ABRIR JOGO
-======================== */
+   BOTÃO BETA (VOLTA PRA TELA INICIAL)
+========================= */
+document.getElementById("btnBeta").onclick = () => {
+  indexAtual = 0;
+  mudarBanner(0);
+  window.scrollTo(0, 0);
+};
+
+checarLogin();
+
+/* =========================
+   ABRIR JOGO + FULLSCREEN + LANDSCAPE
+========================= */
+
 async function abrirJogo(url){
   document.getElementById("loadingOverlay").style.display = "flex";
   document.getElementById("jogoArea").style.display = "flex";
   const iframe = document.getElementById("iframeJogo");
   iframe.src = url;
 
-  try { await document.documentElement.requestFullscreen(); } catch (e) {}
-  try { await screen.orientation.lock("landscape"); } catch (e) {}
+  // TENTA MODO FULLSCREEN (só funciona após clique do usuário)
+  try {
+    await document.documentElement.requestFullscreen();
+  } catch (e) {
+    // se não der, continua normal
+  }
+
+  // TENTA BLOQUEAR ORIENTAÇÃO PARA HORIZONTAL
+  try {
+    await screen.orientation.lock("landscape");
+  } catch (e) {
+    // se não der, continua normal
+  }
 
   iframe.onload = () => {
     document.getElementById("loadingOverlay").style.display = "none";
@@ -394,15 +418,261 @@ function fecharJogo(){
   document.getElementById("jogoArea").style.display = "none";
   document.getElementById("iframeJogo").src = "";
 
-  if (document.fullscreenElement) document.exitFullscreen();
-  try { screen.orientation.unlock(); } catch (e) {}
+  // SAI DO FULLSCREEN
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+
+  // DESBLOQUEIA ORIENTAÇÃO
+  try {
+    screen.orientation.unlock();
+  } catch (e) {}
+}
+</script>
+
+<style>
+/* ===== LOGIN ===== */
+.loginScreen{
+  position:fixed;
+  inset:0;
+  background: linear-gradient(180deg, #0a0f18, #05070a);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.loginBox{
+  background: rgba(10, 13, 18, 0.9);
+  border: 1px solid #2d6cff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 380px;
+  text-align:center;
+  box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
+}
+
+.loginBox h2{
+  margin: 0;
+  font-size: 28px;
+  color: #eaf1ff;
+}
+
+#loginMsg{
+  margin-top: 8px;
+  font-size: 14px;
+  color: #c7d9ff;
+}
+
+.loginBox input{
+  width:100%;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #2d6cff;
+  background:#0d1320;
+  color:#eaf1ff;
+  font-size: 16px;
+}
+
+.btnPrimary{
+  width:100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2d6cff;
+  color:#fff;
+  font-weight: bold;
+  font-size: 16px;
+  cursor:pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.btnPrimary:hover{
+  background: #3a7bff;
+}
+
+.switchText{
+  margin-top: 14px;
+  color:#aebdff;
+  font-size: 14px;
+}
+
+.switchLink{
+  color:#2d6cff;
+  cursor:pointer;
+  font-weight: bold;
+}
+
+/* ===== TOPO ===== */
+.topo{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+  background:#0c1018;
+  color:#fff;
+}
+
+.logo{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.logoutBtn{
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* Estrela */
+.fav{
+  position:absolute;
+  top:8px;
+  right:10px;
+  font-size:20px;
+  cursor:pointer;
+  z-index:3;
+}
+
+/* BOTÃO BETA */
+.betaBtn{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 12px;
+  background: #2d6cff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 100;
+  box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
+}
+
+/* Favoritos estilo Netflix */
+.favoritos{
+  margin-top: 30px;
+}
+
+.favoritos-items{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.favItem{
+  min-width: 160px;
+  background:#111;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  cursor:pointer;
+  position:relative;
+}
+
+.favItem img{
+  width:100%;
+  height: 100px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.favInfo h3{
+  margin:0;
+  font-size:14px;
+}
+
+.favInfo p{
+  margin:0;
+  font-size:12px;
+  color:#ccc;
+}
+
+.remFav{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#2d6cff;
+  border:none;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+@media (max-width: 600px){
+  .favItem{ min-width: 130px; }
 }
 
 /* =========================
-   INICIALIZAÇÃO
-======================== */
-checarLogin();
+   JOGO (CENTRALIZADO)
+========================= */
+.jogoArea{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
 
+.iframeJogo{
+  width: 90vw;
+  height: 85vh;
+  max-width: 1200px;
+  max-height: 720px;
+  border:none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.12);
+}
+
+.btnFechar{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:1000;
+  padding:8px 14px;
+  font-size:14px;
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.loadingOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  color:#fff;
+  justify-content:center;
+  align-items:center;
+}
+</style>
+
+<!-- =========================
+   REGISTRO DO SERVICE WORKER
+========================= -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log("Service Worker registrado"))
+      .catch((err) => console.log("Erro SW:", err));
+  }
 </script>
 
 </body>
