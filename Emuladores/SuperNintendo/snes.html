@@ -2,39 +2,26 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emulador SNES</title>
+<title>SNES</title>
 </head>
 <body>
 
 <div id="EJS_player"></div>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const rom = params.get("rom");
+const rom = new URLSearchParams(window.location.search).get("rom");
 
-  if (!rom) {
-    document.body.innerHTML = "<h2 style='color:white'>Nenhuma ROM definida</h2>";
-    throw new Error("ROM não definida");
-  }
-
-  window.EJS_player = "#EJS_player";
-  window.EJS_gameName = rom.replace(".sfc", "");
+if(!rom){
+  document.body.innerHTML = "<h2 style='color:white'>Nenhum jogo selecionado</h2>";
+}else{
+  window.EJS_gameName = rom;
   window.EJS_gameUrl = "roms/" + rom;
-  window.EJS_core = "snes";
-
+  window.EJS_core = "snes9x";
   window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-  window.EJS_startOnLoaded = true;
+}
 </script>
 
 <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
-
-<style>
-  body {
-    margin: 0;
-    background: black;
-  }
-</style>
 
 </body>
 </html>
