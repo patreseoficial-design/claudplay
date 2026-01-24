@@ -139,8 +139,8 @@ function checarLogin(){
 
     avatarCircle.innerText = usuarioAtual.charAt(0).toUpperCase();
 
-    // Carrega os jogos apenas após logar
     carregarJogos();
+    mostrarPlataformas();
   } else {
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
@@ -231,10 +231,7 @@ async function carregarJogos(){
     item.dataset.img = imgBanner;
     item.dataset.link = `Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(jogo.rom)}`;
 
-    item.innerHTML = `
-      <img src="${item.dataset.img}">
-    `;
-
+    item.innerHTML = `<img src="${item.dataset.img}">`;
     carrossel.appendChild(item);
   });
 
@@ -339,34 +336,37 @@ btnVoltar.onclick = () => {
 
 /* =========================
    ABRIR JOGO
-========================= */
+======================== */
+const loadingOverlay = document.getElementById("loadingOverlay");
+const jogoArea = document.getElementById("jogoArea");
+const iframeJogo = document.getElementById("iframeJogo");
+
 async function abrirJogo(url){
-  document.getElementById("loadingOverlay").style.display = "flex";
-  document.getElementById("jogoArea").style.display = "flex";
-  const iframe = document.getElementById("iframeJogo");
-  iframe.src = url;
+  loadingOverlay.style.display = "flex";
+  jogoArea.style.display = "flex";
 
-  try { await document.documentElement.requestFullscreen(); } catch (e) {}
-  try { await screen.orientation.lock("landscape"); } catch (e) {}
+  iframeJogo.src = url;
 
-  iframe.onload = () => {
-    document.getElementById("loadingOverlay").style.display = "none";
+  // Se o iframe demorar mais que 6 segundos, fecha o overlay
+  setTimeout(() => {
+    loadingOverlay.style.display = "none";
+  }, 6000);
+
+  iframeJogo.onload = () => {
+    loadingOverlay.style.display = "none";
   };
 }
 
 function fecharJogo(){
-  document.getElementById("jogoArea").style.display = "none";
-  document.getElementById("iframeJogo").src = "";
-
-  if (document.fullscreenElement) document.exitFullscreen();
-  try { screen.orientation.unlock(); } catch (e) {}
+  jogoArea.style.display = "none";
+  iframeJogo.src = "";
+  loadingOverlay.style.display = "none";
 }
 
 /* =========================
    INICIALIZAÇÃO
 ======================== */
 checarLogin();
-mostrarPlataformas();
 </script>
 
 <style>
