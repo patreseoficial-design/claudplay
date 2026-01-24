@@ -4,34 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emulador SNES</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    width: 100%;
+    height: 100%;
+  }
+  #game {
+    width: 100%;
+    height: 100%;
+  }
+</style>
 </head>
 <body>
-<div id="EJS_player"></div>
+
+<div id="game"></div>
 
 <script>
-  // Pega o ROM do link ?rom=SuperMarioWorld.sfc
-  const rom = new URLSearchParams(window.location.search).get("rom");
-  window.EJS_gameName = rom ? rom.replace(".zip", "") : "";
+  // Lê o parâmetro ?rom=
+  const params = new URLSearchParams(window.location.search);
+  const rom = params.get("rom");
 
-  // Caminho da ROM dentro da pasta roms/
-  window.EJS_gameUrl = "roms/" + encodeURIComponent(rom);
+  // 🚨 Se não tiver ROM, mostra erro claro
+  if (!rom) {
+    document.body.innerHTML =
+      "<h2 style='color:white;text-align:center;margin-top:40px'>Nenhuma ROM definida</h2>";
+    throw new Error("ROM não definida");
+  }
 
-  // Core SNES
-  window.EJS_core = "snes9x";
+  // === CONFIGURAÇÃO OBRIGATÓRIA DO EMULATORJS ===
+  window.EJS_player = "#game";
+  window.EJS_core = "snes";
 
-  // CORE (caminhos corretos do CDN que funciona)
-  window.EJS_paths = {
-    "snes9x.wasm": "https://cdn.emulatorjs.org/latest/cores/snes9x.wasm",
-    "snes9x.js": "https://cdn.emulatorjs.org/latest/cores/snes9x.js"
-  };
+  // Caminho correto da ROM
+  window.EJS_gameUrl = "roms/" + rom;
 
-  // Arquivos do EmulatorJS
+  // Nome do jogo
+  window.EJS_gameName = rom.replace(".sfc", "");
+
+  // Dados do EmulatorJS
   window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-  window.EJS_biosUrl = "";
-  window.EJS_color = "black";
   window.EJS_startOnLoaded = true;
+  window.EJS_color = "black";
 </script>
 
 <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
+
 </body>
 </html>
