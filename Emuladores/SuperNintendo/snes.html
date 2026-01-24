@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>SNES - ClaudPlay</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin:0; background:#000; }
-    #game { width:100vw; height:100vh; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emulador SNES</title>
 </head>
 <body>
-<div id="game"></div>
+<div id="EJS_player"></div>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const rom = params.get("rom");
+  // Configuração do jogo
+  const rom = new URLSearchParams(window.location.search).get("rom");
+  window.EJS_gameName = rom ? rom.replace(".zip", "") : "";
+  window.EJS_gameUrl = "Emuladores/SuperNintendo/roms/" + encodeURIComponent(rom);
 
-  if (!rom) {
-    document.body.innerHTML = "<h2 style='color:white;text-align:center;margin-top:40vh'>Nenhuma ROM definida</h2>";
-    throw new Error("ROM não definida");
-  }
-
-  window.EJS_player = "#game";
-  window.EJS_gameName = rom.replace(".zip", "");
-  window.EJS_gameUrl = "./roms/" + rom;
+  // Core SNES (da CDN)
   window.EJS_core = "snes9x";
 
-  // =========================
-  // PEGANDO TUDO DA CDN
-  // =========================
-  window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-  window.EJS_startOnLoaded = true;
+  // **IMPORTANTE**: definir o caminho do core
+  window.EJS_paths = {
+    "snes9x.wasm": "https://cdn.emulatorjs.org/stable/cores/snes9x.wasm",
+    "snes9x.js": "https://cdn.emulatorjs.org/stable/cores/snes9x.js"
+  };
 
-  const script = document.createElement("script");
-  script.src = "https://cdn.emulatorjs.org/latest/data/loader.js";
-  document.body.appendChild(script);
+  // Caminho dos arquivos do EmulatorJS
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  window.EJS_biosUrl = "";
+  window.EJS_color = "black";
+  window.EJS_startOnLoaded = true;
 </script>
+
+<script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 </body>
 </html>
