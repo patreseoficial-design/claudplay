@@ -1,581 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>ClaudPlay</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>ClaudPlay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
-  <style>
-    /* ===============================
-    ESTILO BASE
-    ================================ */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
-    }
+<style>
+body{
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+  font-family:Arial, sans-serif;
+}
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+.topo{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  background:#101010;
+}
 
-    /* ===============================
-    TOPO
-    ================================ */
-    .topo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: #101010;
-      border-bottom: 1px solid #222;
-    }
+.logo{font-size:20px;font-weight:bold}
+.beta{background:#6b00ff;padding:4px 10px;border-radius:10px;font-size:12px}
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
+.container{padding:20px}
 
-    .beta {
-      background: #6b00ff;
-      padding: 5px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: bold;
-    }
+.carrossel-items{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+}
 
-    /* ===============================
-    CONTAINER
-    ================================ */
-    .container {
-      padding: 20px 40px;
-    }
+.item{
+  min-width:220px;
+  aspect-ratio:16/9;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#000;
+}
 
-    /* ===============================
-    BANNER DESTAQUE
-    ================================ */
-    .banner {
-      display: flex;
-      align-items: center;
-      background: #1a1a1a;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 30px;
-    }
+.item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .banner-img img {
-      width: 260px;
-      height: 160px;
-      object-fit: cover;
-    }
+.jogoArea{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
 
-    .banner-info {
-      padding: 20px;
-    }
+.iframeJogo{
+  width:95vw;
+  height:85vh;
+  max-width:980px;
+  max-height:720px;
+  border:none;
+}
 
-    /* ===============================
-    CARROSSEL
-    ================================ */
-    .carrossel {
-      margin-top: 20px;
-    }
+.btnFechar{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#2d6cff;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    .carrossel-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .carrossel-items {
-      display: flex;
-      gap: 15px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-    }
-
-    /* ===============================
-    CARD DE JOGO (PADRÃO NETFLIX)
-    ================================ */
-    .item {
-      flex: 0 0 auto;
-      width: 220px;
-      aspect-ratio: 16 / 9;
-      border-radius: 14px;
-      overflow: hidden;
-      position: relative;
-      background: #000;
-      cursor: pointer;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.45s ease, filter 0.45s ease;
-    }
-
-    .item:hover {
-      transform: scale(1.06);
-      box-shadow:
-        0 25px 60px rgba(0,0,0,0.8),
-        0 0 25px rgba(0,140,255,0.45);
-    }
-
-    .item:hover img {
-      transform: scale(1.12);
-      filter: brightness(1.1) contrast(1.05);
-    }
-
-    .item::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.65),
-        rgba(0,0,0,0.15),
-        rgba(0,0,0,0)
-      );
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-
-    .item:hover::after {
-      opacity: 1;
-    }
-
-    /* ===============================
-    MOBILE – ESTILO NETFLIX
-    ================================ */
-    @media (max-width: 768px) {
-      .container {
-        padding: 12px;
-      }
-
-      .carrossel-items {
-        gap: 12px;
-      }
-
-      .item {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        transform: none !important;
-        box-shadow: none !important;
-      }
-
-      .item img {
-        transform: none !important;
-        filter: none !important;
-      }
-
-      .item::after {
-        opacity: 1;
-      }
-    }
-
-    /* ===============================
-    TV / ANDROID TV
-    ================================ */
-    @media (min-width: 1200px) {
-      .grid,
-      .catalogo {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 20px;
-      }
-
-      .item:focus {
-        outline: 3px solid #fff;
-        transform: scale(1.08);
-        z-index: 10;
-      }
-    }
-
-    /* ===============================
-    LOGIN
-    ================================ */
-    .loginScreen {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(180deg, #0a0f18, #05070a);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .loginBox {
-      box-sizing: border-box;
-      width: 90%;
-      max-width: 380px;
-      padding: 30px 20px;
-      background: rgba(10, 13, 18, 0.9);
-      border: 1px solid #2d6cff;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(45, 108, 255, 0.18);
-    }
-
-    .loginBox h2 {
-      margin: 0 0 12px 0;
-      font-size: 28px;
-      color: #eaf1ff;
-    }
-
-    .loginBox input {
-      width: 100%;
-      box-sizing: border-box;
-      margin: 10px 0;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #2d6cff;
-      background: #0d1320;
-      color: #eaf1ff;
-      font-size: 16px;
-    }
-
-    .btnPrimary {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      background: #2d6cff;
-      color: #fff;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.2s;
-    }
-
-    .btnPrimary:hover {
-      background: #3a7bff;
-    }
-
-    .switchText {
-      margin-top: 14px;
-      color: #aebdff;
-      font-size: 14px;
-    }
-
-    .switchLink {
-      color: #2d6cff;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* ===============================
-    TOPO
-    ================================ */
-    .topo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background: #0c1018;
-      color: #fff;
-    }
-
-    .logo {
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .logoutBtn {
-      background: #2d6cff;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    /* Estrela */
-    .fav {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 3;
-    }
-
-    /* BOTÃO BETA */
-    .betaBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 10px 12px;
-      background: #2d6cff;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 12px;
-      z-index: 100;
-      box-shadow: 0 0 18px rgba(45, 108, 255, 0.25);
-    }
-
-    /* ===============================
-    FAVORITOS
-    ================================ */
-    .favoritos {
-      margin-top: 30px;
-    }
-
-    .favoritos-items {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-    }
-
-    .favItem {
-      min-width: 160px;
-      background: #111;
-      padding: 10px;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .favItem img {
-      width: 100%;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .favInfo h3 {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .favInfo p {
-      margin: 0;
-      font-size: 12px;
-      color: #ccc;
-    }
-
-    .remFav {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #2d6cff;
-      border: none;
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-      .favItem {
-        min-width: 130px;
-      }
-    }
-
-    /* ===============================
-    RODAPÉ
-    ================================ */
-    .rodape {
-      text-align: center;
-      padding: 12px 0;
-      color: #fff;
-      background: #0b0f13;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 14px;
-    }
-
-    /* =========================
-       BANNER MOBILE - TEXTO ABAIXO
-    ========================= */
-    @media (max-width: 600px) {
-
-      .banner {
-        flex-direction: column;
-        align-items: stretch;
-        height: auto;
-      }
-
-      .banner-img {
-        width: 100%;
-      }
-
-      .banner-img img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        display: block;
-      }
-
-      .banner-info {
-        width: 100%;
-        padding: 14px 12px;
-        background: #0b0b0b;
-        position: static;
-        text-align: left;
-      }
-
-      .banner-info h1 {
-        font-size: 18px;
-        line-height: 1.3;
-        margin: 0 0 6px 0;
-        color: #fff;
-      }
-
-      .banner-info p {
-        font-size: 13px;
-        line-height: 1.3;
-        margin: 0;
-        color: #cfcfcf;
-      }
-    }
-
-    /* =========================
-       AREA DO JOGO (CENTRALIZADO)
-    ========================= */
-    .jogoArea{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:#000;
-      z-index:999;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding: 20px;
-    }
-
-    .iframeJogo{
-      width: 95vw;
-      height: 85vh;
-      max-width: 980px;
-      max-height: 720px;
-      border:none;
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
-    }
-
-    /* Botão fechar */
-    .btnFechar{
-      position:absolute;
-      top: 12px;
-      left: 12px;
-      z-index:1000;
-      padding: 8px 14px;
-      font-size: 14px;
-      background:#2d6cff;
-      color:#fff;
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
-    }
-
-    /* Loading */
-    .loadingOverlay{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:#000;
-      z-index:1000;
-      color:#fff;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-  </style>
+.loadingOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+</style>
 </head>
+
 <body>
 
-  <!-- TOPO -->
-  <div class="topo">
-    <div class="logo">ClaudPlay</div>
-    <div class="beta">BETA</div>
-  </div>
+<div class="topo">
+  <div class="logo">ClaudPlay</div>
+  <div class="beta">BETA</div>
+</div>
 
-  <!-- CONTAINER -->
-  <div class="container">
-    <div class="banner">
-      <div class="banner-img">
-        <img src="banner.jpg" alt="Banner">
-      </div>
-      <div class="banner-info">
-        <h1>Bem-vindo ao ClaudPlay</h1>
-        <p>Escolha um jogo abaixo para começar.</p>
-      </div>
-    </div>
+<div class="container">
+  <h2>Jogos Super Nintendo</h2>
+  <div class="carrossel-items"></div>
+</div>
 
-    <!-- CARROSSEL -->
-    <div class="carrossel">
-      <div class="carrossel-title">
-        <h2>Jogos</h2>
-      </div>
-      <div class="carrossel-items">
-        <!-- Itens serão inseridos via JS -->
-      </div>
-    </div>
-  </div>
+<div class="jogoArea">
+  <button class="btnFechar" onclick="fecharJogo()">Fechar</button>
+  <iframe class="iframeJogo"></iframe>
+</div>
 
-  <!-- AREA DO JOGO -->
-  <div class="jogoArea">
-    <button class="btnFechar" onclick="fecharJogo()">Fechar</button>
-    <iframe class="iframeJogo" src="" frameborder="0"></iframe>
-  </div>
+<div class="loadingOverlay">
+  <h2>Carregando jogo...</h2>
+</div>
 
-  <!-- LOADING -->
-  <div class="loadingOverlay">
-    <h2>Carregando o jogo...</h2>
-  </div>
+<script>
+const jogos = [
+  {
+    nome: "Super Mario World",
+    rom: "SuperMarioWorld.sfc",
+    banner: "Emuladores/SuperNintendo/banners/smw.jpg"
+  },
+  {
+    nome: "Super Mario World 2",
+    rom: "SuperMarioWorld2.sfc",
+    banner: "Emuladores/SuperNintendo/banners/smw2.jpg"
+  }
+];
 
-  <!-- SCRIPT -->
-  <script>
-    const jogos = [
-      { nome: "Sonic", rom: "SONICK.ZIP", banner: "banners/sonic.jpg" },
-      { nome: "Sonic 2", rom: "SONICSB.ZIP", banner: "banners/sonic2.jpg" },
-      { nome: "Aladdin", rom: "ALADDIN.ZIP", banner: "banners/aladdin.jpg" }
-    ];
+const carrossel = document.querySelector(".carrossel-items");
 
-    const carrossel = document.querySelector(".carrossel-items");
+jogos.forEach(jogo => {
+  const div = document.createElement("div");
+  div.className = "item";
+  div.innerHTML = `<img src="${jogo.banner}" alt="${jogo.nome}">`;
+  div.onclick = () => abrirJogo(jogo);
+  carrossel.appendChild(div);
+});
 
-    jogos.forEach(jogo => {
-      const item = document.createElement("div");
-      item.classList.add("item");
-      item.innerHTML = `<img src="${jogo.banner}" alt="${jogo.nome}" />`;
-      item.addEventListener("click", () => {
-        abrirJogo(jogo);
-      });
-      carrossel.appendChild(item);
-    });
+function abrirJogo(jogo){
+  document.querySelector(".loadingOverlay").style.display="flex";
+  document.querySelector(".jogoArea").style.display="flex";
 
-    function abrirJogo(jogo) {
-      document.querySelector(".loadingOverlay").style.display = "flex";
-      document.querySelector(".jogoArea").style.display = "flex";
+  document.querySelector(".iframeJogo").src =
+    "Emuladores/SuperNintendo/snes.html?rom=" +
+    encodeURIComponent(jogo.rom);
 
-      const iframe = document.querySelector(".iframeJogo");
-      iframe.src = `Emuladores/SuperNintendo/snes.html?rom=${jogo.rom}`;
+  setTimeout(()=>{
+    document.querySelector(".loadingOverlay").style.display="none";
+  },1500);
+}
 
-      setTimeout(() => {
-        document.querySelector(".loadingOverlay").style.display = "none";
-      }, 4000);
-    }
+function fecharJogo(){
+  document.querySelector(".jogoArea").style.display="none";
+  document.querySelector(".iframeJogo").src="";
+}
+</script>
 
-    function fecharJogo() {
-      document.querySelector(".jogoArea").style.display = "none";
-      document.querySelector(".iframeJogo").src = "";
-    }
-  </script>
 </body>
 </html>
