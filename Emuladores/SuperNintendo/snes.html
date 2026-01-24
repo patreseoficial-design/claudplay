@@ -17,15 +17,14 @@
     throw new Error("ROM não definida");
   }
 
+  // Decodifica o nome da ROM (resolve espaços e caracteres especiais)
+  const romDecoded = decodeURIComponent(rom);
+
   window.EJS_player = "#game";
-  window.EJS_gameName = rom.replace(".zip", "");
-
-  // CORREÇÃO AQUI: caminho completo da rom
-  window.EJS_gameUrl = "Emuladores/SuperNintendo/roms/" + encodeURIComponent(rom);
-
+  window.EJS_gameName = romDecoded.replace(".zip", "").replace(".sfc", "").replace(".smc", "");
+  window.EJS_gameUrl = "./roms/" + romDecoded;
   window.EJS_core = "snes9x";
 
-  // Puxando do CDN (data + loader)
   window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
   window.EJS_startOnLoaded = true;
 
