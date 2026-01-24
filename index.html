@@ -44,7 +44,7 @@
 
   <!-- ESPAÇO DO AVATAR -->
   <div class="avatarSpace">
-    <div class="avatarCircle">A</div>
+    <div class="avatarCircle" id="avatarCircle">A</div>
   </div>
 
   <button id="btnLogout" class="logoutBtn">Sair</button>
@@ -123,6 +123,7 @@ const btnSwitch = document.getElementById("btnSwitch");
 const loginTitle = document.getElementById("loginTitle");
 const loginMsg = document.getElementById("loginMsg");
 const btnLogout = document.getElementById("btnLogout");
+const avatarCircle = document.getElementById("avatarCircle");
 
 let modo = "login"; // login ou cadastro
 let usuarioAtual = null;
@@ -134,6 +135,7 @@ function checarLogin(){
     loginScreen.style.display = "none";
     mainApp.style.display = "block";
     btnLogout.style.display = "block";
+    avatarCircle.innerText = usuarioAtual.charAt(0).toUpperCase();
     carregarFavoritos();
   } else {
     loginScreen.style.display = "flex";
@@ -440,6 +442,14 @@ mostrarPlataformas();
   color:#2d6cff;
   cursor:pointer;
   font-weight: bold;
+}
+
+/* ===== ESSE TRECHO GARANTE QUE O LOGIN APARECE ===== */
+#mainApp {
+  display: none;
+}
+#loginScreen {
+  display: flex;
 }
 
 /* ===== TOPO ===== */
