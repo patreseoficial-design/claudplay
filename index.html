@@ -130,15 +130,17 @@ let usuarioAtual = null;
 
 function checarLogin(){
   const logado = localStorage.getItem("logado");
+
   if (logado === "true"){
     usuarioAtual = localStorage.getItem("userLogado");
     loginScreen.style.display = "none";
     mainApp.style.display = "block";
     btnLogout.style.display = "block";
-checarLogin();
-mostrarPlataformas();
+
     avatarCircle.innerText = usuarioAtual.charAt(0).toUpperCase();
-    
+
+    // Carrega os jogos apenas após logar
+    carregarJogos();
   } else {
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
@@ -201,7 +203,7 @@ btnLogout.onclick = () => {
 
 /* =========================
    CARROSSEL + JOGOS
-========================= */
+======================== */
 const carrossel = document.getElementById("carrossel");
 const bannerImg = document.getElementById("bannerImg");
 const bannerTitle = document.getElementById("bannerTitle");
@@ -215,7 +217,6 @@ async function carregarJogos(){
   const response = await fetch("Emuladores/SuperNintendo/games.json");
   jogos = await response.json();
 
-  // Banner padrão caso não exista
   const bannerPadrao = "Banner/default_banner.png";
 
   carrossel.innerHTML = "";
@@ -274,7 +275,7 @@ document.getElementById("bannerPrincipal").onclick = () => {
 
 /* =========================
    PLATAFORMAS (SEM RELOAD)
-========================= */
+======================== */
 const plataformasList = document.getElementById("plataformasList");
 const plataformaScreen = document.getElementById("plataformaScreen");
 const plataformaTitle = document.getElementById("plataformaTitle");
@@ -363,11 +364,9 @@ function fecharJogo(){
 
 /* =========================
    INICIALIZAÇÃO
-========================= */
+======================== */
 checarLogin();
-carregarJogos();
 mostrarPlataformas();
-
 </script>
 
 <style>
@@ -402,7 +401,7 @@ mostrarPlataformas();
 #loginMsg{
   margin-top: 8px;
   font-size: 14px;
-  color: #c7d9ff;
+  color:#c7d9ff;
 }
 
 .loginBox input{
