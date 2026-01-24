@@ -485,3 +485,10 @@ a {
   justify-content:center;
   align-items:center;
 }
+#mainApp {
+  display: none;
+}
+
+#loginScreen {
+  display: flex;
+}
