@@ -12,8 +12,6 @@
   // Configuração do jogo
   const rom = new URLSearchParams(window.location.search).get("rom");
   window.EJS_gameName = rom ? rom.replace(".zip", "") : "";
-
-  // CORRIGIDO: caminho correto da ROM (agora sem duplicar "Emuladores/SuperNintendo")
   window.EJS_gameUrl = "roms/" + encodeURIComponent(rom);
 
   // Core SNES (da CDN)
