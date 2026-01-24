@@ -126,7 +126,7 @@
 <script>
 /* =========================
    LOGIN + CADASTRO
-========================= */
+======================== */
 const loginScreen = document.getElementById("loginScreen");
 const mainApp = document.getElementById("mainApp");
 const btnLogin = document.getElementById("btnLogin");
@@ -212,7 +212,7 @@ btnLogout.onclick = () => {
 
 /* =========================
    PLATAFORMAS (Netflix Style)
-========================= */
+======================== */
 const plataformasGrid = document.getElementById("plataformasGrid");
 const gamesScreen = document.getElementById("gamesScreen");
 const gamesGrid = document.getElementById("gamesGrid");
@@ -255,7 +255,7 @@ async function abrirPlataforma(plata){
     const div = document.createElement("div");
     div.className = "gameItem";
     div.innerHTML = `
-      <img src="Banner/${jogo.banner}">
+      <img src="Banner/${jogo.banner || 'default_banner.png'}">
       <div class="gameInfo">
         <h3>${jogo.title}</h3>
         <p>${jogo.console}</p>
@@ -294,9 +294,116 @@ async function carregarJogosSNES(){
     item.className = "item";
     item.dataset.title = jogo.title;
     item.dataset.desc = jogo.console;
-    item.dataset.img = "Banner/" + jogo.banner;
+    item.dataset.img = jogo.banner ? ("Banner/" + jogo.banner) : "Banner/default_banner.png";
     item.dataset.link = `Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(jogo.rom)}`;
 
     item.innerHTML = `
       <img src="${item.dataset.img}">
-      <span
+      <span class="itemTitle">${jogo.title}</span>
+    `;
+
+    carrossel.appendChild(item);
+  });
+
+  itens = document.querySelectorAll(".item");
+  atualizarEventos();
+  mudarBanner(0);
+}
+
+function atualizarEventos(){
+  itens.forEach((item, i) => {
+    item.addEventListener("click", () => {
+      indexAtual = i;
+      mudarBanner(i);
+      abrirJogo(item.dataset.link);
+    });
+  });
+}
+
+function mudarBanner(i){
+  bannerImg.src = itens[i].dataset.img;
+  bannerTitle.innerText = itens[i].dataset.title;
+  bannerDesc.innerText = itens[i].dataset.desc;
+}
+
+document.getElementById("prev").onclick = () => {
+  indexAtual = (indexAtual - 1 + itens.length) % itens.length;
+  mudarBanner(indexAtual);
+};
+
+document.getElementById("next").onclick = () => {
+  indexAtual = (indexAtual + 1) % itens.length;
+  mudarBanner(indexAtual);
+};
+
+document.getElementById("bannerPrincipal").onclick = () => {
+  abrirJogo(itens[indexAtual].dataset.link);
+}
+
+/* =========================
+   FAVORITOS
+======================== */
+function carregarFavoritos(){
+  favoritosItems.innerHTML = "";
+  const favKey = "fav_" + usuarioAtual;
+  const favs = JSON.parse(localStorage.getItem(favKey) || "[]");
+
+  favs.forEach(fav => {
+    const div = document.createElement("div");
+    div.className = "favItem";
+    div.innerHTML = `
+      <img src="Banner/${fav.banner || 'default_banner.png'}">
+      <div class="favInfo">
+        <h3>${fav.title}</h3>
+        <p>${fav.console}</p>
+      </div>
+      <button class="remFav">Remover</button>
+    `;
+    div.querySelector(".remFav").onclick = () => removerFavorito(fav.rom);
+    div.onclick = () => abrirJogo(`Emuladores/SuperNintendo/snes.html?rom=${encodeURIComponent(fav.rom)}`);
+    favoritosItems.appendChild(div);
+  });
+}
+
+function removerFavorito(rom){
+  const favKey = "fav_" + usuarioAtual;
+  let favs = JSON.parse(localStorage.getItem(favKey) || "[]");
+  favs = favs.filter(f => f.rom !== rom);
+  localStorage.setItem(favKey, JSON.stringify(favs));
+  carregarFavoritos();
+}
+
+/* =========================
+   ABRIR JOGO
+======================== */
+async function abrirJogo(url){
+  document.getElementById("loadingOverlay").style.display = "flex";
+  document.getElementById("jogoArea").style.display = "flex";
+  const iframe = document.getElementById("iframeJogo");
+  iframe.src = url;
+
+  try { await document.documentElement.requestFullscreen(); } catch (e) {}
+  try { await screen.orientation.lock("landscape"); } catch (e) {}
+
+  iframe.onload = () => {
+    document.getElementById("loadingOverlay").style.display = "none";
+  };
+}
+
+function fecharJogo(){
+  document.getElementById("jogoArea").style.display = "none";
+  document.getElementById("iframeJogo").src = "";
+
+  if (document.fullscreenElement) document.exitFullscreen();
+  try { screen.orientation.unlock(); } catch (e) {}
+}
+
+/* =========================
+   INICIALIZAÇÃO
+======================== */
+checarLogin();
+
+</script>
+
+</body>
+</html>
