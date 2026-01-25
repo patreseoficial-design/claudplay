@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Super Nintendo</title>
+<title>Emulador SNES</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin:0;background:#000">
+<body style="margin:0; background:#000;">
 
-<div id="EJS_player"></div>
+<canvas id="canvas"></canvas>
 
 <script>
-const rom = new URLSearchParams(window.location.search).get("rom");
+  // pega o ROM da URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const romUrl = decodeURIComponent(urlParams.get("rom"));
 
-if(!rom){
-  document.body.innerHTML =
-    "<h2 style='color:white;text-align:center;margin-top:40px'>Selecione um jogo</h2>";
-  throw new Error("ROM não definida");
-}
+  // IMPORTANTE: este core é o do EmulatorJS (CDN)
+  const coreUrl = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@latest/dist/cores/snes.js";
 
-window.EJS_core = "snes9x";
-window.EJS_gameName = rom.replace(".sfc","");
-window.EJS_gameUrl = "roms/" + rom;
-window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
-window.EJS_startOnLoaded = true;
+  // carrega o core e o rom
+  async function load() {
+    const core = await import(coreUrl);
+
+    const emulator = new core.Emulator({
+      canvas: document.getElementById("canvas"),
+      rom: romUrl,
+      // pode adicionar configs extras aqui
+    });
+
+    emulator.start();
+  }
+
+  load();
 </script>
-
-<script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
 
 </body>
 </html>
