@@ -6,50 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  background:#0b0b0b;
-  color:#fff;
-  font-family:Arial, sans-serif;
-}
-
-.topo{
-  padding:16px 20px;
-  background:#101010;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.container{
-  padding:20px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
-  gap:16px;
-}
-
-.card{
-  background:#000;
-  border-radius:14px;
-  overflow:hidden;
-  cursor:pointer;
-}
-
-.card img{
-  width:100%;
-  aspect-ratio:16/9;
-  object-fit:cover;
-}
-
-.card p{
-  padding:10px;
-  font-size:14px;
-}
+body{ margin:0; background:#0b0b0b; color:#fff; font-family:Arial, sans-serif; }
+.topo{ padding:16px 20px; background:#101010; }
+.logo{ font-size:22px; font-weight:bold; }
+.container{ padding:20px; }
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px; }
+.card{ background:#000; border-radius:14px; overflow:hidden; cursor:pointer; }
+.card img{ width:100%; aspect-ratio:16/9; object-fit:cover; }
+.card p{ padding:10px; font-size:14px; }
 </style>
 </head>
 
@@ -64,7 +28,41 @@ body{
 </div>
 
 <script>
+// COLE O JSON AQUI
 const jogos = [
   {
     "id": "1",
-    "title": "2020 Super Baseball
+    "title": "2020 Super Baseball (U).smc",
+    "rom": "2020 Super Baseball (U).smc",
+    "banner": "2020 Super Baseball (U)-image.jpeg",
+    "console": "SNES"
+  },
+  {
+    "id": "2",
+    "title": "3 Ninjas Kick Back (U).smc",
+    "rom": "3 Ninjas Kick Back (U).smc",
+    "banner": "3 Ninjas Kick Back (U)-image.jpeg",
+    "console": "SNES"
+  },
+  ...
+  // e assim por diante até o id 778
+];
+
+const lista = document.getElementById("listaJogos");
+
+jogos.forEach(jogo => {
+  const div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `
+    <img src="../Banner/${jogo.banner}">
+    <p>${jogo.title}</p>
+  `;
+  div.onclick = () => {
+    window.location.href = "snes.html?rom=" + encodeURIComponent(jogo.rom);
+  };
+  lista.appendChild(div);
+});
+</script>
+
+</body>
+</html>
