@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Nintendo 64</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{ margin:0; background:#0b0b0b; color:#fff; font-family:Arial, sans-serif; }
+.topo{ padding:16px 20px; background:#101010; }
+.logo{ font-size:22px; font-weight:bold; }
+.container{ padding:20px; }
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px; }
+.card{ background:#000; border-radius:14px; overflow:hidden; cursor:pointer; }
+.card img{ width:100%; aspect-ratio:16/9; object-fit:cover; }
+.card p{ padding:10px; font-size:14px; }
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+  <div class="logo">🎮 Nintendo 64</div>
+</div>
+
+<div class="container">
+  <div class="grid" id="listaJogos"></div>
+</div>
+
+<script>
+// COLE O JSON AQUI
+const jogos = [
+  // coloque os jogos do N64 aqui
+];
+
+const baseURL = "https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/Nintendo64/Banner.n64/";
+
+const lista = document.getElementById("listaJogos");
+
+jogos.forEach(jogo => {
+  const div = document.createElement("div");
+  div.className = "card";
+
+  const banner = jogo.banner.replace('.jpeg', '.png');
+  const imgURL = baseURL + encodeURIComponent(banner);
+
+  div.innerHTML = `
+    <img src="${imgURL}">
+    <p>${jogo.title}</p>
+  `;
+
+  div.onclick = () => {
+    window.location.href = "nintendo64.html?rom=" + encodeURIComponent(jogo.rom);
+  };
+
+  lista.appendChild(div);
+});
+</script>
+
+</body>
+</html>
