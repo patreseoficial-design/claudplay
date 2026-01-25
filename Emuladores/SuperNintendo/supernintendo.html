@@ -63,20 +63,15 @@ fetch("games.json")
     const lista = document.getElementById("listaJogos");
 
     jogos.forEach(jogo => {
-
-      // **Caminho completo do banner e rom**
-      const bannerPath = "https://patreseoficial-design.github.io/Claudplay/Banner/" + jogo.banner;
-      const romPath = "https://patreseoficial-design.github.io/Emuladores/SuperNintendo/roms/" + jogo.rom;
-
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
-        <img src="${bannerPath}">
+        <img src="/Banner/${jogo.banner}">
         <p>${jogo.title}</p>
       `;
       div.onclick = () => {
         window.location.href =
-          "snes.html?rom=" + encodeURIComponent(romPath);
+          "snes.html?rom=" + encodeURIComponent("roms/" + jogo.rom);
       };
       lista.appendChild(div);
     });
