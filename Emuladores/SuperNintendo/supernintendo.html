@@ -64,32 +64,7 @@ body{
 </div>
 
 <script>
-fetch("games.json")
-  .then(res => {
-    if (!res.ok) throw new Error("Não foi possível carregar JSON");
-    return res.json();
-  })
-  .then(jogos => {
-    const lista = document.getElementById("listaJogos");
-
-    jogos.forEach(jogo => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <img src="/Banner/${jogo.banner}" alt="${jogo.title}">
-        <p>${jogo.title}</p>
-      `;
-      div.onclick = () => {
-        window.location.href =
-          "snes.html?rom=" + encodeURIComponent("roms/" + jogo.rom);
-      };
-      lista.appendChild(div);
-    });
-  })
-  .catch(err => {
-    console.error("Erro ao carregar games.json", err);
-  });
-</script>
-
-</body>
-</html>
+const jogos = [
+  {
+    "id": "1",
+    "title": "2020 Super Baseball
