@@ -5486,10 +5486,16 @@ jogos.forEach(jogo => {
   const div = document.createElement("div");
   div.className = "card";
 
-  div.innerHTML = `
-    <img src="Banner.snes/${jogo.banner.replace('.png', '.pnd').replace('.jpeg', '.pnd')}">
-    <p>${jogo.title}</p>
-  `;
+  const img = document.createElement("img");
+  img.src = `Banner.snes/${jogo.banner.replace('.pnd', '.png')}`; // tenta .png primeiro
+
+  // se der erro no .png, tenta .jpeg
+  img.onerror = () => {
+    img.src = `Banner.snes/${jogo.banner.replace('.pnd', '.jpeg')}`;
+  };
+
+  div.appendChild(img);
+  div.innerHTML += `<p>${jogo.title}</p>`;
 
   div.onclick = () => {
     window.location.href = "snes.html?rom=" + encodeURIComponent(jogo.rom);
