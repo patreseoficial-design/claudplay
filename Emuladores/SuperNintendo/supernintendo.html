@@ -29,7 +29,7 @@ body{
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
   gap:16px;
 }
 
@@ -38,17 +38,24 @@ body{
   border-radius:14px;
   overflow:hidden;
   cursor:pointer;
+  transition:transform .2s;
+}
+
+.card:hover{
+  transform:scale(1.04);
 }
 
 .card img{
   width:100%;
-  aspect-ratio:16/9;
+  height:120px;
   object-fit:cover;
 }
 
-.card p{
-  padding:10px;
-  font-size:14px;
+.card .info{
+  padding:8px;
+  font-size:13px;
+  color:#ccc;
+  text-align:center;
 }
 </style>
 </head>
@@ -67,21 +74,35 @@ body{
 fetch("games.json")
   .then(res => res.json())
   .then(jogos => {
+
     const lista = document.getElementById("listaJogos");
 
+    // percorre o JSON NA ORDEM ORIGINAL
     jogos.forEach(jogo => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <img src="${jogo.banner}">
-        <p>${jogo.nome}</p>
+
+      // garante que só SNES entra
+      if (jogo.console !== "SNES") return;
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="../../Banner/${jogo.banner}" alt="${jogo.title}">
+        <div class="info">
+          ID ${jogo.id}
+        </div>
       `;
-      div.onclick = () => {
+
+      // ROM só é definida NO CLIQUE
+      card.onclick = () => {
         window.location.href =
-          "snes.html?rom=" + encodeURIComponent(jogo.rom);
+          "snes.html?rom=" +
+          encodeURIComponent("roms/" + jogo.rom);
       };
-      lista.appendChild(div);
+
+      lista.appendChild(card);
     });
+
   })
   .catch(err => {
     console.error("Erro ao carregar games.json", err);
