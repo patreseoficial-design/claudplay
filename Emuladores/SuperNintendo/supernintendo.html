@@ -65,21 +65,23 @@ body{
 
 <script>
 fetch("games.json")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Não foi possível carregar JSON");
+    return res.json();
+  })
   .then(jogos => {
     const lista = document.getElementById("listaJogos");
 
-    jogos.forEach((jogo, index) => {
-      const id = index + 1; // id de 1 a 778
+    jogos.forEach(jogo => {
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
-        <img src="/Banner/${jogo.banner}">
-        <p>${id} - ${jogo.title}</p>
+        <img src="/Banner/${jogo.banner}" alt="${jogo.title}">
+        <p>${jogo.title}</p>
       `;
       div.onclick = () => {
         window.location.href =
-          "snes.html?rom=roms/" + encodeURIComponent(jogo.rom);
+          "snes.html?rom=" + encodeURIComponent("roms/" + jogo.rom);
       };
       lista.appendChild(div);
     });
