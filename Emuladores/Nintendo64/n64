@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Nintendo 64 - ClaudPlay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<body style="margin:0; background:#000; overflow:hidden;">
+
+  <div id="game" style="width:100vw; height:100vh;"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const rom = params.get("rom");
+
+    if (!rom) {
+      document.body.innerHTML =
+        "<h2 style='color:white;text-align:center;margin-top:40vh'>Nenhuma ROM definida</h2>";
+      throw new Error("ROM não definida");
+    }
+
+    // Player
+    window.EJS_player = "#game";
+
+    // Nome do jogo
+    window.EJS_gameName = rom.replace(".n64", "").replace(".z64", "");
+
+    // Caminho da ROM (relativo ao n64.html)
+    window.EJS_gameUrl = "./roms/" + rom;
+
+    // Core do Nintendo 64
+    window.EJS_core = "mupen64plus_next";
+
+    // MUITO IMPORTANTE PARA MOBILE (evita travamento)
+    window.EJS_threads = false;
+
+    // Melhor compatibilidade
+    window.EJS_lightgun = false;
+    window.EJS_startOnLoaded = true;
+
+    // CDN oficial (ignora seus arquivos locais)
+    window.EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+
+    // Loader
+    const script = document.createElement("script");
+    script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
+    document.body.appendChild(script);
+  </script>
+
+</body>
+</html>
