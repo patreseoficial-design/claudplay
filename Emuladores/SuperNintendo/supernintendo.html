@@ -5487,31 +5487,31 @@ ____"banner":_"Zoop_(Europe)-image",
   },
   
   ];
-<script>
-  const lista = document.getElementById("listaJogos");
+const lista = document.getElementById("listaJogos");
 
-  jogos.forEach(jogo => {
-    const div = document.createElement("div");
-    div.className = "card";
+jogos.forEach(jogo => {
+  const div = document.createElement("div");
+  div.className = "card";
 
-    const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.png`;
-    const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.jpeg`;
+  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.png`;
+  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.jpeg`;
 
-    const img = document.createElement("img");
-    img.src = bannerPNG;
+  const img = document.createElement("img");
+  img.src = bannerPNG;
 
-    img.onerror = () => {
-      if (img.src === bannerPNG) {
-        img.src = bannerJPEG;
-      } else {
-        img.src = "https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/sem-imagem.png";
-      }
-    };
+  img.onerror = () => {
+    if (img.src === bannerPNG) {
+      img.src = bannerJPEG;
+    } else {
+      img.src = "https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/sem-imagem.png";
+    }
+  };
 
-    div.appendChild(img);
-    div.innerHTML += `<p>${jogo.title}</p>`;
-    lista.appendChild(div);
-  });
+  div.appendChild(img);
+  div.innerHTML += `<p>${jogo.title}</p>`;
+  lista.appendChild(div);
+});
 </script>
+
 </body>
 </html>
