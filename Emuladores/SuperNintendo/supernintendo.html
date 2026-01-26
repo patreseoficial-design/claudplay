@@ -5506,8 +5506,7 @@ jogos.forEach(jogo => {
     if (img.src === bannerPNG) {
       img.src = bannerJPEG;
     } else {
-      img.src = "https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/sem-imagem.png";
-    }
+<img src="https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}">
   };
 
   div.appendChild(img);
