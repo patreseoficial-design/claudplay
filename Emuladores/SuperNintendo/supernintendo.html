@@ -5493,8 +5493,8 @@ jogos.forEach(jogo => {
   const div = document.createElement("div");
   div.className = "card";
 
-  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.png`;
-  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.jpeg`;
+  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${encodeURIComponent(jogo.banner)}.png`;
+  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${encodeURIComponent(jogo.banner)}.jpeg`;
 
   const img = document.createElement("img");
   img.src = bannerPNG;
@@ -5509,6 +5509,15 @@ jogos.forEach(jogo => {
 
   div.appendChild(img);
   div.innerHTML += `<p>${jogo.title}</p>`;
+
+  // 🔥 AQUI É O CLIQUE
+  div.onclick = () => {
+    const romURL = encodeURIComponent(
+      `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/roms/${jogo.rom}`
+    );
+    window.location.href = `snes.html?rom=${romURL}`;
+  };
+
   lista.appendChild(div);
 });
 </script>
