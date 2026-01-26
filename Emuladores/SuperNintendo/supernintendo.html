@@ -39,9 +39,7 @@
 <div id="listaJogos"></div>
 
 <script>
-const jogos = 
-  [
-  
+const jogos = [
   {
     "id": "1",
     "title": "2020 Super Baseball (U).smc",
@@ -5497,10 +5495,25 @@ jogos.forEach(jogo => {
   const div = document.createElement("div");
   div.className = "card";
 
-  div.innerHTML = `
-    <img src="https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}">
-    <p>${jogo.title}</p>
-  `;
+  // 1º tenta .png
+  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner.replace('.jpeg', '.png')}`;
+
+  // 2º tenta .jpeg
+  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner.replace('.png', '.jpeg')}`;
+
+  const img = document.createElement("img");
+  img.src = bannerPNG;
+
+  img.onerror = () => {
+    if (img.src === bannerPNG) {
+      img.src = bannerJPEG;
+    } else {
+      img.src = "https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/sem-imagem.png";
+    }
+  };
+
+  div.appendChild(img);
+  div.innerHTML += `<p>${jogo.title}</p>`;
 
   div.onclick = () => {
     const romURL = encodeURIComponent(
