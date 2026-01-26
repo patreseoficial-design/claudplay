@@ -5488,7 +5488,6 @@ ____"banner":_"Zoop_(Europe)-image",
   },
   
   ];
-
 const lista = document.getElementById("listaJogos");
 
 jogos.forEach(jogo => {
@@ -5496,10 +5495,10 @@ jogos.forEach(jogo => {
   div.className = "card";
 
   // 1º tenta .png
-  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner.replace('.jpeg', '.png')}`;
+  const bannerPNG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.png`;
 
   // 2º tenta .jpeg
-  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner.replace('.png', '.jpeg')}`;
+  const bannerJPEG = `https://raw.githubusercontent.com/patreseoficial-design/claudplay/main/Emuladores/SuperNintendo/Banner.snes/${jogo.banner}.jpeg`;
 
   const img = document.createElement("img");
   img.src = bannerPNG;
