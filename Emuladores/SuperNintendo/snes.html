@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Super Nintendo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 html, body {
   margin: 0;
@@ -19,9 +18,7 @@ html, body {
 }
 </style>
 </head>
-
 <body>
-
 <div id="EJS_player"></div>
 
 <script>
@@ -35,13 +32,12 @@ if (!rom) {
 
 window.EJS_player = "#EJS_player";
 window.EJS_core = "snes9x";
-window.EJS_gameName = rom.replace(".smc", "");
+window.EJS_gameName = rom.replace(".smc", "").replace(".sfc", "");
 window.EJS_gameUrl = "roms/" + rom;
 window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
 window.EJS_startOnLoaded = true;
 </script>
 
 <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
-
 </body>
 </html>
