@@ -2,8 +2,13 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<<<<<<< Updated upstream
 <title>SNES</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+=======
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emulador SNES</title>
+>>>>>>> Stashed changes
 </head>
 
 <body style="margin:0;background:#000">
@@ -19,6 +24,7 @@ if (!rom) {
   throw new Error("ROM não definida");
 }
 
+<<<<<<< Updated upstream
 window.EJS_player = "#game";
 window.EJS_core = "snes";
 window.EJS_gameName = rom.replace(".smc", "");
@@ -29,5 +35,22 @@ window.EJS_startOnLoaded = true;
 
 <script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
 
+=======
+  window.EJS_player = "#game";
+  window.EJS_gameName = rom.replace(".sfc", "");
+  window.EJS_gameUrl = "./roms/" + rom;
+
+  window.EJS_core = "snes9x";
+  window.EJS_paths = {
+    "snes9x.wasm": "https://cdn.emulatorjs.org/latest/cores/snes9x.wasm",
+    "snes9x.js": "https://cdn.emulatorjs.org/latest/cores/snes9x.js"
+  };
+
+  window.EJS_pathtodata = "https://cdn.emulatorjs.org/latest/data/";
+  window.EJS_startOnLoaded = true;
+</script>
+
+<script src="https://cdn.emulatorjs.org/latest/data/loader.js"></script>
+>>>>>>> Stashed changes
 </body>
 </html>
