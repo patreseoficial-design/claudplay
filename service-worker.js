@@ -1,29 +1,41 @@
-const CACHE_NAME = "claudplay-cache-v1";
+const CACHE_NAME = "claudplay-cache-v2";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/manifest.json",
-  "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png",
-  "/Banner/mario_banner.jpeg",
-  "/Banner/bannerbomberman.jpeg",
-  "/Banner/aladdin.jpeg",
-  "/Banner/bannerfutebol64.jpeg"
+  "./",
+  "./index.html",
+  "./style.css",
+  "./manifest.json",
+  "./icons/icon-192x192.png",
+  "./icons/icon-512.png",
+  "./Emuladores/lista.css",
+  "./Emuladores/lista.js",
+  "./Emuladores/jogar.html"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
+  self.skipWaiting();
 });
 
+// Remove caches antigos (a v1 tinha arquivos que não existem)
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((nomes) =>
+      Promise.all(nomes.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
+    )
+  );
+  self.clients.claim();
+});
+
+// Busca na rede primeiro (para pegar atualizações) e usa o cache se estiver offline.
+// ROMs e arquivos de outros sites não passam pelo cache.
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  if (event.request.method !== "GET" || url.origin !== self.location.origin || url.pathname.includes("/roms/")) {
+    return;
+  }
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });

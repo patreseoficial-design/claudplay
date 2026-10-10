@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>ClaudPlay🎮</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6b00ff">
 
 <style>
 body{
@@ -53,20 +55,20 @@ body{
   <div class="menu" onclick="mostrarCategorias()">Todos os jogos</div>
 </div>
 
-<div class="container" id="categorias" style="display:none">
+<div class="container" id="categorias">
   <div class="categoria" onclick="location.href='Emuladores/GameBoy/gameboy.html'">
     🎮 GameBoy
   </div>
 
-  <div class="categoria" onclick="location.href='Emuladores/GameBoyCollor/gameboycollor.html'">
-    🎮 GameBoy Collor
+  <div class="categoria" onclick="location.href='Emuladores/GameBoyCollor/gameboycolor.html'">
+    🎮 GameBoy Color
   </div>
 
   <div class="categoria" onclick="location.href='Emuladores/MegaDrive/megadrive.html'">
     🎮 MegaDrive
   </div>
 
-  <div class="categoria" onclick="location.href='Emuladores/Nes/nes.html'">
+  <div class="categoria" onclick="location.href='Emuladores/Nes/nintendo.html'">
     🎮 Nes
   </div>
 
@@ -74,7 +76,7 @@ body{
     🎮 Nintendo64
   </div>
 
-  <div class="categoria" onclick="location.href='Emuladores/Ps1/ps1.html'">
+  <div class="categoria" onclick="location.href='Emuladores/Ps1/playstation.html'">
     🎮 Ps1
   </div>
 
@@ -86,6 +88,10 @@ body{
 <script>
 function mostrarCategorias(){
   document.getElementById("categorias").style.display="block";
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js").catch(() => {});
 }
 </script>
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>PlayStation - ClaudPlay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../lista.css">
+</head>
+
+<body>
+
+<div class="topo">
+  <a href="../../index.html">⬅ Início</a>
+  <div class="logo">🎮 PlayStation</div>
+  <input id="busca" type="search" placeholder="Buscar jogo...">
+</div>
+
+<div class="container">
+  <p class="aviso">Nenhum jogo disponível ainda. O Crash Bandicoot precisa do arquivo "Crash Bandicoot (USA).bin" dentro de Emuladores/Ps1/roms/Crash/ (só o .cue foi enviado).</p>
+  <div class="grid" id="listaJogos"></div>
+</div>
+
+<script src="../lista.js"></script>
+<script>
+const jogos = [
+];
+montarLista("Ps1", "psx", jogos);
+</script>
+
+</body>
+</html>
