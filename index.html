@@ -2,60 +2,56 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>ClaudPlay🎮</title>
+<title>ClaudPlay — jogos retrô no navegador</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#6b00ff">
-
-<style>
-body{ margin:0; background:#0b0b0b; color:#fff; font-family:Arial, sans-serif; }
-a{ color:inherit; }
-
-.topo{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:16px 20px; background:#101010; }
-.logo{ font-size:22px; font-weight:bold; flex:1; }
-.botao{ background:#6b00ff; color:#fff; border:0; border-radius:10px; padding:10px 16px; font-size:15px; text-decoration:none; }
-
-.container{ padding:20px; }
-.ferramentas{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-#busca{ flex:1; min-width:160px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#000; color:#fff; font-size:15px; }
-.filtro{ background:#161616; color:#aaa; border:1px solid #333; border-radius:20px; padding:8px 14px; font-size:14px; cursor:pointer; }
-.filtro.ativo{ background:#fff; color:#000; }
-
-.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:16px; }
-.card{ display:block; background:#161616; border-radius:14px; overflow:hidden; text-decoration:none; color:#fff; }
-.card:hover{ background:#1f1f1f; }
-.capa{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; padding:10px; box-sizing:border-box; text-align:center; font-weight:bold; font-size:17px; background:linear-gradient(135deg, #3a0080, #6b00ff); }
-.info{ padding:10px; }
-.info .titulo{ font-size:14px; font-weight:bold; }
-.info .detalhe{ font-size:12px; color:#aaa; margin-top:4px; }
-.card.breve{ opacity:.45; pointer-events:none; }
-.selo{ display:inline-block; margin-top:6px; font-size:11px; background:#333; border-radius:6px; padding:2px 6px; }
-.vazio{ color:#aaa; }
-
-.rodape{ padding:20px; font-size:13px; color:#888; }
-</style>
+<meta name="theme-color" content="#07070c">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="topo">
-  <div class="logo">ClaudPlay</div>
-  <a class="botao" href="jogar.html">📂 Abrir meu jogo</a>
-</div>
+<header class="topo">
+  <a class="logo" href="index.html"><span class="logo-icone">🎮</span><span>Claud<b>Play</b></span></a>
+  <a class="link-topo" href="creditos.html">Créditos</a>
+</header>
 
-<div class="container">
-  <div class="ferramentas">
-    <input id="busca" type="search" placeholder="Buscar jogo...">
+<main class="pagina">
+  <section class="hero">
+    <h1>Clássicos no navegador.<br><em>Sem baixar nada.</em></h1>
+    <p>Escolha um jogo do catálogo e comece a jogar na hora, ou abra uma ROM que você já tem no seu aparelho.</p>
+    <div class="acoes">
+      <a class="botao" href="#catalogo">▶ Ver catálogo</a>
+      <a class="botao secundario" href="jogar.html">📂 Abrir meu jogo</a>
+    </div>
+  </section>
+
+  <div class="secao-titulo" id="catalogo">
+    <h2>Catálogo</h2>
+    <small id="contagem"></small>
   </div>
-  <div class="ferramentas" id="filtros"></div>
+
+  <div class="ferramentas">
+    <label class="busca"><input id="busca" type="search" placeholder="Buscar jogo ou autor..." aria-label="Buscar jogo"></label>
+    <div class="filtros" id="filtros"></div>
+  </div>
+
   <div class="grid" id="listaJogos"></div>
   <p class="vazio" id="vazio" hidden>Nenhum jogo encontrado.</p>
-</div>
 
-<div class="rodape">
-  Todos os jogos do catálogo são homebrew com licença livre.
-  <a href="creditos.html">Créditos e licenças</a>
-</div>
+  <section class="destaque">
+    <div class="texto">
+      <h3>📂 Tem suas próprias ROMs?</h3>
+      <p>Abra o arquivo direto do celular ou do computador. Ele roda aqui mesmo e não é enviado para nenhum servidor.</p>
+    </div>
+    <a class="botao" href="jogar.html">Abrir meu jogo</a>
+  </section>
+</main>
+
+<footer class="rodape">
+  <span>Os jogos do catálogo são homebrew com licença livre.</span>
+  <a href="creditos.html">Créditos e licenças →</a>
+</footer>
 
 <script src="jogos/catalogo.js"></script>
 <script>
@@ -63,6 +59,8 @@ const lista = document.getElementById("listaJogos");
 const busca = document.getElementById("busca");
 const filtros = document.getElementById("filtros");
 let consoleAtivo = "";
+
+const ICONES = { nes: "🕹️", snes: "🎮", gb: "🟩", gbc: "🌈", gba: "🎯", segaMD: "⚡", n64: "⭐", psx: "💿" };
 
 // Monta os cards
 CATALOGO.forEach(jogo => {
@@ -72,19 +70,21 @@ CATALOGO.forEach(jogo => {
   card.dataset.console = jogo.console;
   card.dataset.busca = (jogo.titulo + " " + jogo.autor).toLowerCase();
 
-  const capa = document.createElement("div");
-  capa.className = "capa";
-  capa.textContent = jogo.titulo;
-
-  const info = document.createElement("div");
-  info.className = "info";
-  info.innerHTML = "<div class='titulo'></div><div class='detalhe'></div><span class='selo'></span>";
-  info.querySelector(".titulo").textContent = jogo.titulo;
-  info.querySelector(".detalhe").textContent = jogo.descricao;
-  info.querySelector(".selo").textContent = CONSOLES[jogo.console].nome;
-
-  card.appendChild(capa);
-  card.appendChild(info);
+  card.innerHTML = `
+    <div class="capa c-${jogo.console}">
+      <span class="capa-icone"></span>
+      <span class="capa-titulo"></span>
+      <span class="jogar">▶</span>
+    </div>
+    <div class="info">
+      <p class="descricao"></p>
+      <div class="selos"><span class="selo"></span></div>
+    </div>`;
+  card.querySelector(".capa-icone").textContent = ICONES[jogo.console] || "🎮";
+  card.querySelector(".capa-titulo").textContent = jogo.titulo;
+  card.querySelector(".descricao").textContent = jogo.descricao;
+  card.querySelector(".selo").textContent = CONSOLES[jogo.console].nome;
+  card.setAttribute("aria-label", "Jogar " + jogo.titulo);
   lista.appendChild(card);
 
   // Se a ROM ainda não foi adicionada, mostra como "Em breve"
@@ -94,8 +94,12 @@ CATALOGO.forEach(jogo => {
 });
 
 function marcarEmBreve(card){
-  card.classList.add("breve");
-  card.querySelector(".selo").textContent += " · Em breve";
+  card.classList.add("indisponivel");
+  card.removeAttribute("href");
+  const selo = document.createElement("span");
+  selo.className = "selo breve";
+  selo.textContent = "Em breve";
+  card.querySelector(".selos").appendChild(selo);
 }
 
 // Filtros por console (só os que têm jogo no catálogo)
@@ -121,8 +125,10 @@ function filtrar(){
     if (mostra) visiveis++;
   });
   document.getElementById("vazio").hidden = visiveis > 0;
+  document.getElementById("contagem").textContent = visiveis + (visiveis === 1 ? " jogo" : " jogos");
 }
 busca.addEventListener("input", filtrar);
+filtrar();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js").catch(() => {});
