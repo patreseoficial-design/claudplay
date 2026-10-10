@@ -180,3 +180,20 @@ a{ color: inherit; text-decoration: none; }
   display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap;
 }
 .rodape a{ color: var(--texto); font-weight: 600; }
+
+/* ---------- Instalar app ---------- */
+.instalar{ padding: 8px 14px; font-size: 14px; }
+.instalar[hidden]{ display: none; }
+.aviso-instalar{
+  display: flex; align-items: center; gap: 10px;
+  margin: 12px clamp(16px, 4vw, 40px) 0; padding: 12px 14px; border-radius: 14px;
+  background: var(--cartao-2); border: 1px solid var(--borda); font-size: 14px; color: var(--texto-2);
+}
+.aviso-instalar[hidden]{ display: none; }
+.aviso-instalar b{ color: var(--texto); }
+.aviso-instalar button{ margin-left: auto; background: none; border: 0; color: var(--texto-2); font-size: 16px; cursor: pointer; }
+
+/* No app instalado, respeita o entalhe do celular */
+@media (display-mode: standalone){
+  .topo{ padding-top: max(14px, env(safe-area-inset-top)); }
+}

@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>ClaudPlay — jogos retrô no navegador</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#07070c">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ClaudPlay">
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,7 +17,13 @@
 <header class="topo">
   <a class="logo" href="index.html"><span class="logo-icone">🎮</span><span>Claud<b>Play</b></span></a>
   <a class="link-topo" href="creditos.html">Créditos</a>
+  <button class="botao instalar" id="instalar" hidden>⬇ Instalar app</button>
 </header>
+
+<div class="aviso-instalar" id="dicaIos" hidden>
+  Para instalar no iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.
+  <button id="fecharDica" aria-label="Fechar">✕</button>
+</div>
 
 <main class="pagina">
   <section class="hero">
@@ -129,6 +138,34 @@ function filtrar(){
 }
 busca.addEventListener("input", filtrar);
 filtrar();
+
+// Botão "Instalar app" (Android/PC: Chrome e Edge)
+const botaoInstalar = document.getElementById("instalar");
+let pedidoInstalacao = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  pedidoInstalacao = e;
+  botaoInstalar.hidden = false;
+});
+botaoInstalar.onclick = async () => {
+  if (!pedidoInstalacao) return;
+  pedidoInstalacao.prompt();
+  await pedidoInstalacao.userChoice;
+  pedidoInstalacao = null;
+  botaoInstalar.hidden = true;
+};
+window.addEventListener("appinstalled", () => { botaoInstalar.hidden = true; });
+
+// iPhone não tem botão de instalar: mostra a dica uma vez
+const ehIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const jaInstalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+let dicaVista = false;
+try { dicaVista = localStorage.getItem("dicaIos") === "1"; } catch (e) {}
+if (ehIos && !jaInstalado && !dicaVista) document.getElementById("dicaIos").hidden = false;
+document.getElementById("fecharDica").onclick = () => {
+  document.getElementById("dicaIos").hidden = true;
+  try { localStorage.setItem("dicaIos", "1"); } catch (e) {}
+};
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js").catch(() => {});
