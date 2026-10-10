@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Créditos - ClaudPlay</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{ margin:0; background:#0b0b0b; color:#fff; font-family:Arial, sans-serif; }
+.topo{ padding:16px 20px; background:#101010; }
+.topo a{ color:#aaa; text-decoration:none; }
+.container{ padding:20px; max-width:760px; }
+.jogo{ background:#161616; border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+.jogo h3{ margin:0 0 6px; }
+.jogo p{ margin:4px 0; color:#ccc; font-size:14px; }
+a{ color:#b98cff; }
+</style>
+</head>
+<body>
+
+<div class="topo"><a href="index.html">⬅ Início</a></div>
+
+<div class="container">
+  <h1>Créditos e licenças</h1>
+  <p>Os jogos do catálogo são homebrew (jogos independentes feitos por fãs) distribuídos
+     com a permissão dada pelas licenças dos autores. O código-fonte de cada jogo está no link "Código-fonte".</p>
+  <div id="lista"></div>
+
+  <h2>Emulador</h2>
+  <p><a href="https://github.com/EmulatorJS/EmulatorJS">EmulatorJS</a> — GPL-3.0.</p>
+
+  <h2>Abrir meu jogo</h2>
+  <p>Quando você abre um jogo do seu aparelho, o arquivo é lido localmente e não é enviado ao ClaudPlay.
+     Use apenas jogos que você tem o direito de usar.</p>
+</div>
+
+<script src="jogos/catalogo.js"></script>
+<script>
+const div = document.getElementById("lista");
+CATALOGO.forEach(j => {
+  const el = document.createElement("div");
+  el.className = "jogo";
+  el.innerHTML = "<h3></h3><p class='a'></p><p class='l'></p><p><a target='_blank' rel='noopener'>Código-fonte</a></p>";
+  el.querySelector("h3").textContent = j.titulo + " (" + CONSOLES[j.console].nome + ")";
+  el.querySelector(".a").textContent = "Autor: " + j.autor;
+  el.querySelector(".l").textContent = "Licença: " + j.licenca;
+  el.querySelector("a").href = j.fonte;
+  div.appendChild(el);
+});
+</script>
+</body>
+</html>

@@ -8,43 +8,31 @@
 <meta name="theme-color" content="#6b00ff">
 
 <style>
-body{
-  margin:0;
-  background:#0b0b0b;
-  color:#fff;
-  font-family:Arial, sans-serif;
-}
+body{ margin:0; background:#0b0b0b; color:#fff; font-family:Arial, sans-serif; }
+a{ color:inherit; }
 
-.topo{
-  padding:16px 20px;
-  background:#101010;
-}
+.topo{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:16px 20px; background:#101010; }
+.logo{ font-size:22px; font-weight:bold; flex:1; }
+.botao{ background:#6b00ff; color:#fff; border:0; border-radius:10px; padding:10px 16px; font-size:15px; text-decoration:none; }
 
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
+.container{ padding:20px; }
+.ferramentas{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+#busca{ flex:1; min-width:160px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#000; color:#fff; font-size:15px; }
+.filtro{ background:#161616; color:#aaa; border:1px solid #333; border-radius:20px; padding:8px 14px; font-size:14px; cursor:pointer; }
+.filtro.ativo{ background:#fff; color:#000; }
 
-.menu{
-  margin-top:8px;
-  font-size:14px;
-  color:#aaa;
-  cursor:pointer;
-}
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:16px; }
+.card{ display:block; background:#161616; border-radius:14px; overflow:hidden; text-decoration:none; color:#fff; }
+.card:hover{ background:#1f1f1f; }
+.capa{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; padding:10px; box-sizing:border-box; text-align:center; font-weight:bold; font-size:17px; background:linear-gradient(135deg, #3a0080, #6b00ff); }
+.info{ padding:10px; }
+.info .titulo{ font-size:14px; font-weight:bold; }
+.info .detalhe{ font-size:12px; color:#aaa; margin-top:4px; }
+.card.breve{ opacity:.45; pointer-events:none; }
+.selo{ display:inline-block; margin-top:6px; font-size:11px; background:#333; border-radius:6px; padding:2px 6px; }
+.vazio{ color:#aaa; }
 
-.menu:hover{color:#fff}
-
-.container{padding:20px}
-
-.categoria{
-  margin-top:20px;
-  padding:14px;
-  background:#161616;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-.categoria:hover{background:#1f1f1f}
+.rodape{ padding:20px; font-size:13px; color:#888; }
 </style>
 </head>
 
@@ -52,43 +40,89 @@ body{
 
 <div class="topo">
   <div class="logo">ClaudPlay</div>
-  <div class="menu" onclick="mostrarCategorias()">Todos os jogos</div>
+  <a class="botao" href="jogar.html">📂 Abrir meu jogo</a>
 </div>
 
-<div class="container" id="categorias">
-  <div class="categoria" onclick="location.href='Emuladores/GameBoy/gameboy.html'">
-    🎮 GameBoy
+<div class="container">
+  <div class="ferramentas">
+    <input id="busca" type="search" placeholder="Buscar jogo...">
   </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/GameBoyCollor/gameboycolor.html'">
-    🎮 GameBoy Color
-  </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/MegaDrive/megadrive.html'">
-    🎮 MegaDrive
-  </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/Nes/nintendo.html'">
-    🎮 Nes
-  </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/Nintendo64/nintendo64.html'">
-    🎮 Nintendo64
-  </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/Ps1/playstation.html'">
-    🎮 Ps1
-  </div>
-
-  <div class="categoria" onclick="location.href='Emuladores/SuperNintendo/supernintendo.html'">
-    🎮 SuperNintendo
-  </div>
+  <div class="ferramentas" id="filtros"></div>
+  <div class="grid" id="listaJogos"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum jogo encontrado.</p>
 </div>
 
+<div class="rodape">
+  Todos os jogos do catálogo são homebrew com licença livre.
+  <a href="creditos.html">Créditos e licenças</a>
+</div>
+
+<script src="jogos/catalogo.js"></script>
 <script>
-function mostrarCategorias(){
-  document.getElementById("categorias").style.display="block";
+const lista = document.getElementById("listaJogos");
+const busca = document.getElementById("busca");
+const filtros = document.getElementById("filtros");
+let consoleAtivo = "";
+
+// Monta os cards
+CATALOGO.forEach(jogo => {
+  const card = document.createElement("a");
+  card.className = "card";
+  card.href = "jogar.html?" + new URLSearchParams({ jogo: jogo.rom });
+  card.dataset.console = jogo.console;
+  card.dataset.busca = (jogo.titulo + " " + jogo.autor).toLowerCase();
+
+  const capa = document.createElement("div");
+  capa.className = "capa";
+  capa.textContent = jogo.titulo;
+
+  const info = document.createElement("div");
+  info.className = "info";
+  info.innerHTML = "<div class='titulo'></div><div class='detalhe'></div><span class='selo'></span>";
+  info.querySelector(".titulo").textContent = jogo.titulo;
+  info.querySelector(".detalhe").textContent = jogo.descricao;
+  info.querySelector(".selo").textContent = CONSOLES[jogo.console].nome;
+
+  card.appendChild(capa);
+  card.appendChild(info);
+  lista.appendChild(card);
+
+  // Se a ROM ainda não foi adicionada, mostra como "Em breve"
+  fetch("jogos/" + jogo.rom.split("/").map(encodeURIComponent).join("/"), { method: "HEAD" })
+    .then(r => { if (!r.ok) marcarEmBreve(card); })
+    .catch(() => marcarEmBreve(card));
+});
+
+function marcarEmBreve(card){
+  card.classList.add("breve");
+  card.querySelector(".selo").textContent += " · Em breve";
 }
+
+// Filtros por console (só os que têm jogo no catálogo)
+const consolesUsados = [...new Set(CATALOGO.map(j => j.console))];
+[["", "Todos"], ...consolesUsados.map(id => [id, CONSOLES[id].nome])].forEach(([id, nome]) => {
+  const b = document.createElement("button");
+  b.className = "filtro" + (id === "" ? " ativo" : "");
+  b.textContent = nome;
+  b.onclick = () => {
+    consoleAtivo = id;
+    filtros.querySelectorAll(".filtro").forEach(f => f.classList.toggle("ativo", f === b));
+    filtrar();
+  };
+  filtros.appendChild(b);
+});
+
+function filtrar(){
+  const termo = busca.value.trim().toLowerCase();
+  let visiveis = 0;
+  lista.querySelectorAll(".card").forEach(card => {
+    const mostra = card.dataset.busca.includes(termo) && (!consoleAtivo || card.dataset.console === consoleAtivo);
+    card.style.display = mostra ? "" : "none";
+    if (mostra) visiveis++;
+  });
+  document.getElementById("vazio").hidden = visiveis > 0;
+}
+busca.addEventListener("input", filtrar);
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js").catch(() => {});

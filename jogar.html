@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ClaudPlay - Jogando</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+html, body{ margin:0; padding:0; width:100%; height:100%; background:#000; color:#fff; font-family:Arial, sans-serif; overflow:hidden; }
+#game{ width:100vw; height:100vh; }
+.voltar{ position:fixed; top:8px; left:8px; z-index:10; background:rgba(0,0,0,.6); color:#fff; padding:6px 12px; border-radius:8px; text-decoration:none; font-size:14px; }
+.painel{ max-width:420px; margin:18vh auto 0; padding:24px; text-align:center; }
+.painel h2{ margin-top:0; }
+.painel p{ color:#aaa; font-size:14px; line-height:1.5; }
+.painel select, .painel .botao{ display:block; width:100%; box-sizing:border-box; margin-top:12px; padding:12px; border-radius:10px; font-size:16px; }
+.painel select{ background:#161616; color:#fff; border:1px solid #333; }
+.botao{ background:#6b00ff; color:#fff; border:0; cursor:pointer; }
+#arquivo{ display:none; }
+</style>
+</head>
+
+<body>
+<a class="voltar" href="index.html">⬅ Início</a>
+<div id="game"></div>
+
+<script src="jogos/catalogo.js"></script>
+<script>
+// Dois modos:
+//   jogar.html?jogo=<rom do catálogo>  → abre um jogo do catálogo
+//   jogar.html                         → o jogador escolhe uma ROM do próprio aparelho
+const params = new URLSearchParams(window.location.search);
+const romCatalogo = params.get("jogo");
+const tela = document.getElementById("game");
+
+function iniciar(core, gameUrl, nome){
+  document.title = nome + " - ClaudPlay";
+  tela.innerHTML = "";
+
+  window.EJS_player = "#game";
+  window.EJS_core = core;
+  window.EJS_gameName = nome;
+  window.EJS_gameUrl = gameUrl;
+  window.EJS_language = "pt-BR";
+  window.EJS_startOnLoaded = true;
+  // Evita travamento no celular
+  window.EJS_threads = false;
+  // Usa a cópia do EmulatorJS que já está no repositório
+  window.EJS_pathtodata = "emulatorjs/EmulatorJS/Data/";
+
+  const script = document.createElement("script");
+  script.src = "emulatorjs/EmulatorJS/Data/loader.js";
+  document.body.appendChild(script);
+}
+
+function mensagem(texto){
+  tela.innerHTML = "<div class='painel'><h2></h2></div>";
+  tela.querySelector("h2").textContent = texto;
+}
+
+if (romCatalogo) {
+  // Só abre jogos que estão no catálogo
+  const jogo = CATALOGO.find(j => j.rom === romCatalogo);
+  if (!jogo) {
+    mensagem("Jogo não encontrado");
+  } else {
+    const url = "jogos/" + jogo.rom.split("/").map(encodeURIComponent).join("/");
+    iniciar(CONSOLES[jogo.console].core, url, jogo.titulo);
+  }
+} else {
+  // Modo "Abrir meu jogo": a ROM é lida do aparelho e não sai dele
+  tela.innerHTML = `
+    <div class="painel">
+      <h2>📂 Abrir meu jogo</h2>
+      <p>Escolha uma ROM que você já tem no seu aparelho.
+         O arquivo é aberto aqui mesmo e não é enviado para nenhum servidor.</p>
+      <select id="console"></select>
+      <button class="botao" id="escolher">Escolher arquivo</button>
+      <input type="file" id="arquivo">
+    </div>`;
+
+  const select = document.getElementById("console");
+  const input = document.getElementById("arquivo");
+
+  select.innerHTML = "<option value=''>Detectar console pelo arquivo</option>" +
+    Object.entries(CONSOLES).map(([id, c]) => `<option value="${id}">${c.nome}</option>`).join("");
+  input.accept = Object.values(CONSOLES).flatMap(c => c.ext.map(e => "." + e)).concat(".zip", ".7z", ".bin").join(",");
+
+  document.getElementById("escolher").onclick = () => input.click();
+
+  input.onchange = () => {
+    const arquivo = input.files[0];
+    if (!arquivo) return;
+    const ext = arquivo.name.split(".").pop().toLowerCase();
+    let id = select.value;
+    if (!id) {
+      id = Object.keys(CONSOLES).find(k => CONSOLES[k].ext.includes(ext));
+    }
+    if (!id) {
+      alert("Não deu para saber o console pelo arquivo ." + ext + ". Escolha o console na lista e tente de novo.");
+      input.value = "";
+      return;
+    }
+    iniciar(CONSOLES[id].core, arquivo, arquivo.name.replace(/\.[^.]+$/, ""));
+  };
+}
+</script>
+</body>
+</html>

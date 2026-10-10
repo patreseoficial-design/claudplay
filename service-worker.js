@@ -1,4 +1,4 @@
-const CACHE_NAME = "claudplay-cache-v2";
+const CACHE_NAME = "claudplay-cache-v3";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -6,9 +6,9 @@ const urlsToCache = [
   "./manifest.json",
   "./icons/icon-192x192.png",
   "./icons/icon-512.png",
-  "./Emuladores/lista.css",
-  "./Emuladores/lista.js",
-  "./Emuladores/jogar.html"
+  "./jogar.html",
+  "./creditos.html",
+  "./jogos/catalogo.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -29,10 +29,10 @@ self.addEventListener("activate", (event) => {
 });
 
 // Busca na rede primeiro (para pegar atualizações) e usa o cache se estiver offline.
-// ROMs e arquivos de outros sites não passam pelo cache.
+// Arquivos de outros sites não passam pelo cache.
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if (event.request.method !== "GET" || url.origin !== self.location.origin || url.pathname.includes("/roms/")) {
+  if (event.request.method !== "GET" || url.origin !== self.location.origin) {
     return;
   }
   event.respondWith(
