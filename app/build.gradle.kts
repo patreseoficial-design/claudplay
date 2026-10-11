@@ -11,8 +11,8 @@ plugins {
 val arquivoChave = System.getenv("KEYSTORE_FILE")
 val temChave = !arquivoChave.isNullOrBlank() && file(arquivoChave).exists()
 
-// IDs do AdMob do ClaudPlay: cadastre nos Secrets do GitHub.
-// Sem eles, a versão da loja usa os IDs de TESTE do Google.
+// IDs do AdMob do ClaudPlay (os reais já estão abaixo; os Secrets
+// do GitHub com o mesmo nome, se existirem, têm prioridade)
 fun idAdMob(nome: String, padrao: String): String =
     System.getenv(nome)?.takeIf { it.isNotBlank() } ?: padrao
 
@@ -57,8 +57,9 @@ android {
 
         // Versão da Play Store: anúncios de verdade da conta AdMob
         release {
-            resValue("string", "admob_app_id", idAdMob("ADMOB_APP_ID", "ca-app-pub-3940256099942544~3347511713"))
-            resValue("string", "admob_banner_id", idAdMob("ADMOB_BANNER_ID", "ca-app-pub-3940256099942544/9214589741"))
+            resValue("string", "admob_app_id", idAdMob("ADMOB_APP_ID", "ca-app-pub-9393930095097786~1786455388"))
+            resValue("string", "admob_banner_id", idAdMob("ADMOB_BANNER_ID", "ca-app-pub-9393930095097786/4954624336"))
+            // Intersticial: ainda com o ID de TESTE até o bloco ser criado no AdMob
             resValue("string", "admob_intersticial_id", idAdMob("ADMOB_INTERSTICIAL_ID", "ca-app-pub-3940256099942544/1033173712"))
             isMinifyEnabled = false
             if (temChave) {
