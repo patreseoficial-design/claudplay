@@ -167,7 +167,8 @@ document.getElementById("fecharDica").onclick = () => {
   try { localStorage.setItem("dicaIos", "1"); } catch (e) {}
 };
 
-if ("serviceWorker" in navigator) {
+// Dentro do app Android tudo já está no aparelho: sem service worker
+if ("serviceWorker" in navigator && !window.ClaudPlayApp) {
   navigator.serviceWorker.register("service-worker.js").catch(() => {});
 }
 </script>

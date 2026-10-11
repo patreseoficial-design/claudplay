@@ -41,6 +41,8 @@ function iniciar(core, gameUrl, nome){
   document.title = nome + " - ClaudPlay";
   tela.innerHTML = "";
   document.body.classList.add("jogando");
+  // No app Android: tela cheia e sem anúncio durante o jogo
+  if (window.ClaudPlayApp) ClaudPlayApp.jogando(true);
 
   window.EJS_player = "#game";
   window.EJS_core = core;

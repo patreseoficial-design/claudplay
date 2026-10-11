@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme"
+        parent="Theme.AppCompat.NoActionBar">
+
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="android:statusBarColor">#07070C</item>
+
+        <item name="android:navigationBarColor">#07070C</item>
+
+        <item name="android:windowBackground">@color/fundo</item>
+
+    </style>
+
+</resources>

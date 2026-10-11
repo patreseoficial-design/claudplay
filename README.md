@@ -16,11 +16,18 @@ Só entram jogos cuja licença permite distribuir (homebrew livre, domínio púb
 
 Enquanto o arquivo da ROM não existir, o jogo aparece como "Em breve".
 
-## App Android (APK)
+## App Android
 
-A automação `.github/workflows/apk.yml` gera o APK a cada atualização e publica em
-**Releases → "ClaudPlay para Android"**:
-https://github.com/patreseoficial-design/claudplay/releases/download/apk/ClaudPlay.apk
+O app Android (Kotlin) fica em `app/`. Ele leva o site e o emulador dentro dele
+(em `assets/www`, copiados na hora da compilação), então funciona sem internet.
+Anúncios: banner fora do jogo e tela cheia ao sair de um jogo (no máximo a cada 3 minutos).
 
-O app (Capacitor) leva o site e o emulador dentro dele, então funciona sem internet.
-Os arquivos ficam em `app/`; `app/montar-www.sh` copia o site para dentro do app.
+A automação `.github/workflows/build.yml` compila a cada atualização:
+- **APK de teste** (anúncios de teste), publicado em Releases:
+  https://github.com/patreseoficial-design/claudplay/releases/download/apk/ClaudPlay.apk
+- **AAB da Play Store**, assinado quando estes Secrets estão cadastrados no repositório:
+  `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`
+- Anúncios reais na versão da loja: Secrets `ADMOB_APP_ID`, `ADMOB_BANNER_ID`,
+  `ADMOB_INTERSTICIAL_ID` (de um app **ClaudPlay** criado no AdMob)
+
+Política de privacidade: [docs/politica-de-privacidade.md](docs/politica-de-privacidade.md)
