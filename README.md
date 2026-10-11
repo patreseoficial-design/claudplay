@@ -27,7 +27,7 @@ A automação `.github/workflows/build.yml` compila a cada atualização:
   https://github.com/patreseoficial-design/claudplay/releases/download/apk/ClaudPlay.apk
 - **AAB da Play Store**, assinado quando estes Secrets estão cadastrados no repositório:
   `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`
-- Anúncios reais na versão da loja: Secrets `ADMOB_APP_ID`, `ADMOB_BANNER_ID`,
-  `ADMOB_INTERSTICIAL_ID` (de um app **ClaudPlay** criado no AdMob)
+- Anúncios reais na versão da loja: IDs do app **ClaudPlay** no AdMob, já em
+  `app/build.gradle.kts` (os Secrets `ADMOB_*`, se existirem, têm prioridade)
 
 Política de privacidade: [docs/politica-de-privacidade.md](docs/politica-de-privacidade.md)

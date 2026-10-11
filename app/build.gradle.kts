@@ -59,8 +59,7 @@ android {
         release {
             resValue("string", "admob_app_id", idAdMob("ADMOB_APP_ID", "ca-app-pub-9393930095097786~1786455388"))
             resValue("string", "admob_banner_id", idAdMob("ADMOB_BANNER_ID", "ca-app-pub-9393930095097786/4954624336"))
-            // Intersticial: ainda com o ID de TESTE até o bloco ser criado no AdMob
-            resValue("string", "admob_intersticial_id", idAdMob("ADMOB_INTERSTICIAL_ID", "ca-app-pub-3940256099942544/1033173712"))
+            resValue("string", "admob_intersticial_id", idAdMob("ADMOB_INTERSTICIAL_ID", "ca-app-pub-9393930095097786/7987981783"))
             isMinifyEnabled = false
             if (temChave) {
                 signingConfig = signingConfigs.getByName("release")
