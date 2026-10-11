@@ -1,0 +1,9 @@
+{
+  "appId": "com.claudplay.app",
+  "appName": "ClaudPlay",
+  "webDir": "www",
+  "backgroundColor": "#07070c",
+  "android": {
+    "backgroundColor": "#07070c"
+  }
+}

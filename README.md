@@ -15,3 +15,12 @@ Só entram jogos cuja licença permite distribuir (homebrew livre, domínio púb
 2. Adicione uma entrada em `jogos/catalogo.js` com título, autor, licença e link do código-fonte.
 
 Enquanto o arquivo da ROM não existir, o jogo aparece como "Em breve".
+
+## App Android (APK)
+
+A automação `.github/workflows/apk.yml` gera o APK a cada atualização e publica em
+**Releases → "ClaudPlay para Android"**:
+https://github.com/patreseoficial-design/claudplay/releases/download/apk/ClaudPlay.apk
+
+O app (Capacitor) leva o site e o emulador dentro dele, então funciona sem internet.
+Os arquivos ficam em `app/`; `app/montar-www.sh` copia o site para dentro do app.
