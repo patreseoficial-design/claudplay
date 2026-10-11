@@ -57,9 +57,9 @@ android {
 
         // Versão da Play Store: anúncios de verdade da conta AdMob
         release {
-            resValue("string", "admob_app_id", idAdMob("ADMOB_APP_ID", "ca-app-pub-9393930095097786~1786455388"))
-            resValue("string", "admob_banner_id", idAdMob("ADMOB_BANNER_ID", "ca-app-pub-9393930095097786/4954624336"))
-            resValue("string", "admob_intersticial_id", idAdMob("ADMOB_INTERSTICIAL_ID", "ca-app-pub-9393930095097786/7987981783"))
+            resValue("string", "admob_app_id", idAdMob("ADMOB_APP_ID", "ca-app-pub-9393930095097786~4471408607"))
+            resValue("string", "admob_banner_id", idAdMob("ADMOB_BANNER_ID", "ca-app-pub-9393930095097786/4935362906"))
+            resValue("string", "admob_intersticial_id", idAdMob("ADMOB_INTERSTICIAL_ID", "ca-app-pub-9393930095097786/2735655107"))
             isMinifyEnabled = false
             if (temChave) {
                 signingConfig = signingConfigs.getByName("release")
