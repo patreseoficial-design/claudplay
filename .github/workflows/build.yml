@@ -40,6 +40,54 @@ jobs:
         with:
           gradle-version: '8.13'
 
+      # Jogos homebrew do catálogo, compilados do código-fonte oficial
+      # de cada autor (licenças livres, veja creditos.html). Se um deles
+      # falhar, o app sai mesmo assim e o jogo aparece como "Em breve".
+      - name: Ferramentas para compilar os jogos
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cc65 bison libpng-dev pkg-config python3-pil
+          git clone -q --depth 1 --branch v1.0.4 https://github.com/gbdev/rgbds "$RUNNER_TEMP/rgbds"
+          make -C "$RUNNER_TEMP/rgbds" -j"$(nproc)" -s
+          sudo make -C "$RUNNER_TEMP/rgbds" install -s
+          rgbasm --version
+
+      - name: "Jogo: Thwaite (NES)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/thwaite-nes "$RUNNER_TEMP/thwaite"
+          git -C "$RUNNER_TEMP/thwaite" checkout -q 00e36745188bc165990f60eed6b093c3ce6ad0e3
+          make -C "$RUNNER_TEMP/thwaite" thwaite.nes
+          mkdir -p jogos/nes && cp "$RUNNER_TEMP/thwaite/thwaite.nes" jogos/nes/
+
+      - name: "Jogo: Concentration Room (NES)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/croom-nes "$RUNNER_TEMP/croom"
+          git -C "$RUNNER_TEMP/croom" checkout -q ed19c3c07ca389b70cf2e0dd2ce0320df28d511d
+          make -C "$RUNNER_TEMP/croom" croom.nes
+          mkdir -p jogos/nes && cp "$RUNNER_TEMP/croom/croom.nes" jogos/nes/
+
+      - name: "Jogo: Libbet and the Magic Floor (Game Boy)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/libbet "$RUNNER_TEMP/libbet"
+          git -C "$RUNNER_TEMP/libbet" checkout -q 1232e71dc1ac852786ad9825316e19d2b341bc4a
+          make -C "$RUNNER_TEMP/libbet" libbet.gb
+          mkdir -p jogos/gb && cp "$RUNNER_TEMP/libbet/libbet.gb" jogos/gb/
+
+      - name: "Jogo: µCity (Game Boy Color)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/AntonioND/ucity "$RUNNER_TEMP/ucity"
+          git -C "$RUNNER_TEMP/ucity" checkout -q 71fb08e7ca53fe4228e66316968d9c6bea3439ba
+          make -C "$RUNNER_TEMP/ucity" ucity.gbc
+          mkdir -p jogos/gbc && cp "$RUNNER_TEMP/ucity/ucity.gbc" jogos/gbc/
+
+      - name: Jogos prontos
+        run: ls -la jogos/*/ || true
+
       - name: Compilar versão de teste (APK)
         run: |
           gradle assembleDebug

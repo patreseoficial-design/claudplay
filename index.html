@@ -2,10 +2,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>ClaudPlay — jogos retrô no navegador</title>
+<title>ClaudPlay — emulador de Super Nintendo, NES, Game Boy e mais</title>
+<meta name="description" content="Emulador de Super Nintendo (SNES), NES, Game Boy, Game Boy Color, Game Boy Advance, Mega Drive, Nintendo 64 e PlayStation. Jogue direto no navegador ou no app.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#07070c">
+<meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="icons/icon-192x192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ClaudPlay">
@@ -16,8 +17,8 @@
 
 <header class="topo">
   <a class="logo" href="index.html"><span class="logo-icone">🎮</span><span>Claud<b>Play</b></span></a>
-  <a class="link-topo" href="creditos.html">Créditos</a>
-  <button class="botao instalar" id="instalar" hidden>⬇ Instalar app</button>
+  <button class="botao instalar" id="instalar" hidden>⬇ Instalar</button>
+  <a class="icone-topo" href="jogar.html" title="Abrir meu jogo" aria-label="Abrir meu jogo">📂</a>
 </header>
 
 <div class="aviso-instalar" id="dicaIos" hidden>
@@ -25,35 +26,41 @@
   <button id="fecharDica" aria-label="Fechar">✕</button>
 </div>
 
+<!-- Destaques -->
+<section class="destaques" aria-label="Destaques">
+  <div class="trilho" id="trilho"></div>
+  <div class="pontos" id="pontos"></div>
+</section>
+
 <main class="pagina">
-  <section class="hero">
-    <h1>Clássicos no navegador.<br><em>Sem baixar nada.</em></h1>
-    <p>Escolha um jogo do catálogo e comece a jogar na hora, ou abra uma ROM que você já tem no seu aparelho.</p>
-    <div class="acoes">
-      <a class="botao" href="#catalogo">▶ Ver catálogo</a>
-      <a class="botao secundario" href="jogar.html">📂 Abrir meu jogo</a>
+
+  <!-- Consoles -->
+  <section class="secao consoles">
+    <div class="secao-titulo">
+      <h2>Emula Super Nintendo, NES, Game Boy e mais</h2>
     </div>
+    <div class="fileira" id="consoles"></div>
   </section>
 
-  <div class="secao-titulo" id="catalogo">
-    <h2>Catálogo</h2>
-    <small id="contagem"></small>
-  </div>
-
-  <div class="ferramentas">
-    <label class="busca"><input id="busca" type="search" placeholder="Buscar jogo ou autor..." aria-label="Buscar jogo"></label>
-    <div class="filtros" id="filtros"></div>
-  </div>
-
-  <div class="grid" id="listaJogos"></div>
-  <p class="vazio" id="vazio" hidden>Nenhum jogo encontrado.</p>
-
-  <section class="destaque">
-    <div class="texto">
-      <h3>📂 Tem suas próprias ROMs?</h3>
-      <p>Abra o arquivo direto do celular ou do computador. Ele roda aqui mesmo e não é enviado para nenhum servidor.</p>
+  <!-- Jogos -->
+  <section class="secao" id="catalogo">
+    <div class="secao-titulo">
+      <h2>Jogos grátis</h2>
+      <small id="contagem"></small>
     </div>
-    <a class="botao" href="jogar.html">Abrir meu jogo</a>
+    <label class="busca"><input id="busca" type="search" placeholder="Buscar jogo, console ou gênero..." aria-label="Buscar jogo"></label>
+    <div class="grid" id="listaJogos"></div>
+    <p class="vazio" id="vazio" hidden>Nenhum jogo encontrado.</p>
+  </section>
+
+  <!-- Abrir meu jogo -->
+  <section class="chamada">
+    <div class="icone">📂</div>
+    <div class="texto">
+      <h3>Tem seus próprios jogos?</h3>
+      <p>Abra a ROM direto do celular ou do computador: Super Nintendo, NES, Game Boy, Mega Drive, Nintendo 64, PlayStation e outros. O arquivo roda aqui e não é enviado para nenhum servidor.</p>
+    </div>
+    <a class="botao cor" href="jogar.html">Abrir meu jogo</a>
   </section>
 </main>
 
@@ -64,72 +71,117 @@
 
 <script src="jogos/catalogo.js"></script>
 <script>
-const lista = document.getElementById("listaJogos");
-const busca = document.getElementById("busca");
-const filtros = document.getElementById("filtros");
-let consoleAtivo = "";
+const caminho = p => "jogos/" + p.split("/").map(encodeURIComponent).join("/");
+const linkJogo = j => "jogar.html?" + new URLSearchParams({ jogo: j.rom });
 
-const ICONES = { nes: "🕹️", snes: "🎮", gb: "🟩", gbc: "🌈", gba: "🎯", segaMD: "⚡", n64: "⭐", psx: "💿" };
+// Confere quais ROMs existem (as que faltam aparecem como "Em breve")
+const disponivel = new Map(CATALOGO.map(j => [j.rom,
+  fetch(caminho(j.rom), { method: "HEAD" }).then(r => r.ok).catch(() => false)
+]));
 
-// Monta os cards
-CATALOGO.forEach(jogo => {
-  const card = document.createElement("a");
-  card.className = "card";
-  card.href = "jogar.html?" + new URLSearchParams({ jogo: jogo.rom });
-  card.dataset.console = jogo.console;
-  card.dataset.busca = (jogo.titulo + " " + jogo.autor).toLowerCase();
+/* ---------- Destaques ---------- */
+const trilho = document.getElementById("trilho");
+const pontos = document.getElementById("pontos");
 
-  card.innerHTML = `
-    <div class="capa c-${jogo.console}">
-      <span class="capa-icone"></span>
-      <span class="capa-titulo"></span>
-      <span class="jogar">▶</span>
-    </div>
-    <div class="info">
-      <p class="descricao"></p>
-      <div class="selos"><span class="selo"></span></div>
+CATALOGO.forEach((jogo, i) => {
+  const slide = document.createElement("article");
+  slide.className = "slide";
+  slide.innerHTML = `
+    <img class="fundo" alt="">
+    <img class="frente" alt="">
+    <div class="slide-info">
+      <span class="etiqueta verde">Grátis</span>
+      <span class="etiqueta nome-console"></span>
+      <h2></h2>
+      <p></p>
+      <div class="acoes">
+        <a class="botao jogar">▶ Jogar</a>
+        <a class="botao secundario" href="creditos.html">Detalhes</a>
+      </div>
     </div>`;
-  card.querySelector(".capa-icone").textContent = ICONES[jogo.console] || "🎮";
-  card.querySelector(".capa-titulo").textContent = jogo.titulo;
-  card.querySelector(".descricao").textContent = jogo.descricao;
-  card.querySelector(".selo").textContent = CONSOLES[jogo.console].nome;
-  card.setAttribute("aria-label", "Jogar " + jogo.titulo);
-  lista.appendChild(card);
+  slide.querySelectorAll("img").forEach(img => img.src = caminho(jogo.capa));
+  slide.querySelector(".nome-console").textContent = CONSOLES[jogo.console].nome;
+  slide.querySelector("h2").textContent = jogo.titulo;
+  slide.querySelector("p").textContent = jogo.descricao;
+  const botao = slide.querySelector(".jogar");
+  botao.href = linkJogo(jogo);
+  disponivel.get(jogo.rom).then(ok => {
+    if (!ok) { botao.textContent = "Em breve"; botao.setAttribute("aria-disabled", "true"); botao.removeAttribute("href"); }
+  });
+  trilho.appendChild(slide);
 
-  // Se a ROM ainda não foi adicionada, mostra como "Em breve"
-  fetch("jogos/" + jogo.rom.split("/").map(encodeURIComponent).join("/"), { method: "HEAD" })
-    .then(r => { if (!r.ok) marcarEmBreve(card); })
-    .catch(() => marcarEmBreve(card));
+  const ponto = document.createElement("button");
+  ponto.setAttribute("aria-label", "Destaque " + (i + 1));
+  ponto.onclick = () => irPara(i);
+  pontos.appendChild(ponto);
 });
 
-function marcarEmBreve(card){
-  card.classList.add("indisponivel");
-  card.removeAttribute("href");
-  const selo = document.createElement("span");
-  selo.className = "selo breve";
-  selo.textContent = "Em breve";
-  card.querySelector(".selos").appendChild(selo);
+let atual = 0;
+function irPara(i){
+  trilho.scrollTo({ left: i * trilho.clientWidth, behavior: "smooth" });
 }
+function marcarPonto(){
+  atual = Math.round(trilho.scrollLeft / trilho.clientWidth);
+  pontos.querySelectorAll("button").forEach((p, i) => p.classList.toggle("ativo", i === atual));
+}
+trilho.addEventListener("scroll", () => requestAnimationFrame(marcarPonto));
+marcarPonto();
 
-// Filtros por console (só os que têm jogo no catálogo)
-const consolesUsados = [...new Set(CATALOGO.map(j => j.console))];
-[["", "Todos"], ...consolesUsados.map(id => [id, CONSOLES[id].nome])].forEach(([id, nome]) => {
-  const b = document.createElement("button");
-  b.className = "filtro" + (id === "" ? " ativo" : "");
-  b.textContent = nome;
-  b.onclick = () => {
-    consoleAtivo = id;
-    filtros.querySelectorAll(".filtro").forEach(f => f.classList.toggle("ativo", f === b));
-    filtrar();
-  };
-  filtros.appendChild(b);
+// Passa sozinho a cada 6 segundos (para quando a pessoa mexe)
+let automatico = setInterval(() => irPara((atual + 1) % CATALOGO.length), 6000);
+["pointerdown", "touchstart", "wheel"].forEach(ev =>
+  trilho.addEventListener(ev, () => clearInterval(automatico), { passive: true }));
+
+/* ---------- Consoles ---------- */
+const comJogos = new Set(CATALOGO.map(j => j.console));
+const consoles = document.getElementById("consoles");
+Object.entries(CONSOLES).forEach(([id, c]) => {
+  const a = document.createElement("a");
+  a.className = "console c-" + id;
+  a.href = "jogar.html?" + new URLSearchParams({ console: id });
+  a.innerHTML = "<span class='sigla'></span><span class='nome'></span><span class='tipo'></span>";
+  a.querySelector(".sigla").textContent = c.curto;
+  a.querySelector(".nome").textContent = c.nome;
+  a.querySelector(".tipo").textContent = comJogos.has(id) ? "Jogos grátis + seus jogos" : "Abrir seus jogos";
+  consoles.appendChild(a);
+});
+
+/* ---------- Jogos ---------- */
+const lista = document.getElementById("listaJogos");
+const busca = document.getElementById("busca");
+
+CATALOGO.forEach(jogo => {
+  const c = CONSOLES[jogo.console];
+  const card = document.createElement("a");
+  card.className = "card";
+  card.href = linkJogo(jogo);
+  card.dataset.busca = [jogo.titulo, jogo.autor, jogo.genero, c.nome, c.curto].join(" ").toLowerCase();
+  card.innerHTML = `
+    <div class="capa c-${jogo.console}">
+      <img alt="" loading="lazy">
+      <span class="selo-console"></span>
+      <span class="jogar">▶</span>
+    </div>
+    <div>
+      <div class="titulo"></div>
+      <div class="detalhe"></div>
+    </div>`;
+  card.querySelector("img").src = caminho(jogo.capa);
+  card.querySelector(".selo-console").textContent = c.curto;
+  card.querySelector(".titulo").textContent = jogo.titulo;
+  card.querySelector(".detalhe").textContent = jogo.genero + " · " + c.nome;
+  card.setAttribute("aria-label", "Jogar " + jogo.titulo);
+  disponivel.get(jogo.rom).then(ok => {
+    if (!ok) { card.classList.add("indisponivel"); card.removeAttribute("href"); }
+  });
+  lista.appendChild(card);
 });
 
 function filtrar(){
   const termo = busca.value.trim().toLowerCase();
   let visiveis = 0;
   lista.querySelectorAll(".card").forEach(card => {
-    const mostra = card.dataset.busca.includes(termo) && (!consoleAtivo || card.dataset.console === consoleAtivo);
+    const mostra = card.dataset.busca.includes(termo);
     card.style.display = mostra ? "" : "none";
     if (mostra) visiveis++;
   });
@@ -139,7 +191,8 @@ function filtrar(){
 busca.addEventListener("input", filtrar);
 filtrar();
 
-// Botão "Instalar app" (Android/PC: Chrome e Edge)
+/* ---------- Instalar app ---------- */
+// Botão "Instalar" (Android/PC: Chrome e Edge)
 const botaoInstalar = document.getElementById("instalar");
 let pedidoInstalacao = null;
 window.addEventListener("beforeinstallprompt", e => {
