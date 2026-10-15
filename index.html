@@ -2,90 +2,227 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>ClaudPlay🎮</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-  margin:0;
-  background:#0b0b0b;
-  color:#fff;
-  font-family:Arial, sans-serif;
-}
-
-.topo{
-  padding:16px 20px;
-  background:#101010;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.menu{
-  margin-top:8px;
-  font-size:14px;
-  color:#aaa;
-  cursor:pointer;
-}
-
-.menu:hover{color:#fff}
-
-.container{padding:20px}
-
-.categoria{
-  margin-top:20px;
-  padding:14px;
-  background:#161616;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-.categoria:hover{background:#1f1f1f}
-</style>
+<title>ClaudPlay — emulador de Super Nintendo, NES, Game Boy e mais</title>
+<meta name="description" content="Emulador de Super Nintendo (SNES), NES, Game Boy, Game Boy Color, Game Boy Advance, Mega Drive, Nintendo 64 e PlayStation. Jogue direto no navegador ou no app.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ClaudPlay">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="topo">
-  <div class="logo">ClaudPlay</div>
-  <div class="menu" onclick="mostrarCategorias()">Todos os jogos</div>
+<header class="topo">
+  <a class="logo" href="index.html"><span class="logo-icone">🎮</span><span>Claud<b>Play</b></span></a>
+  <button class="botao instalar" id="instalar" hidden>⬇ Instalar</button>
+  <a class="icone-topo" href="jogar.html" title="Abrir meu jogo" aria-label="Abrir meu jogo">📂</a>
+</header>
+
+<div class="aviso-instalar" id="dicaIos" hidden>
+  Para instalar no iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.
+  <button id="fecharDica" aria-label="Fechar">✕</button>
 </div>
 
-<div class="container" id="categorias" style="display:none">
-  <div class="categoria" onclick="location.href='Emuladores/GameBoy/gameboy.html'">
-    🎮 GameBoy
-  </div>
+<!-- Destaques -->
+<section class="destaques" aria-label="Destaques">
+  <div class="trilho" id="trilho"></div>
+  <div class="pontos" id="pontos"></div>
+</section>
 
-  <div class="categoria" onclick="location.href='Emuladores/GameBoyCollor/gameboycollor.html'">
-    🎮 GameBoy Collor
-  </div>
+<main class="pagina">
 
-  <div class="categoria" onclick="location.href='Emuladores/MegaDrive/megadrive.html'">
-    🎮 MegaDrive
-  </div>
+  <!-- Consoles -->
+  <section class="secao consoles">
+    <div class="secao-titulo">
+      <h2>Emula Super Nintendo, NES, Game Boy e mais</h2>
+    </div>
+    <div class="fileira" id="consoles"></div>
+  </section>
 
-  <div class="categoria" onclick="location.href='Emuladores/Nes/nes.html'">
-    🎮 Nes
-  </div>
+  <!-- Jogos -->
+  <section class="secao" id="catalogo">
+    <div class="secao-titulo">
+      <h2>Jogos grátis</h2>
+      <small id="contagem"></small>
+    </div>
+    <label class="busca"><input id="busca" type="search" placeholder="Buscar jogo, console ou gênero..." aria-label="Buscar jogo"></label>
+    <div class="grid" id="listaJogos"></div>
+    <p class="vazio" id="vazio" hidden>Nenhum jogo encontrado.</p>
+  </section>
 
-  <div class="categoria" onclick="location.href='Emuladores/Nintendo64/nintendo64.html'">
-    🎮 Nintendo64
-  </div>
+  <!-- Abrir meu jogo -->
+  <section class="chamada">
+    <div class="icone">📂</div>
+    <div class="texto">
+      <h3>Tem seus próprios jogos?</h3>
+      <p>Abra a ROM direto do celular ou do computador: Super Nintendo, NES, Game Boy, Mega Drive, Nintendo 64, PlayStation e outros. O arquivo roda aqui e não é enviado para nenhum servidor.</p>
+    </div>
+    <a class="botao cor" href="jogar.html">Abrir meu jogo</a>
+  </section>
+</main>
 
-  <div class="categoria" onclick="location.href='Emuladores/Ps1/ps1.html'">
-    🎮 Ps1
-  </div>
+<footer class="rodape">
+  <span>Os jogos do catálogo são homebrew com licença livre.</span>
+  <a href="creditos.html">Créditos e licenças →</a>
+</footer>
 
-  <div class="categoria" onclick="location.href='Emuladores/SuperNintendo/supernintendo.html'">
-    🎮 SuperNintendo
-  </div>
-</div>
-
+<script src="jogos/catalogo.js"></script>
 <script>
-function mostrarCategorias(){
-  document.getElementById("categorias").style.display="block";
+const caminho = p => "jogos/" + p.split("/").map(encodeURIComponent).join("/");
+const linkJogo = j => "jogar.html?" + new URLSearchParams({ jogo: j.rom });
+
+// Confere quais ROMs existem (as que faltam aparecem como "Em breve")
+const disponivel = new Map(CATALOGO.map(j => [j.rom,
+  fetch(caminho(j.rom), { method: "HEAD" }).then(r => r.ok).catch(() => false)
+]));
+
+/* ---------- Destaques ---------- */
+const trilho = document.getElementById("trilho");
+const pontos = document.getElementById("pontos");
+
+CATALOGO.forEach((jogo, i) => {
+  const slide = document.createElement("article");
+  slide.className = "slide";
+  slide.innerHTML = `
+    <img class="fundo" alt="">
+    <img class="frente" alt="">
+    <div class="slide-info">
+      <span class="etiqueta verde">Grátis</span>
+      <span class="etiqueta nome-console"></span>
+      <h2></h2>
+      <p></p>
+      <div class="acoes">
+        <a class="botao jogar">▶ Jogar</a>
+        <a class="botao secundario" href="creditos.html">Detalhes</a>
+      </div>
+    </div>`;
+  slide.querySelectorAll("img").forEach(img => img.src = caminho(jogo.capa));
+  slide.querySelector(".nome-console").textContent = CONSOLES[jogo.console].nome;
+  slide.querySelector("h2").textContent = jogo.titulo;
+  slide.querySelector("p").textContent = jogo.descricao;
+  const botao = slide.querySelector(".jogar");
+  botao.href = linkJogo(jogo);
+  disponivel.get(jogo.rom).then(ok => {
+    if (!ok) { botao.textContent = "Em breve"; botao.setAttribute("aria-disabled", "true"); botao.removeAttribute("href"); }
+  });
+  trilho.appendChild(slide);
+
+  const ponto = document.createElement("button");
+  ponto.setAttribute("aria-label", "Destaque " + (i + 1));
+  ponto.onclick = () => irPara(i);
+  pontos.appendChild(ponto);
+});
+
+let atual = 0;
+function irPara(i){
+  trilho.scrollTo({ left: i * trilho.clientWidth, behavior: "smooth" });
+}
+function marcarPonto(){
+  atual = Math.round(trilho.scrollLeft / trilho.clientWidth);
+  pontos.querySelectorAll("button").forEach((p, i) => p.classList.toggle("ativo", i === atual));
+}
+trilho.addEventListener("scroll", () => requestAnimationFrame(marcarPonto));
+marcarPonto();
+
+// Passa sozinho a cada 6 segundos (para quando a pessoa mexe)
+let automatico = setInterval(() => irPara((atual + 1) % CATALOGO.length), 6000);
+["pointerdown", "touchstart", "wheel"].forEach(ev =>
+  trilho.addEventListener(ev, () => clearInterval(automatico), { passive: true }));
+
+/* ---------- Consoles ---------- */
+const comJogos = new Set(CATALOGO.map(j => j.console));
+const consoles = document.getElementById("consoles");
+Object.entries(CONSOLES).forEach(([id, c]) => {
+  const a = document.createElement("a");
+  a.className = "console c-" + id;
+  a.href = "jogar.html?" + new URLSearchParams({ console: id });
+  a.innerHTML = "<span class='sigla'></span><span class='nome'></span><span class='tipo'></span>";
+  a.querySelector(".sigla").textContent = c.curto;
+  a.querySelector(".nome").textContent = c.nome;
+  a.querySelector(".tipo").textContent = comJogos.has(id) ? "Jogos grátis + seus jogos" : "Abrir seus jogos";
+  consoles.appendChild(a);
+});
+
+/* ---------- Jogos ---------- */
+const lista = document.getElementById("listaJogos");
+const busca = document.getElementById("busca");
+
+CATALOGO.forEach(jogo => {
+  const c = CONSOLES[jogo.console];
+  const card = document.createElement("a");
+  card.className = "card";
+  card.href = linkJogo(jogo);
+  card.dataset.busca = [jogo.titulo, jogo.autor, jogo.genero, c.nome, c.curto].join(" ").toLowerCase();
+  card.innerHTML = `
+    <div class="capa c-${jogo.console}">
+      <img alt="" loading="lazy">
+      <span class="selo-console"></span>
+      <span class="jogar">▶</span>
+    </div>
+    <div>
+      <div class="titulo"></div>
+      <div class="detalhe"></div>
+    </div>`;
+  card.querySelector("img").src = caminho(jogo.capa);
+  card.querySelector(".selo-console").textContent = c.curto;
+  card.querySelector(".titulo").textContent = jogo.titulo;
+  card.querySelector(".detalhe").textContent = jogo.genero + " · " + c.nome;
+  card.setAttribute("aria-label", "Jogar " + jogo.titulo);
+  disponivel.get(jogo.rom).then(ok => {
+    if (!ok) { card.classList.add("indisponivel"); card.removeAttribute("href"); }
+  });
+  lista.appendChild(card);
+});
+
+function filtrar(){
+  const termo = busca.value.trim().toLowerCase();
+  let visiveis = 0;
+  lista.querySelectorAll(".card").forEach(card => {
+    const mostra = card.dataset.busca.includes(termo);
+    card.style.display = mostra ? "" : "none";
+    if (mostra) visiveis++;
+  });
+  document.getElementById("vazio").hidden = visiveis > 0;
+  document.getElementById("contagem").textContent = visiveis + (visiveis === 1 ? " jogo" : " jogos");
+}
+busca.addEventListener("input", filtrar);
+filtrar();
+
+/* ---------- Instalar app ---------- */
+// Botão "Instalar" (Android/PC: Chrome e Edge)
+const botaoInstalar = document.getElementById("instalar");
+let pedidoInstalacao = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  pedidoInstalacao = e;
+  botaoInstalar.hidden = false;
+});
+botaoInstalar.onclick = async () => {
+  if (!pedidoInstalacao) return;
+  pedidoInstalacao.prompt();
+  await pedidoInstalacao.userChoice;
+  pedidoInstalacao = null;
+  botaoInstalar.hidden = true;
+};
+window.addEventListener("appinstalled", () => { botaoInstalar.hidden = true; });
+
+// iPhone não tem botão de instalar: mostra a dica uma vez
+const ehIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const jaInstalado = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+let dicaVista = false;
+try { dicaVista = localStorage.getItem("dicaIos") === "1"; } catch (e) {}
+if (ehIos && !jaInstalado && !dicaVista) document.getElementById("dicaIos").hidden = false;
+document.getElementById("fecharDica").onclick = () => {
+  document.getElementById("dicaIos").hidden = true;
+  try { localStorage.setItem("dicaIos", "1"); } catch (e) {}
+};
+
+// Dentro do app Android tudo já está no aparelho: sem service worker
+if ("serviceWorker" in navigator && !window.ClaudPlayApp) {
+  navigator.serviceWorker.register("service-worker.js").catch(() => {});
 }
 </script>
 

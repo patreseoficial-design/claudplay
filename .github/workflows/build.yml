@@ -1,0 +1,147 @@
+name: Build Android
+
+on:
+  push:
+    branches:
+      - main
+      - claude/beautiful-archimedes-rzt494
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+      # IDs do AdMob do ClaudPlay (sem eles, a versão da loja usa anúncios de teste)
+      ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+      ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
+      ADMOB_INTERSTICIAL_ID: ${{ secrets.ADMOB_INTERSTICIAL_ID }}
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      # Jogos homebrew do catálogo, compilados do código-fonte oficial
+      # de cada autor (licenças livres, veja creditos.html). Se um deles
+      # falhar, o app sai mesmo assim e o jogo aparece como "Em breve".
+      - name: Ferramentas para compilar os jogos
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cc65 bison libpng-dev pkg-config python3-pil
+          git clone -q --depth 1 --branch v1.0.4 https://github.com/gbdev/rgbds "$RUNNER_TEMP/rgbds"
+          make -C "$RUNNER_TEMP/rgbds" -j"$(nproc)" -s
+          sudo make -C "$RUNNER_TEMP/rgbds" install -s
+          rgbasm --version
+
+      - name: "Jogo: Thwaite (NES)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/thwaite-nes "$RUNNER_TEMP/thwaite"
+          git -C "$RUNNER_TEMP/thwaite" checkout -q 00e36745188bc165990f60eed6b093c3ce6ad0e3
+          make -C "$RUNNER_TEMP/thwaite" thwaite.nes
+          mkdir -p jogos/nes && cp "$RUNNER_TEMP/thwaite/thwaite.nes" jogos/nes/
+
+      - name: "Jogo: Concentration Room (NES)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/croom-nes "$RUNNER_TEMP/croom"
+          git -C "$RUNNER_TEMP/croom" checkout -q ed19c3c07ca389b70cf2e0dd2ce0320df28d511d
+          make -C "$RUNNER_TEMP/croom" croom.nes
+          mkdir -p jogos/nes && cp "$RUNNER_TEMP/croom/croom.nes" jogos/nes/
+
+      - name: "Jogo: Libbet and the Magic Floor (Game Boy)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/pinobatch/libbet "$RUNNER_TEMP/libbet"
+          git -C "$RUNNER_TEMP/libbet" checkout -q 1232e71dc1ac852786ad9825316e19d2b341bc4a
+          make -C "$RUNNER_TEMP/libbet" libbet.gb
+          mkdir -p jogos/gb && cp "$RUNNER_TEMP/libbet/libbet.gb" jogos/gb/
+
+      - name: "Jogo: µCity (Game Boy Color)"
+        continue-on-error: true
+        run: |
+          git clone -q https://github.com/AntonioND/ucity "$RUNNER_TEMP/ucity"
+          git -C "$RUNNER_TEMP/ucity" checkout -q 71fb08e7ca53fe4228e66316968d9c6bea3439ba
+          make -C "$RUNNER_TEMP/ucity" ucity.gbc
+          mkdir -p jogos/gbc && cp "$RUNNER_TEMP/ucity/ucity.gbc" jogos/gbc/
+
+      - name: Jogos prontos
+        run: ls -la jogos/*/ || true
+
+      - name: Compilar versão de teste (APK)
+        run: |
+          gradle assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ClaudPlay.apk
+
+      - name: Enviar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: ClaudPlay.apk
+
+      # Link fixo para baixar no celular:
+      # https://github.com/<dono>/<repo>/releases/download/apk/ClaudPlay.apk
+      - name: Publicar APK em Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete apk --yes --cleanup-tag || true
+          gh release create apk ClaudPlay.apk \
+            --target "$GITHUB_SHA" \
+            --title "ClaudPlay para Android (teste)" \
+            --notes "Versão de teste gerada a partir de ${GITHUB_REF_NAME} (${GITHUB_SHA::7}). Baixe ClaudPlay.apk abaixo e instale no celular (permita 'instalar apps desta fonte')."
+
+      # Versão para a Play Store: só roda se a chave estiver
+      # cadastrada nos Secrets do repositório
+      - name: Preparar chave de assinatura
+        id: chave
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Chave não cadastrada: pulando a versão da Play Store"
+          fi
+
+      # Sempre compila (confere se a versão da loja está ok);
+      # só sai assinada quando a chave existe
+      - name: Compilar versão da Play Store (AAB)
+        env:
+          KEYSTORE_FILE: ${{ steps.chave.outputs.existe == 'true' && format('{0}/upload.jks', runner.temp) || '' }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: gradle bundleRelease
+
+      - name: Enviar AAB
+        if: steps.chave.outputs.existe == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-playstore
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Apagar chave
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.jks"

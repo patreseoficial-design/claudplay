@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ClaudPlay - Jogando</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="style.css">
+<style>
+html, body{ width:100%; height:100%; }
+body.jogando{ background:#000; overflow:hidden; }
+#game{ width:100vw; height:100vh; }
+.voltar{ position:fixed; top:12px; left:12px; z-index:30; padding:8px 14px; border-radius:12px; font-size:14px; font-weight:700;
+  background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+.painel{ max-width:440px; margin:0 auto; padding:16vh 20px 40px; text-align:center; }
+.painel .icone{ width:72px; height:72px; margin:0 auto 18px; border-radius:22px; display:grid; place-items:center; font-size:34px;
+  background:var(--grad); }
+.painel h2{ margin:0 0 8px; font-size:26px; letter-spacing:-.02em; }
+.painel p{ margin:0 0 22px; color:var(--texto-2); font-size:15px; line-height:1.5; }
+.painel select{ width:100%; padding:13px 14px; border-radius:14px; border:1px solid var(--borda); background:var(--fundo-2);
+  color:var(--texto); font:inherit; font-size:15px; margin-bottom:12px; }
+.painel .botao{ width:100%; padding:15px; font-size:16px; }
+.painel .lista-consoles{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:18px; }
+.painel .lista-consoles span{ font-size:11px; font-weight:800; padding:4px 8px; border-radius:6px; background:var(--cartao-2); color:var(--texto-2); }
+.painel .dica{ margin-top:16px; font-size:12px; color:var(--texto-2); }
+#arquivo{ display:none; }
+</style>
+</head>
+
+<body>
+<a class="voltar" href="index.html">← Início</a>
+<div id="game"></div>
+
+<script src="jogos/catalogo.js"></script>
+<script>
+// Dois modos:
+//   jogar.html?jogo=<rom do catálogo>  → abre um jogo do catálogo
+//   jogar.html                         → o jogador escolhe uma ROM do próprio aparelho
+const params = new URLSearchParams(window.location.search);
+const romCatalogo = params.get("jogo");
+const tela = document.getElementById("game");
+
+function iniciar(core, gameUrl, nome){
+  document.title = nome + " - ClaudPlay";
+  tela.innerHTML = "";
+  document.body.classList.add("jogando");
+  // No app Android: tela cheia e sem anúncio durante o jogo
+  if (window.ClaudPlayApp) ClaudPlayApp.jogando(true);
+
+  window.EJS_player = "#game";
+  window.EJS_core = core;
+  window.EJS_gameName = nome;
+  window.EJS_gameUrl = gameUrl;
+  window.EJS_language = "pt-BR";
+  window.EJS_startOnLoaded = true;
+  // Evita travamento no celular
+  window.EJS_threads = false;
+  // Usa a cópia do EmulatorJS que já está no repositório
+  window.EJS_pathtodata = "emulatorjs/EmulatorJS/Data/";
+
+  const script = document.createElement("script");
+  script.src = "emulatorjs/EmulatorJS/Data/loader.js";
+  document.body.appendChild(script);
+}
+
+function mensagem(texto){
+  tela.innerHTML = "<div class='painel'><h2></h2></div>";
+  tela.querySelector("h2").textContent = texto;
+}
+
+if (romCatalogo) {
+  // Só abre jogos que estão no catálogo
+  const jogo = CATALOGO.find(j => j.rom === romCatalogo);
+  if (!jogo) {
+    mensagem("Jogo não encontrado");
+  } else {
+    const url = "jogos/" + jogo.rom.split("/").map(encodeURIComponent).join("/");
+    iniciar(CONSOLES[jogo.console].core, url, jogo.titulo);
+  }
+} else {
+  // Modo "Abrir meu jogo": a ROM é lida do aparelho e não sai dele
+  tela.innerHTML = `
+    <div class="painel">
+      <div class="icone">📂</div>
+      <h2>Abrir meu jogo</h2>
+      <p>Escolha uma ROM que você já tem no seu aparelho.
+         O arquivo roda aqui mesmo e não é enviado para nenhum servidor.</p>
+      <select id="console" aria-label="Console"></select>
+      <button class="botao cor" id="escolher">Escolher arquivo</button>
+      <input type="file" id="arquivo">
+      <div class="lista-consoles" id="listaConsoles"></div>
+    </div>`;
+
+  const select = document.getElementById("console");
+  const input = document.getElementById("arquivo");
+
+  select.innerHTML = "<option value=''>Detectar console pelo arquivo</option>" +
+    Object.entries(CONSOLES).map(([id, c]) => `<option value="${id}">${c.nome}</option>`).join("");
+  // Console já escolhido na tela inicial (jogar.html?console=snes)
+  const consolePedido = params.get("console");
+  if (CONSOLES[consolePedido]) select.value = consolePedido;
+
+  document.getElementById("listaConsoles").innerHTML =
+    Object.values(CONSOLES).map(c => `<span>${c.nome}</span>`).join("");
+
+  input.accept = Object.values(CONSOLES).flatMap(c => c.ext.map(e => "." + e)).concat(".zip", ".7z", ".bin").join(",");
+
+  document.getElementById("escolher").onclick = () => input.click();
+
+  input.onchange = () => {
+    const arquivo = input.files[0];
+    if (!arquivo) return;
+    const ext = arquivo.name.split(".").pop().toLowerCase();
+    let id = select.value;
+    if (!id) {
+      id = Object.keys(CONSOLES).find(k => CONSOLES[k].ext.includes(ext));
+    }
+    if (!id) {
+      alert("Não deu para saber o console pelo arquivo ." + ext + ". Escolha o console na lista e tente de novo.");
+      input.value = "";
+      return;
+    }
+    iniciar(CONSOLES[id].core, arquivo, arquivo.name.replace(/\.[^.]+$/, ""));
+  };
+}
+</script>
+</body>
+</html>
