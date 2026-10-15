@@ -56,7 +56,7 @@ const CONSOLES = {
   snes:   { nome: "Super Nintendo",   curto: "SNES",  core: "snes",   ext: ["sfc", "smc"] },
   nes:    { nome: "NES",              curto: "NES",   core: "nes",    ext: ["nes"] },
   gb:     { nome: "Game Boy",         curto: "GB",    core: "gb",     ext: ["gb"] },
-  gbc:    { nome: "Game Boy Color",   curto: "GBC",   core: "gbc",    ext: ["gbc"] },
+  gbc:    { nome: "Game Boy Color",   curto: "GBC",   core: "gb",     ext: ["gbc"] },
   gba:    { nome: "Game Boy Advance", curto: "GBA",   core: "gba",    ext: ["gba"] },
   segaMD: { nome: "Mega Drive",       curto: "MD",    core: "segaMD", ext: ["md", "gen", "smd"] },
   n64:    { nome: "Nintendo 64",      curto: "N64",   core: "n64",    ext: ["n64", "z64", "v64"] },
